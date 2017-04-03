@@ -3,16 +3,15 @@ Gestion de médias vidéos
 	- Séries
 	- Jeux vidéos
 	
-Un média est défini par son nom, sa date ...
-Films, séries, JV héritent de média.
-Film et série héritent de qq chose ?
-Un film est défini par sa bande annonce, sa BO (?), son réalisateur, ses acteurs....
-Une série est définie par son nb de saisons, son réal, ses acteurs...
+Un média vidéo est défini par son nom, sa date,ses acteurs, son synopsis. 
+Films, épisode, JV héritent de média.
+Un film est défini par sa bande annonce, sa BO, son réalisateur.
+Une série est définie par son nb de saisons, son réal.
 Une série contient un certain nombre de saisons qui ont chacune une bande annonce, et des acteurs secondaires, et un nb d'épisodes.
 Un épisode est défini par sa durée, son nom, ses acteurs (supplémentaires // à ceux de la série), son numéro, et son synopsis.
-Un JV est def par son trailer, ses acteurs (doubleurs ? A mettre dans média ?), ...
+Un JV est def par son trailer, sa photo de couverture, son synopsis.
 Acteur, réal sont des personnes.
-Une personne est def par son nom, son prénom...
-Un réal est def par ....
-Un acteur est def ...
+Une personne est def par son nom, son prénom, sa photo, sa ddn.
+Un réal est associé aux films qu'il à réalisé.
+Un acteur est associé aux médias vidéos auxquels il a participé.
 
