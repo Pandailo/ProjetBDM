@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 package projetbdm;
-
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Yann
@@ -14,6 +16,9 @@ public class frame_con_admin extends javax.swing.JFrame {
     /**
      * Creates new form frame_con_admin
      */
+    private String uname;
+    private String pw;
+    private String droits;
     public frame_con_admin() {
         initComponents();
     }
@@ -41,11 +46,11 @@ public class frame_con_admin extends javax.swing.JFrame {
         connect_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setLayout(new java.awt.GridLayout(5, 1));
 
-        jPanel2.setLayout(new java.awt.GridLayout());
+        jPanel2.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Nom d'utilisateur");
@@ -53,12 +58,12 @@ public class frame_con_admin extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2);
 
-        jPanel3.setLayout(new java.awt.GridLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(1, 0));
         jPanel3.add(user_text);
 
         jPanel1.add(jPanel3);
 
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Mot de passe");
@@ -66,7 +71,7 @@ public class frame_con_admin extends javax.swing.JFrame {
 
         jPanel1.add(jPanel4);
 
-        jPanel5.setLayout(new java.awt.GridLayout());
+        jPanel5.setLayout(new java.awt.GridLayout(1, 0));
         jPanel5.add(user_pw);
 
         jPanel1.add(jPanel5);
@@ -82,6 +87,11 @@ public class frame_con_admin extends javax.swing.JFrame {
         jPanel6.add(cancel_button);
 
         connect_button.setText("Connexion");
+        connect_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connect_buttonActionPerformed(evt);
+            }
+        });
         jPanel6.add(connect_button);
 
         jPanel1.add(jPanel6);
@@ -94,6 +104,29 @@ public class frame_con_admin extends javax.swing.JFrame {
     private void cancel_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancel_buttonActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_cancel_buttonActionPerformed
+
+    private void connect_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_buttonActionPerformed
+       //encodage du pw en MD5 pour vérif avec la valeur hexa stockée dans la base
+       
+       String pw_temp; 
+       this.uname=user_text.getText();
+       pw_temp=user_pw.getText();
+       MD5Password md5=new MD5Password();
+       this.pw=md5.getEncodedPassword(pw_temp);
+       
+       //vérif de la bonne entrée des infos de connexion
+       
+       
+        try 
+        {
+            Connection con=connexionUtils.getConnexion();
+        } 
+        catch (SQLException ex) 
+        {
+            Logger.getLogger(frame_con_admin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_connect_buttonActionPerformed
 
     /**
      * @param args the command line arguments

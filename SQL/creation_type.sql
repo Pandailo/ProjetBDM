@@ -1,6 +1,6 @@
 --CREATION DES TYPES
 CREATE TYPE PBDM_MediaVideo_Type AS OBJECT 
-(dateSortie date, nom VARCHAR2(25), synopsis VARCHAR2(25))
+(dateSortie date, nom VARCHAR2(25), synopsis VARCHAR2(25)) 
 NOT FINAL;
 /
 CREATE TYPE PBDM_Prenom_Type AS OBJECT(prenom VARCHAR2(25));
@@ -23,4 +23,5 @@ CREATE TYPE PBDM_Episode_Type UNDER PBDM_MediaVideo_Type (duree INTEGER, nomE VA
 CREATE TYPE PBDM_Saison_Type AS OBJECT (nbE INTEGER, bandeA VARCHAR2(25));
 /
 CREATE TYPE PBDM_Serie_Type AS OBJECT (affiche StillImage, bandeA VARCHAR2(25),nombreS INTEGER);
+
 /

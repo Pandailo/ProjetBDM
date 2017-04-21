@@ -5,6 +5,10 @@
  */
 package projetbdm;
 
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Yann
@@ -18,6 +22,16 @@ public class ProjetBDM {
     {
         frame_con test= new frame_con();
         test.setVisible(true);
+        /*MD5Password md5=new MD5Password();
+        String pw=md5.getEncodedPassword("patate");
+        try {
+            if(md5.testPassword("patate", pw))
+            {
+                System.out.println("cé bo");
+            }
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(ProjetBDM.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
     }
     
 }
