@@ -31,13 +31,11 @@ public class frame_con_admin extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        user_text = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        user_pw = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         cancel_button = new javax.swing.JButton();
         connect_button = new javax.swing.JButton();
@@ -56,12 +54,7 @@ public class frame_con_admin extends javax.swing.JFrame {
         jPanel1.add(jPanel2);
 
         jPanel3.setLayout(new java.awt.GridLayout());
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jPanel3.add(jScrollPane1);
+        jPanel3.add(user_text);
 
         jPanel1.add(jPanel3);
 
@@ -74,12 +67,7 @@ public class frame_con_admin extends javax.swing.JFrame {
         jPanel1.add(jPanel4);
 
         jPanel5.setLayout(new java.awt.GridLayout());
-
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
-
-        jPanel5.add(jScrollPane2);
+        jPanel5.add(user_pw);
 
         jPanel1.add(jPanel5);
 
@@ -153,9 +141,7 @@ public class frame_con_admin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextField user_pw;
+    private javax.swing.JTextField user_text;
     // End of variables declaration//GEN-END:variables
 }
