@@ -35,26 +35,26 @@ public class connexionUtils {
 	}
 	public static Connection getConnexion() throws SQLException
 	{
-		Connection con=null;
-		try 
-        {
-			con=getConnexion(URLFAC);
-        } 
-        catch (SQLException ex) 
-        {
-        	con=getConnexion(URLDIST);
-        } 
-		
-		return con;
+            Connection con=null;
+            try 
+            {
+                    con=getConnexion(URLFAC);
+            } 
+            catch (SQLException ex) 
+            {
+                    con=getConnexion(URLDIST);
+            } 
+
+            return con;
 	}
 	private static Connection getConnexion(String url) throws SQLException
 	{
 		Connection con=null;
 		try 
-        {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-            con = DriverManager.getConnection(url, LOGIN, PASS);
-        } 
+                {
+                    Class.forName("oracle.jdbc.driver.OracleDriver");
+                    con = DriverManager.getConnection(url, LOGIN, PASS);
+                } 
         catch (SQLException ex) 
         {
             try 

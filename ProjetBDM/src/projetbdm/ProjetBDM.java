@@ -6,6 +6,10 @@
 package projetbdm;
 
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,8 +26,8 @@ public class ProjetBDM {
     {
         frame_con test= new frame_con();
         test.setVisible(true);
-        /*MD5Password md5=new MD5Password();
-        String pw=md5.getEncodedPassword("patate");
+        MD5Password md5=new MD5Password();
+        String pw=md5.getEncodedPassword("admin");
         try {
             if(md5.testPassword("patate", pw))
             {
@@ -31,7 +35,19 @@ public class ProjetBDM {
             }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(ProjetBDM.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        }
+        try
+        {
+            Connection con=null;
+            con=connexionUtils.getConnexion();
+            Statement st=con.createStatement();
+            st.executeQuery("INSERT INTO PBDM_table_connexion VALUES(\"admin\",pw)");
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(ProjetBDM.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
 }
