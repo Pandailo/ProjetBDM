@@ -39,7 +39,7 @@ public class ProjetBDM {
         try
         {
             Connection con=null;
-            con=connexionUtils.getConnexion();
+            con=connexionUtils2.getInstance();
             Statement st=con.createStatement();
             st.executeQuery("INSERT INTO PBDM_table_connexion VALUES(\"admin\",pw)");
         }
