@@ -45,7 +45,7 @@ public class frame_con_admin extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        user_pw = new javax.swing.JTextField();
+        user_pw = new javax.swing.JPasswordField();
         jPanel6 = new javax.swing.JPanel();
         cancel_button = new javax.swing.JButton();
         connect_button = new javax.swing.JButton();
@@ -132,66 +132,75 @@ public class frame_con_admin extends javax.swing.JFrame {
     }//GEN-LAST:event_cancel_buttonActionPerformed
 
     private void connect_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_buttonActionPerformed
-        try 
-        {
-            //encodage du pw en MD5 pour vérif avec la valeur hexa stockée dans la base
-            
-            String pw_temp;
-            this.uname=user_text.getText();
-            pw_temp=user_pw.getText();
-            MD5Password md5=new MD5Password();
-            this.pw=md5.getEncodedPassword(pw_temp);
-            String pwt="";
-            ArrayList<String> unames=null;
-            Boolean unameIsIn=false;
-            //vérif de la bonne entrée des infos de connexion
-            
-            Connection con=null;
-            con=connexionUtils.getConnexion();
-            Statement st=con.createStatement();
-            ResultSet rset = st.executeQuery("SELECT uname FROM PBDM_table_connexion");
-            while(rset.next())
+       
+        if(this.uname!=null&&this.pw!=null)
+        {    
+            try 
             {
-                unames.add(rset.getString("UNAME"));
-            }
-            if(unames.contains(this.uname))
-            {
-                unameIsIn=true;
-                rset = st.executeQuery("SELECT pw FROM PBDM_table_connexion WHERE uname="+this.uname);
+                //encodage du pw en MD5 pour vérif avec la valeur hexa stockée dans la base
+
+                String pw_temp;
+                this.uname=user_text.getText();
+                pw_temp=user_pw.getText();
+                MD5Password md5=new MD5Password();
+                this.pw=md5.getEncodedPassword(pw_temp);
+                String pwt="";
+                ArrayList<String> unames=null;
+                Boolean unameIsIn=false;
+                //vérif de la bonne entrée des infos de connexion
+
+                Connection con=null;
+                con=connexionUtils.getConnexion();
+                Statement st=con.createStatement();
+                ResultSet rset = st.executeQuery("SELECT uname FROM PBDM_table_connexion");
                 while(rset.next())
                 {
-                    pwt=rset.getString("PW");
+                    unames.add(rset.getString("UNAME"));
                 }
-                rset.close();
-                st.close();
-                try
+                if(unames.contains(this.uname))
                 {
-                    if(md5.testPassword(pwt, this.pw))                
+                    unameIsIn=true;
+                    rset = st.executeQuery("SELECT pw FROM PBDM_table_connexion WHERE uname="+this.uname);
+                    while(rset.next())
                     {
-                        //Ouverture prochaine fenetre en administrateur.
+                        pwt=rset.getString("PW");
                     }
-                    else
+                    rset.close();
+                    st.close();
+                    try
                     {
-                        text_error_pw.setVisible(true);
+                        if(md5.testPassword(pwt, this.pw))                
+                        {
+                            //Ouverture prochaine fenetre en administrateur.
+                            frame_menu fm=new frame_menu(true);
+                            fm.setVisible(true);
+                            this.dispose();
+                        }
+                        else
+                        {
+                            text_error_pw.setVisible(true);
+                        }
+                    }
+                    catch (NoSuchAlgorithmException ex)
+                    {
+                        Logger.getLogger(frame_con_admin.class.getName()).log(Level.SEVERE, null, ex);                
                     }
                 }
-                catch (NoSuchAlgorithmException ex)
+                else
                 {
-                    Logger.getLogger(frame_con_admin.class.getName()).log(Level.SEVERE, null, ex);                
+                    text_error_uname.setVisible(true);
                 }
-            }
-            else
+
+            } 
+            catch (SQLException ex) 
             {
-                text_error_uname.setVisible(true);
+                Logger.getLogger(frame_con_admin.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-        } 
-        catch (SQLException ex) 
-        {
-            Logger.getLogger(frame_con_admin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-       
+        else
+        {
+            
+        }
     }//GEN-LAST:event_connect_buttonActionPerformed
 
     /**
@@ -243,7 +252,7 @@ public class frame_con_admin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JLabel text_error_pw;
     private javax.swing.JLabel text_error_uname;
-    private javax.swing.JTextField user_pw;
+    private javax.swing.JPasswordField user_pw;
     private javax.swing.JTextField user_text;
     // End of variables declaration//GEN-END:variables
 }

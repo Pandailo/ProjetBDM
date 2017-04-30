@@ -29,7 +29,7 @@ public class ProjetBDM {
         MD5Password md5=new MD5Password();
         String pw=md5.getEncodedPassword("admin");
         try {
-            if(md5.testPassword("patate", pw))
+            if(md5.testPassword("admin", pw))
             {
                 System.out.println("cé bo");
             }
@@ -41,7 +41,8 @@ public class ProjetBDM {
             Connection con=null;
             con=connexionUtils2.getInstance();
             Statement st=con.createStatement();
-            st.executeQuery("INSERT INTO PBDM_table_connexion VALUES(\"admin\",pw)");
+            st.executeQuery("CREATE TABLE PBDM_table_connexion (uname VARCHAR2(25),pw VARCHAR2(25),droits ENUM(\'admin\',\'user\'))");
+            st.executeQuery("INSERT INTO PBDM_table_connexion VALUES('admin',pw,'admin')");
         }
         catch (SQLException ex)
         {

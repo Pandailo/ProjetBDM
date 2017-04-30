@@ -25,7 +25,8 @@ public class frame_con extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         user_button = new javax.swing.JButton();
@@ -37,11 +38,20 @@ public class frame_con extends javax.swing.JFrame {
         jPanel1.setLayout(new java.awt.GridLayout(2, 1));
 
         user_button.setText("Utilisateur");
+        user_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                user_buttonActionPerformed(evt);
+            }
+        });
         jPanel1.add(user_button);
 
         admin_button.setText("Administrateur");
-        admin_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        admin_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 admin_buttonActionPerformed(evt);
             }
         });
@@ -56,6 +66,12 @@ public class frame_con extends javax.swing.JFrame {
         frame_con_admin fenetre_con=new frame_con_admin();
         fenetre_con.setVisible(true);
     }//GEN-LAST:event_admin_buttonActionPerformed
+
+    private void user_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_user_buttonActionPerformed
+    {//GEN-HEADEREND:event_user_buttonActionPerformed
+        frame_menu fm=new frame_menu(false);
+        fm.setVisible(true);
+    }//GEN-LAST:event_user_buttonActionPerformed
 
     /**
      * @param args the command line arguments
