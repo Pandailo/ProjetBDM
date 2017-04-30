@@ -41,8 +41,7 @@ public class ProjetBDM {
             Connection con=null;
             con=connexionUtils2.getInstance();
             Statement st=con.createStatement();
-            st.executeQuery("CREATE TABLE PBDM_table_connexion (uname VARCHAR2(25),pw VARCHAR2(25),droits ENUM(\'admin\',\'user\'))");
-            st.executeQuery("INSERT INTO PBDM_table_connexion VALUES('admin',pw,'admin')");
+            st.executeQuery("INSERT INTO PBDM_table_connexion VALUES('admin','"+pw+"','admin')");
         }
         catch (SQLException ex)
         {
