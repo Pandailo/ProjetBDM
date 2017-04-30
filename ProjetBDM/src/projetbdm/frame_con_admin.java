@@ -144,7 +144,6 @@ public class frame_con_admin extends javax.swing.JFrame {
                 pw_temp=user_pw.getText();
                 MD5Password md5=new MD5Password();
                 this.pw=md5.getEncodedPassword(pw_temp);
-                System.out.println(this.pw);
                 String pwt="";
                 ArrayList<String> unames=new ArrayList();
                 //vérif de la bonne entrée des infos de connexion
@@ -191,7 +190,9 @@ public class frame_con_admin extends javax.swing.JFrame {
         }
         else
         {
-            
+            //Utile pour le dispose
+            text_error_uname.setVisible(true);
+            text_error_pw.setVisible(true);
         }
     }//GEN-LAST:event_connect_buttonActionPerformed
 
