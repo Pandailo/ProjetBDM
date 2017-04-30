@@ -133,7 +133,7 @@ public class frame_con_admin extends javax.swing.JFrame {
 
     private void connect_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connect_buttonActionPerformed
        
-        if(this.uname!=null&&this.pw!=null)
+        if(this.user_text.getText()!=null&&this.user_pw.getText()!=null)
         {    
             try 
             {
@@ -144,32 +144,29 @@ public class frame_con_admin extends javax.swing.JFrame {
                 pw_temp=user_pw.getText();
                 MD5Password md5=new MD5Password();
                 this.pw=md5.getEncodedPassword(pw_temp);
+                System.out.println(this.pw);
                 String pwt="";
-                ArrayList<String> unames=null;
-                Boolean unameIsIn=false;
+                ArrayList<String> unames=new ArrayList();
                 //vérif de la bonne entrée des infos de connexion
 
-                Connection con=null;
-                con=connexionUtils.getConnexion();
+                 Connection con=null;
+                con=connexionUtils2.getInstance();
                 Statement st=con.createStatement();
                 ResultSet rset = st.executeQuery("SELECT uname FROM PBDM_table_connexion");
                 while(rset.next())
                 {
-                    unames.add(rset.getString("UNAME"));
+                    unames.add(rset.getString(1));
                 }
                 if(unames.contains(this.uname))
                 {
-                    unameIsIn=true;
-                    rset = st.executeQuery("SELECT pw FROM PBDM_table_connexion WHERE uname="+this.uname);
+                    rset = st.executeQuery("SELECT pw FROM PBDM_table_connexion WHERE uname='"+this.uname+"'");
                     while(rset.next())
                     {
-                        pwt=rset.getString("PW");
+                        pwt=rset.getString("pw");
                     }
                     rset.close();
                     st.close();
-                    try
-                    {
-                        if(md5.testPassword(pwt, this.pw))                
+                        if(this.pw.equals(pwt))                
                         {
                             //Ouverture prochaine fenetre en administrateur.
                             frame_menu fm=new frame_menu(true);
@@ -180,11 +177,6 @@ public class frame_con_admin extends javax.swing.JFrame {
                         {
                             text_error_pw.setVisible(true);
                         }
-                    }
-                    catch (NoSuchAlgorithmException ex)
-                    {
-                        Logger.getLogger(frame_con_admin.class.getName()).log(Level.SEVERE, null, ex);                
-                    }
                 }
                 else
                 {

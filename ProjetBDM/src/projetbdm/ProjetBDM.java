@@ -26,7 +26,7 @@ public class ProjetBDM {
     {
         frame_con test= new frame_con();
         test.setVisible(true);
-        MD5Password md5=new MD5Password();
+       /* MD5Password md5=new MD5Password();
         String pw=md5.getEncodedPassword("admin");
         try {
             if(md5.testPassword("admin", pw))
@@ -47,7 +47,7 @@ public class ProjetBDM {
         {
             Logger.getLogger(ProjetBDM.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        */
     }
     
 }
