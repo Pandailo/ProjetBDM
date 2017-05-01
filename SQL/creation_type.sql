@@ -23,6 +23,8 @@ CREATE Type PBDM_MediaVideo_Type AS OBJECT
 (id NUMBER,dateSortie date, nom VARCHAR2(50), synopsis VARCHAR2(255)) 
 NOT FINAL;
 /
+CREATE TYPE PBDM_Realisateur_Type;
+/
 CREATE TYPE PBDM_Episode_Type;
 /
 CREATE TYPE PBDM_Saison_Type;
@@ -45,7 +47,7 @@ CREATE TYPE PBDM_Serie_Type;
 /
 CREATE TYPE PBDM_Episodes_Type AS TABLE OF PBDM_Episode_type;
 /
-CREATE Type PBDM_Saison_Type AS OBJECT (id NUMBER,nbE INTEGER, bandeA ORDSYS.ORDVideo,serie REF PBDM_Serie_Type,episodes episodes_type);
+CREATE Type PBDM_Saison_Type AS OBJECT (id NUMBER,nbE INTEGER, bandeA ORDSYS.ORDVideo,serie REF PBDM_Serie_Type,episodes PBDM_episodes_type);
 /
 CREATE TYPE PBDM_SaisonRef_Type AS OBJECT(serieRef REF PBDM_Saison_Type);
 /
