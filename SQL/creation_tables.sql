@@ -16,7 +16,7 @@ CREATE TABLE PBDM_MedVidActeur OF PBDM_MedVidActeur_Type;
 
 CREATE TABLE PBDM_Film OF PBDM_Film_Type (PRIMARY KEY (id));
 
-CREATE TABLE PBDM_Realisateur OF PBDM_Realisateur_Type (PRIMARY KEY(id))NESTED TABLE filmR STORE AS tabfilms;
+CREATE TABLE PBDM_Realisateur OF PBDM_Realisateur_Type (PRIMARY KEY(id))NESTED TABLE filmsR STORE AS tabfilms;
 
 ALTER TABLE PBDM_Film ADD (SCOPE FOR (realisateur) IS PBDM_Realisateur);
 
