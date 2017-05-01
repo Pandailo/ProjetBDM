@@ -39,7 +39,7 @@ CREATE Type PBDM_Acteur_Type UNDER PBDM_Personne_Type(OVERRIDING MEMBER PROCEDUR
 /
 CREATE Type PBDM_JeuVideo_Type UNDER PBDM_MediaVideo_Type(note INTEGER,photoC ORDSYS.ORDIMAGE);
 /
-CREATE Type PBDM_Film_Type UNDER PBDM_MediaVideo_Type (id NUMBER,bandeA ORDSYS.ORDVideo, bandeO ORDSYS.ORDAudio,realisateur REF PBDM_Realisateur_Type);
+CREATE Type PBDM_Film_Type UNDER PBDM_MediaVideo_Type (bandeA ORDSYS.ORDVideo, bandeO ORDSYS.ORDAudio,realisateur REF PBDM_Realisateur_Type);
 /
 CREATE Type PBDM_Episode_Type UNDER PBDM_MediaVideo_Type (duree INTEGER, nomE VARCHAR2(25), numero INTEGER,saison REF PBDM_Saison_Type);
 /
