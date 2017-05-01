@@ -60,33 +60,4 @@ CREATE Type PBDM_Realisateur_Type UNDER PBDM_Personne_Type (id NUMBER,filmsR PBD
 CREATE TYPE PBDM_MedVidActeur_Type AS OBJECT(ActeurMA REF PBDM_Acteur_Type,MedVidMA REF PBDM_MediaVideo_Type);
 /
 
---CREATION DES TABLES
-
-DROP TABLE PBDM_Acteur;
-DROP TABLE PBDM_JeuVideo;
-DROP TABLE PBDM_MedVidActeur;
-DROP TABLE PBDM_Film;
-DROP TABLE PBDM_Realisateur;
-DROP TABLE PBDM_Saison;
-DROP TABLE PBDM_Serie;
-
-CREATE TABLE PBDM_Acteur OF PBDM_Acteur_Type (PRIMARY KEY (id));
-
-CREATE TABLE PBDM_JeuVideo OF PBDM_JeuVideo_Type (PRIMARY KEY (id));
-
-CREATE TABLE PBDM_MedVidActeur OF PBDM_MedVidActeur_Type;
-
-CREATE TABLE PBDM_Film OF PBDM_Film_Type (PRIMARY KEY (id));
-
-CREATE TABLE PBDM_Realisateur OF PBDM_Realisateur_Type (PRIMARY KEY(id))NESTED TABLE filmR STORE AS tabfilms;
-
-ALTER TABLE PBDM_Film ADD (SCOPE FOR (realisateur) IS PBDM_Realisateur);
-
-CREATE TABLE PBDM_Saison OF PBDM_Saison_Type(PRIMARY KEY (id))NESTED TABLE episodes STORE AS tabepisodes;
-
-CREATE TABLE PBDM_Serie OF PBDM_Serie_Type  (PRIMARY KEY(id))NESTED TABLE saisons STORE AS tabesaisons;
-
-ALTER TABLE PBDM_Saison ADD (SCOPE FOR (serie) IS PBDM_Serie);
-
-
 
