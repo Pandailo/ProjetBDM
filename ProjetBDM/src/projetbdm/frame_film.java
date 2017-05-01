@@ -27,20 +27,75 @@ public class frame_film extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
+
+        jPanel1 = new javax.swing.JPanel();
+        label_titre = new javax.swing.JLabel();
+        pan_principal = new javax.swing.JPanel();
+        pan_text = new javax.swing.JScrollPane();
+        edition = new javax.swing.JTextArea();
+        pan_affiche = new javax.swing.JPanel();
+        pan_image = new javax.swing.JPanel();
+        pan_buttons = new javax.swing.JPanel();
+        button_bo = new javax.swing.JButton();
+        button_ba = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        label_titre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_titre.setText("titre film");
+        jPanel1.add(label_titre, java.awt.BorderLayout.NORTH);
+
+        pan_principal.setLayout(new java.awt.GridLayout());
+
+        edition.setEditable(false);
+        edition.setColumns(20);
+        edition.setRows(5);
+        pan_text.setViewportView(edition);
+
+        pan_principal.add(pan_text);
+
+        pan_affiche.setLayout(new java.awt.GridLayout(2, 2));
+
+        javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
+        pan_image.setLayout(pan_imageLayout);
+        pan_imageLayout.setHorizontalGroup(
+            pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
+        );
+        pan_imageLayout.setVerticalGroup(
+            pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 131, Short.MAX_VALUE)
+        );
+
+        pan_affiche.add(pan_image);
+
+        pan_principal.add(pan_affiche);
+
+        jPanel1.add(pan_principal, java.awt.BorderLayout.CENTER);
+
+        pan_buttons.setLayout(new java.awt.GridLayout(1, 2));
+
+        button_bo.setText("Bande originale");
+        pan_buttons.add(button_bo);
+
+        button_ba.setText("Bande-annonce");
+        pan_buttons.add(button_ba);
+
+        jPanel1.add(pan_buttons, java.awt.BorderLayout.SOUTH);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -96,5 +151,15 @@ public class frame_film extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button_ba;
+    private javax.swing.JButton button_bo;
+    private javax.swing.JTextArea edition;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel label_titre;
+    private javax.swing.JPanel pan_affiche;
+    private javax.swing.JPanel pan_buttons;
+    private javax.swing.JPanel pan_image;
+    private javax.swing.JPanel pan_principal;
+    private javax.swing.JScrollPane pan_text;
     // End of variables declaration//GEN-END:variables
 }

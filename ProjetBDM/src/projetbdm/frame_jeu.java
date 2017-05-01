@@ -27,21 +27,58 @@ public class frame_jeu extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
+
+        label_titre = new javax.swing.JLabel();
+        pan_buttons = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        pan_principal = new javax.swing.JPanel();
+        pan_text = new javax.swing.JScrollPane();
+        edition = new javax.swing.JTextArea();
+        pan_affiche = new javax.swing.JPanel();
+        button_ba = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        label_titre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_titre.setText("titre jeu");
+        getContentPane().add(label_titre, java.awt.BorderLayout.NORTH);
+
+        pan_buttons.setLayout(new java.awt.GridLayout());
+
+        jButton1.setText("Bande-annonce");
+        pan_buttons.add(jButton1);
+
+        getContentPane().add(pan_buttons, java.awt.BorderLayout.SOUTH);
+
+        pan_principal.setLayout(new java.awt.GridLayout(1, 2));
+
+        edition.setEditable(false);
+        edition.setColumns(20);
+        edition.setRows(5);
+        pan_text.setViewportView(edition);
+
+        pan_principal.add(pan_text);
+
+        pan_affiche.setLayout(new java.awt.GridLayout(2, 0));
+
+        javax.swing.GroupLayout button_baLayout = new javax.swing.GroupLayout(button_ba);
+        button_ba.setLayout(button_baLayout);
+        button_baLayout.setHorizontalGroup(
+            button_baLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        button_baLayout.setVerticalGroup(
+            button_baLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 131, Short.MAX_VALUE)
         );
+
+        pan_affiche.add(button_ba);
+
+        pan_principal.add(pan_affiche);
+
+        getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -96,5 +133,13 @@ public class frame_jeu extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel button_ba;
+    private javax.swing.JTextArea edition;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel label_titre;
+    private javax.swing.JPanel pan_affiche;
+    private javax.swing.JPanel pan_buttons;
+    private javax.swing.JPanel pan_principal;
+    private javax.swing.JScrollPane pan_text;
     // End of variables declaration//GEN-END:variables
 }
