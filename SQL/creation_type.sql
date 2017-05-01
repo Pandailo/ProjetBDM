@@ -55,7 +55,7 @@ CREATE Type PBDM_FilmRef_Type AS OBJECT (filmRef REF PBDM_Film_Type);
 /
 CREATE Type PBDM_Films_Type AS TABLE OF PBDM_FilmRef_Type;
 /
-CREATE Type PBDM_Realisateur_Type UNDER PBDM_Personne_Type (id NUMBER,filmsR PBDM_Films_Type,INSTANTIABLE FINAL OVERRIDING MEMBER PROCEDURE affiche);
+CREATE Type PBDM_Realisateur_Type UNDER PBDM_Personne_Type (id NUMBER,filmsR PBDM_Films_Type,OVERRIDING INSTANTIABLE FINAL MEMBER PROCEDURE affiche);
 /
 --CREATE TYPE PBDM_MedVidActeur_Type AS OBJECT(ActeurMA REF PBDM_Acteur_Type,MedVidMA REF PBDM_MediaVideo_Type);
 /
