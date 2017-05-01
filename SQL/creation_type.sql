@@ -31,7 +31,7 @@ CREATE Type PBDM_PrenomsV_Type AS VARRAY(3) OF PBDM_Prenom_Type;
 /
 CREATE Type PBDM_Personne_Type AS OBJECT(id NUMBER,dateNaiss DATE,nom VARCHAR2(25), prenoms PBDM_PrenomsV_Type,INSTANTIABLE NOT FINAL MEMBER PROCEDURE affiche) NOT FINAL;
 /
-CREATE Type PBDM_Acteur_Type UNDER PBDM_Personne_Type(INSTANTIABLE FINAL OVERRIDING MEMBER PROCEDURE affiche);
+CREATE Type PBDM_Acteur_Type UNDER PBDM_Personne_Type(OVERRIDING MEMBER PROCEDURE affiche);
 /
 CREATE Type PBDM_JeuVideo_Type UNDER PBDM_MediaVideo_Type(note INTEGER,photoC ORDIMAGE);
 /
@@ -55,7 +55,7 @@ CREATE Type PBDM_FilmRef_Type AS OBJECT (filmRef REF PBDM_Film_Type);
 /
 CREATE Type PBDM_Films_Type AS TABLE OF PBDM_FilmRef_Type;
 /
-CREATE Type PBDM_Realisateur_Type UNDER PBDM_Personne_Type (id NUMBER,filmsR PBDM_Films_Type,OVERRIDING INSTANTIABLE FINAL MEMBER PROCEDURE affiche);
+CREATE Type PBDM_Realisateur_Type UNDER PBDM_Personne_Type (id NUMBER,filmsR PBDM_Films_Type,OVERRIDING MEMBER PROCEDURE affiche);
 /
 --CREATE TYPE PBDM_MedVidActeur_Type AS OBJECT(ActeurMA REF PBDM_Acteur_Type,MedVidMA REF PBDM_MediaVideo_Type);
 /
