@@ -47,7 +47,7 @@ CREATE TYPE PBDM_Episodes_Type AS TABLE OF PBDM_Episode_type;
 /
 CREATE Type PBDM_Saison_Type AS OBJECT (id NUMBER,nbE INTEGER, bandeA ORDSYS.ORDVideo,serie REF PBDM_Serie_Type,episodes episodes_type);
 /
-CREATE TYPE PBDM_SaisonRef_Type AS OBJECT(serieRef REF PBDM_Serie_Type);
+CREATE TYPE PBDM_SaisonRef_Type AS OBJECT(serieRef REF PBDM_Saison_Type);
 /
 CREATE TYPE PBDM_Saisons_Type AS TABLE OF PBDM_SaisonRef_Type;
 /
