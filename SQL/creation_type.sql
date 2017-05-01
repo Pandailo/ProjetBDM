@@ -6,16 +6,18 @@ DROP TYPE PDBM_Prenom_Type FORCE;
 DROP TYPE PBDM_PrenomsV_Type FORCE;
 DROP TYPE PBDM_Personne_Type FORCE;
 DROP TYPE PBDM_Acteur_Type FORCE;
-DROP TYPE PBDM_Realisateur_Type FORCE;
 DROP TYPE PBDM_JeuVideo_Type FORCE;
 DROP TYPE PBDM_Film_Type FORCE;
+DROP TYPE PBDM_Episode_Type FORCE;
 DROP TYPE PBDM_Serie_Type FORCE;
+DROP TYPE PBDM_Episodes_Type FORCE;
 DROP TYPE PBDM_SaisonRef_Type FORCE;
 DROP TYPE PBDM_Saisons_Type FORCE;
 DROP TYPE PBDM_Serie_Type FORCE;
 DROP TYPE PBDM_FilmRef_Type FORCE;
 DROP TYPE PBDM_Films_Type FORCE;
 DROP TYPE PBDM_MedVidActeur_Type;
+DROP TYPE PBDM_Realisateur_Type FORCE;
 
 CREATE Type PBDM_MediaVideo_Type AS OBJECT 
 (id NUMBER,dateSortie date, nom VARCHAR2(50), synopsis VARCHAR2(255)) 
@@ -49,15 +51,15 @@ CREATE TYPE PBDM_SaisonRef_Type AS OBJECT(serieRef REF PBDM_Serie_Type);
 /
 CREATE TYPE PBDM_Saisons_Type AS TABLE OF PBDM_SaisonRef_Type;
 /
---CREATE Type PBDM_Serie_Type AS OBJECT (id NUMBER,affiche StillImage, bandeA VARCHAR2(25),nombreS INTEGER,saisons PBDM_Saisons_Type);
+CREATE Type PBDM_Serie_Type AS OBJECT (id NUMBER,affiche StillImage, bandeA VARCHAR2(25),nombreS INTEGER,saisons PBDM_Saisons_Type);
 /
---CREATE Type PBDM_FilmRef_Type AS OBJECT (filmRef REF PBDM_Film_Type);
+CREATE Type PBDM_FilmRef_Type AS OBJECT (filmRef REF PBDM_Film_Type);
 /
---CREATE Type PBDM_Films_Type AS TABLE OF PBDM_FilmRef_Type;
+CREATE Type PBDM_Films_Type AS TABLE OF PBDM_FilmRef_Type;
 /
---CREATE Type PBDM_Realisateur_Type UNDER PBDM_Personne_Type (filmsR PBDM_Films_Type,OVERRIDING MEMBER PROCEDURE affiche);
+CREATE Type PBDM_Realisateur_Type UNDER PBDM_Personne_Type (filmsR PBDM_Films_Type,OVERRIDING MEMBER PROCEDURE affiche);
 /
---CREATE TYPE PBDM_MedVidActeur_Type AS OBJECT(ActeurMA REF PBDM_Acteur_Type,MedVidMA REF PBDM_MediaVideo_Type);
+CREATE TYPE PBDM_MedVidActeur_Type AS OBJECT(ActeurMA REF PBDM_Acteur_Type,MedVidMA REF PBDM_MediaVideo_Type);
 /
 
 
