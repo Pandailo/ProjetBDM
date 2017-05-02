@@ -21,12 +21,18 @@ public class frame_film extends javax.swing.JFrame
     {
         initComponents();
         this.admin=admin;
-        this.lab_ajout_affiche.setVisible(admin);
-        this.button_ajout_ba.setVisible(admin);
-        this.button_ajout_bo.setVisible(admin);
-        JFileChooser jf=new JFileChooser();
-        this.pan_ajout.add(jf);
-        this.pan_admin.setVisible(admin);
+
+        if(!admin){
+            this.pan_bo.remove(button_ajout_bo);
+            this.pan_ba.remove(button_ajout_ba);
+            this.pan_admin.removeAll();
+            this.pan_bo.setLayout(new java.awt.GridLayout(1, 1));
+            this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
+        }
+        else{
+            JFileChooser jf=new JFileChooser();
+            this.pan_ajout.add(jf);
+        }
     }
 
     /**
@@ -36,8 +42,7 @@ public class frame_film extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         label_titre = new javax.swing.JLabel();
@@ -52,15 +57,17 @@ public class frame_film extends javax.swing.JFrame
         button_chgt_infos = new javax.swing.JButton();
         pan_buttons = new javax.swing.JPanel();
         pan_bo = new javax.swing.JPanel();
-        button_bo = new javax.swing.JButton();
         button_ajout_bo = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        button_ba = new javax.swing.JButton();
+        button_bo = new javax.swing.JButton();
+        pan_ba = new javax.swing.JPanel();
         button_ajout_ba = new javax.swing.JButton();
+        button_ba = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(720, 600));
+        getContentPane().setLayout(new java.awt.GridLayout(1, 1));
 
+        jPanel1.setPreferredSize(new java.awt.Dimension(720, 600));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
         label_titre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -73,24 +80,25 @@ public class frame_film extends javax.swing.JFrame
         edition.setEditable(false);
         edition.setColumns(20);
         edition.setRows(5);
+        edition.setEnabled(false);
         pan_text.setViewportView(edition);
 
         pan_principal.add(pan_text);
 
-        pan_affiche.setLayout(new java.awt.GridLayout(2, 1));
+        pan_affiche.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
         pan_image.setLayout(pan_imageLayout);
         pan_imageLayout.setHorizontalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 466, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pan_imageLayout.setVerticalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 131, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        pan_affiche.add(pan_image);
+        pan_affiche.add(pan_image, java.awt.BorderLayout.NORTH);
 
         pan_admin.setLayout(new java.awt.BorderLayout());
 
@@ -99,14 +107,14 @@ public class frame_film extends javax.swing.JFrame
         lab_ajout_affiche.setMaximumSize(new java.awt.Dimension(123456, 123456));
         pan_admin.add(lab_ajout_affiche, java.awt.BorderLayout.NORTH);
 
-        pan_ajout.setLayout(new java.awt.GridLayout());
+        pan_ajout.setLayout(new java.awt.GridLayout(1, 0));
 
         button_chgt_infos.setText("Changer les informations");
         pan_ajout.add(button_chgt_infos);
 
         pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
 
-        pan_affiche.add(pan_admin);
+        pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
 
         pan_principal.add(pan_affiche);
 
@@ -114,38 +122,29 @@ public class frame_film extends javax.swing.JFrame
 
         pan_buttons.setLayout(new java.awt.GridLayout(1, 2));
 
-        pan_bo.setLayout(new java.awt.GridLayout(1, 2));
-
-        button_bo.setText("Bande originale");
-        pan_bo.add(button_bo);
+        pan_bo.setLayout(new java.awt.GridLayout(2, 1));
 
         button_ajout_bo.setText("Ajouter une bande originale");
         pan_bo.add(button_ajout_bo);
 
+        button_bo.setText("Bande originale");
+        pan_bo.add(button_bo);
+
         pan_buttons.add(pan_bo);
 
-        jPanel3.setLayout(new java.awt.GridLayout(1, 2));
-
-        button_ba.setText("Bande-annonce");
-        jPanel3.add(button_ba);
+        pan_ba.setLayout(new java.awt.GridLayout(2, 1));
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
-        jPanel3.add(button_ajout_ba);
+        pan_ba.add(button_ajout_ba);
 
-        pan_buttons.add(jPanel3);
+        button_ba.setText("Bande-annonce");
+        pan_ba.add(button_ba);
+
+        pan_buttons.add(pan_ba);
 
         jPanel1.add(pan_buttons, java.awt.BorderLayout.SOUTH);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -188,7 +187,8 @@ public class frame_film extends javax.swing.JFrame
             java.util.logging.Logger.getLogger(frame_film.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+            frame_film oui = new frame_film(true,1);
+            oui.setVisible(true);
         /* Create and display the form */
     }
 
@@ -200,12 +200,12 @@ public class frame_film extends javax.swing.JFrame
     private javax.swing.JButton button_chgt_infos;
     private javax.swing.JTextArea edition;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JLabel lab_ajout_affiche;
     private javax.swing.JLabel label_titre;
     private javax.swing.JPanel pan_admin;
     private javax.swing.JPanel pan_affiche;
     private javax.swing.JPanel pan_ajout;
+    private javax.swing.JPanel pan_ba;
     private javax.swing.JPanel pan_bo;
     private javax.swing.JPanel pan_buttons;
     private javax.swing.JPanel pan_image;

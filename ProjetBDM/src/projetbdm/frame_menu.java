@@ -21,6 +21,11 @@ public class frame_menu extends javax.swing.JFrame
         initComponents();
         this.admin=admin;
         
+        if(!admin){
+            this.pan_principal.remove(pan_ajout);
+            this.pan_principal.setLayout(new java.awt.GridLayout(1, 1));
+        }
+        
     }
 
     /**
@@ -30,61 +35,73 @@ public class frame_menu extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        menu_button = new javax.swing.JButton();
+        pan_principal = new javax.swing.JPanel();
+        pan_recherche = new javax.swing.JPanel();
         film_button = new javax.swing.JButton();
         serie_button = new javax.swing.JButton();
         jeu_button = new javax.swing.JButton();
-        menu_button = new javax.swing.JButton();
+        pan_ajout = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
-        jPanel1.setLayout(new java.awt.GridLayout(4, 1));
-
-        film_button.setText("Rechercher un film");
-        film_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                film_buttonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(film_button);
-
-        serie_button.setText("Rechercher une série");
-        serie_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                serie_buttonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(serie_button);
-
-        jeu_button.setText("Rechercher un jeu");
-        jeu_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jeu_buttonActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jeu_button);
-
-        menu_button.setText("Revenir au menu");
-        menu_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        menu_button.setText("Revenir à l'authentification");
+        menu_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_buttonActionPerformed(evt);
             }
         });
-        jPanel1.add(menu_button);
+        getContentPane().add(menu_button, java.awt.BorderLayout.SOUTH);
 
-        getContentPane().add(jPanel1);
+        pan_principal.setLayout(new java.awt.GridLayout(1, 2));
+
+        pan_recherche.setLayout(new java.awt.GridLayout(3, 1));
+
+        film_button.setText("Rechercher un film");
+        film_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                film_buttonActionPerformed(evt);
+            }
+        });
+        pan_recherche.add(film_button);
+
+        serie_button.setText("Rechercher une série");
+        serie_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serie_buttonActionPerformed(evt);
+            }
+        });
+        pan_recherche.add(serie_button);
+
+        jeu_button.setText("Rechercher un jeu");
+        jeu_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jeu_buttonActionPerformed(evt);
+            }
+        });
+        pan_recherche.add(jeu_button);
+
+        pan_principal.add(pan_recherche);
+
+        pan_ajout.setLayout(new java.awt.GridLayout(3, 0));
+
+        jButton1.setText("Ajouter un film");
+        pan_ajout.add(jButton1);
+
+        jButton2.setText("Ajouter une série");
+        pan_ajout.add(jButton2);
+
+        jButton3.setText("Ajouter un jeu");
+        pan_ajout.add(jButton3);
+
+        pan_principal.add(pan_ajout);
+
+        getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -163,9 +180,14 @@ public class frame_menu extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton film_button;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jeu_button;
     private javax.swing.JButton menu_button;
+    private javax.swing.JPanel pan_ajout;
+    private javax.swing.JPanel pan_principal;
+    private javax.swing.JPanel pan_recherche;
     private javax.swing.JButton serie_button;
     // End of variables declaration//GEN-END:variables
 }

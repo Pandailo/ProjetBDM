@@ -21,12 +21,22 @@ public class frame_serie extends javax.swing.JFrame
     {
         initComponents();
         this.admin=admin;
-        this.button_ajout_ba.setVisible(admin);
+        
+        if(!admin){
+            this.pan_saison.remove(button_ajout_saison);
+            this.pan_ba.remove(button_ajout_ba);
+            this.pan_admin.removeAll();
+            this.pan_saison.setLayout(new java.awt.GridLayout(1, 2));
+            this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
+        }
+        else{
+            JFileChooser jf=new JFileChooser();
+            this.pan_ajout.add(jf);
+        }
+        /*this.button_ajout_ba.setVisible(admin);
         this.button_ajout_saison.setVisible(admin);
         this.lab_ajout_affiche.setVisible(admin);
-        JFileChooser jf=new JFileChooser();
-        this.pan_ajout.add(jf);
-        this.pan_admin.setVisible(admin);
+        this.pan_admin.setVisible(admin);*/
     }
 
     /**
@@ -36,8 +46,7 @@ public class frame_serie extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         label_titre = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -54,40 +63,43 @@ public class frame_serie extends javax.swing.JFrame
         cb_saison = new javax.swing.JComboBox<>();
         button_saison = new javax.swing.JButton();
         button_ajout_saison = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        pan_ba = new javax.swing.JPanel();
         button_ba = new javax.swing.JButton();
         button_ajout_ba = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         label_titre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_titre.setText("titre serie");
         getContentPane().add(label_titre, java.awt.BorderLayout.NORTH);
 
+        pan_principal.setPreferredSize(new java.awt.Dimension(720, 500));
         pan_principal.setLayout(new java.awt.GridLayout(1, 2));
 
         edition.setEditable(false);
         edition.setColumns(20);
         edition.setRows(5);
+        edition.setEnabled(false);
         pan_text.setViewportView(edition);
 
         pan_principal.add(pan_text);
 
-        pan_affiche.setLayout(new java.awt.GridLayout(2, 0));
+        pan_affiche.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
         pan_image.setLayout(pan_imageLayout);
         pan_imageLayout.setHorizontalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1344, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pan_imageLayout.setVerticalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 124, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        pan_affiche.add(pan_image);
+        pan_affiche.add(pan_image, java.awt.BorderLayout.NORTH);
 
         pan_admin.setLayout(new java.awt.BorderLayout());
 
@@ -103,7 +115,7 @@ public class frame_serie extends javax.swing.JFrame
 
         pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
 
-        pan_affiche.add(pan_admin);
+        pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
 
         pan_principal.add(pan_affiche);
 
@@ -117,10 +129,8 @@ public class frame_serie extends javax.swing.JFrame
         pan_saison.add(cb_saison);
 
         button_saison.setText("Aller à la saison");
-        button_saison.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_saison.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_saisonActionPerformed(evt);
             }
         });
@@ -131,15 +141,15 @@ public class frame_serie extends javax.swing.JFrame
 
         pan_button.add(pan_saison);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 2));
+        pan_ba.setLayout(new java.awt.GridLayout(1, 2));
 
         button_ba.setText("Bande-annonce");
-        jPanel1.add(button_ba);
+        pan_ba.add(button_ba);
 
         button_ajout_ba.setText("Ajouter une bande annonce");
-        jPanel1.add(button_ajout_ba);
+        pan_ba.add(button_ajout_ba);
 
-        pan_button.add(jPanel1);
+        pan_button.add(pan_ba);
 
         getContentPane().add(pan_button, java.awt.BorderLayout.SOUTH);
 
@@ -147,7 +157,7 @@ public class frame_serie extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_saisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saisonActionPerformed
-        frame_saison saison = new frame_saison(admin);
+        frame_saison saison = new frame_saison(admin,1);
         saison.setVisible(true);
     }//GEN-LAST:event_button_saisonActionPerformed
 
@@ -191,7 +201,8 @@ public class frame_serie extends javax.swing.JFrame
         //</editor-fold>
 
         /* Create and display the form */
-
+        frame_serie oui = new frame_serie(false,1);
+        oui.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -202,12 +213,12 @@ public class frame_serie extends javax.swing.JFrame
     private javax.swing.JButton button_saison;
     private javax.swing.JComboBox<String> cb_saison;
     private javax.swing.JTextArea edition;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lab_ajout_affiche;
     private javax.swing.JLabel label_titre;
     private javax.swing.JPanel pan_admin;
     private javax.swing.JPanel pan_affiche;
     private javax.swing.JPanel pan_ajout;
+    private javax.swing.JPanel pan_ba;
     private javax.swing.JPanel pan_button;
     private javax.swing.JPanel pan_image;
     private javax.swing.JPanel pan_principal;

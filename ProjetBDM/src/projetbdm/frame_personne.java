@@ -5,6 +5,8 @@
  */
 package projetbdm;
 
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author Monsieur Blu
@@ -17,7 +19,15 @@ public class frame_personne extends javax.swing.JFrame {
     public frame_personne(boolean admin,int idP) {
         initComponents();
         this.admin=admin;
-        this.pan_admin.setVisible(admin);
+        
+        if(!admin){
+            this.pan_admin.removeAll();
+        }
+        else{
+            JFileChooser jf=new JFileChooser();
+            this.pan_ajout.add(jf);
+        }
+
     }
 
     /**
@@ -27,8 +37,7 @@ public class frame_personne extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         label_nom = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -45,6 +54,7 @@ public class frame_personne extends javax.swing.JFrame {
         button_media = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         label_nom.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         label_nom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -56,24 +66,25 @@ public class frame_personne extends javax.swing.JFrame {
         edition.setEditable(false);
         edition.setColumns(20);
         edition.setRows(5);
+        edition.setEnabled(false);
         pan_text.setViewportView(edition);
 
         pan_principal.add(pan_text);
 
-        pan_affiche.setLayout(new java.awt.GridLayout(2, 0));
+        pan_affiche.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
         pan_image.setLayout(pan_imageLayout);
         pan_imageLayout.setHorizontalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 223, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pan_imageLayout.setVerticalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 131, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        pan_affiche.add(pan_image);
+        pan_affiche.add(pan_image, java.awt.BorderLayout.NORTH);
 
         pan_admin.setLayout(new java.awt.BorderLayout());
 
@@ -88,7 +99,7 @@ public class frame_personne extends javax.swing.JFrame {
 
         pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
 
-        pan_affiche.add(pan_admin);
+        pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
 
         pan_principal.add(pan_affiche);
 
@@ -136,6 +147,8 @@ public class frame_personne extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        frame_personne oui = new frame_personne(true,1);
+            oui.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

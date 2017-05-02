@@ -14,8 +14,12 @@ public class frame_episode extends javax.swing.JFrame {
     /**
      * Creates new form frame_episode
      */
-    public frame_episode() {
+    public frame_episode(boolean admin,int idE) {
         initComponents();
+        
+        if(!admin){
+            this.pan_admin.removeAll();
+        }
     }
 
     /**
@@ -30,6 +34,11 @@ public class frame_episode extends javax.swing.JFrame {
         label_titre = new javax.swing.JLabel();
         pan_text = new javax.swing.JScrollPane();
         edition = new javax.swing.JTextArea();
+        pan_affiche = new javax.swing.JPanel();
+        pan_admin = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         label_titre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -39,9 +48,21 @@ public class frame_episode extends javax.swing.JFrame {
         edition.setEditable(false);
         edition.setColumns(20);
         edition.setRows(5);
+        edition.setEnabled(false);
         pan_text.setViewportView(edition);
 
         getContentPane().add(pan_text, java.awt.BorderLayout.CENTER);
+
+        pan_affiche.setLayout(new java.awt.BorderLayout());
+
+        pan_admin.setLayout(new java.awt.GridLayout(1, 2));
+
+        jButton1.setText("Changer les infos");
+        pan_admin.add(jButton1);
+
+        pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
+
+        getContentPane().add(pan_affiche, java.awt.BorderLayout.EAST);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -74,16 +95,16 @@ public class frame_episode extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frame_episode().setVisible(true);
-            }
-        });
+        frame_episode episode = new frame_episode(false,1);
+        episode.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea edition;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel label_titre;
+    private javax.swing.JPanel pan_admin;
+    private javax.swing.JPanel pan_affiche;
     private javax.swing.JScrollPane pan_text;
     // End of variables declaration//GEN-END:variables
 }

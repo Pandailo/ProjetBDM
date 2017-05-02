@@ -21,10 +21,15 @@ public class frame_jeu extends javax.swing.JFrame
     {
         initComponents();
         this.admin=admin;
-        JFileChooser jf=new JFileChooser();
-        jf.setVisible(admin);
-        this.pan_ajout.add(jf);
-        this.pan_admin.setVisible(admin);
+        if(!admin){
+            this.pan_buttons.remove(button_ajout_ba);
+            this.pan_admin.removeAll();
+            this.pan_buttons.setLayout(new java.awt.GridLayout(1, 1));
+        }
+        else{
+            JFileChooser jf=new JFileChooser();
+            this.pan_ajout.add(jf);
+        }
     }
 
     /**
@@ -34,17 +39,17 @@ public class frame_jeu extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         label_titre = new javax.swing.JLabel();
         pan_buttons = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        button_ba = new javax.swing.JButton();
+        button_ajout_ba = new javax.swing.JButton();
         pan_principal = new javax.swing.JPanel();
         pan_text = new javax.swing.JScrollPane();
         edition = new javax.swing.JTextArea();
         pan_affiche = new javax.swing.JPanel();
-        button_ba = new javax.swing.JPanel();
+        pan_image = new javax.swing.JPanel();
         pan_admin = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pan_ajout = new javax.swing.JPanel();
@@ -52,16 +57,20 @@ public class frame_jeu extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(720, 600));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         label_titre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_titre.setText("titre jeu");
         getContentPane().add(label_titre, java.awt.BorderLayout.NORTH);
 
-        pan_buttons.setLayout(new java.awt.GridLayout(1, 0));
+        pan_buttons.setLayout(new java.awt.GridLayout(1, 2));
 
-        jButton1.setText("Bande-annonce");
-        pan_buttons.add(jButton1);
+        button_ba.setText("Bande-annonce");
+        pan_buttons.add(button_ba);
+
+        button_ajout_ba.setText("Ajouter une bande-annonce");
+        pan_buttons.add(button_ajout_ba);
 
         getContentPane().add(pan_buttons, java.awt.BorderLayout.SOUTH);
 
@@ -70,24 +79,25 @@ public class frame_jeu extends javax.swing.JFrame
         edition.setEditable(false);
         edition.setColumns(20);
         edition.setRows(5);
+        edition.setEnabled(false);
         pan_text.setViewportView(edition);
 
         pan_principal.add(pan_text);
 
-        pan_affiche.setLayout(new java.awt.GridLayout(2, 0));
+        pan_affiche.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout button_baLayout = new javax.swing.GroupLayout(button_ba);
-        button_ba.setLayout(button_baLayout);
-        button_baLayout.setHorizontalGroup(
-            button_baLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 213, Short.MAX_VALUE)
+        javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
+        pan_image.setLayout(pan_imageLayout);
+        pan_imageLayout.setHorizontalGroup(
+            pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
-        button_baLayout.setVerticalGroup(
-            button_baLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 131, Short.MAX_VALUE)
+        pan_imageLayout.setVerticalGroup(
+            pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        pan_affiche.add(button_ba);
+        pan_affiche.add(pan_image, java.awt.BorderLayout.NORTH);
 
         pan_admin.setLayout(new java.awt.BorderLayout());
 
@@ -102,7 +112,7 @@ public class frame_jeu extends javax.swing.JFrame
 
         pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
 
-        pan_affiche.add(pan_admin);
+        pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
 
         pan_principal.add(pan_affiche);
 
@@ -151,19 +161,22 @@ public class frame_jeu extends javax.swing.JFrame
         //</editor-fold>
 
         /* Create and display the form */
+        frame_jeu oui = new frame_jeu(true,1);
+            oui.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel button_ba;
+    private javax.swing.JButton button_ajout_ba;
+    private javax.swing.JButton button_ba;
     private javax.swing.JButton button_chgt_infos;
     private javax.swing.JTextArea edition;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel label_titre;
     private javax.swing.JPanel pan_admin;
     private javax.swing.JPanel pan_affiche;
     private javax.swing.JPanel pan_ajout;
     private javax.swing.JPanel pan_buttons;
+    private javax.swing.JPanel pan_image;
     private javax.swing.JPanel pan_principal;
     private javax.swing.JScrollPane pan_text;
     // End of variables declaration//GEN-END:variables

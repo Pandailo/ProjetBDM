@@ -16,15 +16,22 @@ public class frame_saison extends javax.swing.JFrame {
     /**
      * Creates new form frame_saison
      */
-    public frame_saison(boolean admin) {
+    public frame_saison(boolean admin, int idSa) {
         initComponents();
         this.admin=admin;
-        this.button_ajout_ep.setVisible(this.admin);
-        this.lab_ajout_affiche.setVisible(admin);
-        JFileChooser jf=new JFileChooser();
-        jf.setVisible(admin);
-        this.pan_ajout.add(jf);
-        this.pan_admin.setVisible(admin);
+        
+        if(!admin){
+            this.pan_episode.remove(button_ajout_ep);
+            this.pan_ba.remove(button_ajout_ba);
+            this.pan_admin.removeAll();
+            this.pan_episode.setLayout(new java.awt.GridLayout(1, 2));
+            this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
+        }
+        else{
+            JFileChooser jf=new JFileChooser();
+            this.pan_ajout.add(jf);
+        }
+
     }
 
     /**
@@ -34,8 +41,7 @@ public class frame_saison extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         label_titre = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -48,15 +54,16 @@ public class frame_saison extends javax.swing.JFrame {
         pan_ajout = new javax.swing.JPanel();
         button_chgt_infos = new javax.swing.JButton();
         pan_button = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        pan_episode = new javax.swing.JPanel();
         cb_episode = new javax.swing.JComboBox<>();
         button_episode = new javax.swing.JButton();
         button_ajout_ep = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
+        pan_ba = new javax.swing.JPanel();
         button_ba = new javax.swing.JButton();
         button_ajout_ba = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
+        getContentPane().setLayout(new java.awt.BorderLayout());
 
         label_titre.setFont(label_titre.getFont().deriveFont(label_titre.getFont().getStyle() | java.awt.Font.BOLD, 11));
         label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -68,31 +75,31 @@ public class frame_saison extends javax.swing.JFrame {
         edition.setEditable(false);
         edition.setColumns(20);
         edition.setRows(5);
+        edition.setEnabled(false);
         pan_text.setViewportView(edition);
 
         pan_principal.add(pan_text);
 
-        pan_affiche.setLayout(new java.awt.GridLayout(2, 0));
+        pan_affiche.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
         pan_image.setLayout(pan_imageLayout);
         pan_imageLayout.setHorizontalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 507, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pan_imageLayout.setVerticalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 118, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        pan_affiche.add(pan_image);
+        pan_affiche.add(pan_image, java.awt.BorderLayout.NORTH);
 
         pan_admin.setLayout(new java.awt.BorderLayout());
 
         lab_ajout_affiche.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lab_ajout_affiche.setText("Ajouter une affiche");
         lab_ajout_affiche.setMaximumSize(new java.awt.Dimension(123456, 123456));
-        lab_ajout_affiche.setPreferredSize(new java.awt.Dimension(1080, 720));
         pan_admin.add(lab_ajout_affiche, java.awt.BorderLayout.PAGE_START);
 
         pan_ajout.setLayout(new java.awt.GridLayout(1, 2));
@@ -102,7 +109,7 @@ public class frame_saison extends javax.swing.JFrame {
 
         pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
 
-        pan_affiche.add(pan_admin);
+        pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
 
         pan_principal.add(pan_affiche);
 
@@ -110,43 +117,39 @@ public class frame_saison extends javax.swing.JFrame {
 
         pan_button.setLayout(new java.awt.GridLayout(2, 1));
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 3));
+        pan_episode.setLayout(new java.awt.GridLayout(1, 3));
 
         cb_episode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cb_episode.setSelectedIndex(-1);
-        jPanel1.add(cb_episode);
+        pan_episode.add(cb_episode);
 
         button_episode.setText("Aller à l'épisode");
-        button_episode.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_episode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_episodeActionPerformed(evt);
             }
         });
-        jPanel1.add(button_episode);
+        pan_episode.add(button_episode);
 
         button_ajout_ep.setText("Ajouter un épisode");
-        jPanel1.add(button_ajout_ep);
+        pan_episode.add(button_ajout_ep);
 
-        pan_button.add(jPanel1);
+        pan_button.add(pan_episode);
 
-        jPanel2.setLayout(new java.awt.GridLayout(1, 2));
+        pan_ba.setLayout(new java.awt.GridLayout(1, 2));
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_baActionPerformed(evt);
             }
         });
-        jPanel2.add(button_ba);
+        pan_ba.add(button_ba);
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
-        jPanel2.add(button_ajout_ba);
+        pan_ba.add(button_ajout_ba);
 
-        pan_button.add(jPanel2);
+        pan_button.add(pan_ba);
 
         getContentPane().add(pan_button, java.awt.BorderLayout.SOUTH);
 
@@ -154,7 +157,7 @@ public class frame_saison extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_episodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_episodeActionPerformed
-        frame_episode episode = new frame_episode();
+        frame_episode episode = new frame_episode(true,1);
         episode.setVisible(true);
     }//GEN-LAST:event_button_episodeActionPerformed
 
@@ -189,9 +192,10 @@ public class frame_saison extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(frame_saison.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+            
         /* Create and display the form */
-       
+       frame_saison oui = new frame_saison(false,1);
+            oui.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -202,14 +206,14 @@ public class frame_saison extends javax.swing.JFrame {
     private javax.swing.JButton button_episode;
     private javax.swing.JComboBox<String> cb_episode;
     private javax.swing.JTextArea edition;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lab_ajout_affiche;
     private javax.swing.JLabel label_titre;
     private javax.swing.JPanel pan_admin;
     private javax.swing.JPanel pan_affiche;
     private javax.swing.JPanel pan_ajout;
+    private javax.swing.JPanel pan_ba;
     private javax.swing.JPanel pan_button;
+    private javax.swing.JPanel pan_episode;
     private javax.swing.JPanel pan_image;
     private javax.swing.JPanel pan_principal;
     private javax.swing.JScrollPane pan_text;
