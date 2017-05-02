@@ -135,6 +135,12 @@ public class frame_personne extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+     public void paint(Graphics g)
+    {
+        super.paint(g);
+        if(this.photo!=null)
+            this.affichePhoto();
+    }
     private void affichePhoto()
     {
         Graphics g = this.pan_image.getGraphics();

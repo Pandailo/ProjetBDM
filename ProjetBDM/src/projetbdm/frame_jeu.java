@@ -155,7 +155,12 @@ public class frame_jeu extends javax.swing.JFrame
             this.affiche();
         }
     }//GEN-LAST:event_button_modif_afficheActionPerformed
-
+     public void paint(Graphics g)
+    {
+        super.paint(g);
+        if(this.photo!=null)
+            this.affiche();
+    }
     /**
      * @param args the command line arguments
      */

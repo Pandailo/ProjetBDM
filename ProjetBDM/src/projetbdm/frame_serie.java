@@ -202,6 +202,12 @@ public class frame_serie extends javax.swing.JFrame
     /**
      * @param args the command line arguments
      */
+     public void paint(Graphics g)
+    {
+        super.paint(g);
+        if(this.photo!=null)
+            this.affiche();
+    }
     public static void main(String args[])
     {
         /* Set the Nimbus look and feel */

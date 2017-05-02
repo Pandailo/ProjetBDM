@@ -89,20 +89,20 @@ public class frame_film extends javax.swing.JFrame
 
         pan_principal.add(pan_text);
 
-        pan_affiche.setLayout(new java.awt.BorderLayout());
+        pan_affiche.setLayout(new java.awt.GridLayout(2, 1));
 
         javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
         pan_image.setLayout(pan_imageLayout);
         pan_imageLayout.setHorizontalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 426, Short.MAX_VALUE)
         );
         pan_imageLayout.setVerticalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        pan_affiche.add(pan_image, java.awt.BorderLayout.NORTH);
+        pan_affiche.add(pan_image);
 
         pan_admin.setLayout(new java.awt.BorderLayout());
 
@@ -128,7 +128,7 @@ public class frame_film extends javax.swing.JFrame
 
         pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
 
-        pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
+        pan_affiche.add(pan_admin);
 
         pan_principal.add(pan_affiche);
 
@@ -162,10 +162,18 @@ public class frame_film extends javax.swing.JFrame
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void affichePhoto()
+    @Override
+    public void paint(Graphics g)
+    {
+        super.paint(g);
+        if(this.photo!=null)
+            this.affiche();
+    }
+    private void affiche()
     {
         Graphics g = this.pan_image.getGraphics();
         g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
+        
     }
     private void button_modif_afficheActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_modif_afficheActionPerformed
     {//GEN-HEADEREND:event_button_modif_afficheActionPerformed
@@ -181,7 +189,7 @@ public class frame_film extends javax.swing.JFrame
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
             //TODO update dans la BD
-            this.affichePhoto();
+            this.affiche();
         }
     }//GEN-LAST:event_button_modif_afficheActionPerformed
 

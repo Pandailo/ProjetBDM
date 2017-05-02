@@ -173,7 +173,12 @@ public class frame_saison extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+     public void paint(Graphics g)
+    {
+        super.paint(g);
+        if(this.photo!=null)
+            this.affiche();
+    }
     private void button_episodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_episodeActionPerformed
         frame_episode episode = new frame_episode(true,1);
         episode.setVisible(true);
@@ -183,7 +188,7 @@ public class frame_saison extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_button_baActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_button_baActionPerformed
-    private void affichePhoto()
+    private void affiche()
     {
         Graphics g = this.pan_image.getGraphics();
         g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
@@ -202,7 +207,7 @@ public class frame_saison extends javax.swing.JFrame {
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
             //TODO update dans la BD
-            this.affichePhoto();
+            this.affiche();
         }
     }//GEN-LAST:event_button_modif_afficheActionPerformed
 
