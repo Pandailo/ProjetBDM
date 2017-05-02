@@ -5,7 +5,11 @@
  */
 package projetbdm;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -13,6 +17,8 @@ import javax.swing.JFileChooser;
  */
 public class frame_personne extends javax.swing.JFrame {
     boolean admin;
+    String cheminPhoto;
+    Image photo;
     /**
      * Creates new form frame_personne
      */
@@ -37,7 +43,8 @@ public class frame_personne extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_nom = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -49,12 +56,12 @@ public class frame_personne extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         pan_ajout = new javax.swing.JPanel();
         button_chgt_infos = new javax.swing.JButton();
+        button_modif_photo = new javax.swing.JButton();
         pan_button = new javax.swing.JPanel();
         vb_media = new javax.swing.JComboBox<>();
         button_media = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         label_nom.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         label_nom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -97,6 +104,16 @@ public class frame_personne extends javax.swing.JFrame {
         button_chgt_infos.setText("Changer les informations");
         pan_ajout.add(button_chgt_infos);
 
+        button_modif_photo.setText("Modifier la photo");
+        button_modif_photo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_modif_photoActionPerformed(evt);
+            }
+        });
+        pan_ajout.add(button_modif_photo);
+
         pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
 
         pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
@@ -118,6 +135,28 @@ public class frame_personne extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void affichePhoto()
+    {
+        Graphics g = this.pan_image.getGraphics();
+        g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
+    }
+    private void button_modif_photoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_modif_photoActionPerformed
+    {//GEN-HEADEREND:event_button_modif_photoActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une photo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "bmp", "jpg", "jpeg", "png");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de l'image
+            this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
+            this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
+            //TODO update dans la BD
+            this.affichePhoto();
+        }
+    }//GEN-LAST:event_button_modif_photoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -154,6 +193,7 @@ public class frame_personne extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_chgt_infos;
     private javax.swing.JButton button_media;
+    private javax.swing.JButton button_modif_photo;
     private javax.swing.JTextArea edition;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel label_nom;

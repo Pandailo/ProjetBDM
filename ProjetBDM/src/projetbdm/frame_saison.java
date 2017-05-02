@@ -5,7 +5,11 @@
  */
 package projetbdm;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -13,6 +17,8 @@ import javax.swing.*;
  */
 public class frame_saison extends javax.swing.JFrame {
     boolean admin;
+            String cheminPhoto;
+        Image photo;
     /**
      * Creates new form frame_saison
      */
@@ -27,10 +33,7 @@ public class frame_saison extends javax.swing.JFrame {
             this.pan_episode.setLayout(new java.awt.GridLayout(1, 2));
             this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
         }
-        else{
-            JFileChooser jf=new JFileChooser();
-            this.pan_ajout.add(jf);
-        }
+
 
     }
 
@@ -41,7 +44,8 @@ public class frame_saison extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_titre = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -53,6 +57,7 @@ public class frame_saison extends javax.swing.JFrame {
         lab_ajout_affiche = new javax.swing.JLabel();
         pan_ajout = new javax.swing.JPanel();
         button_chgt_infos = new javax.swing.JButton();
+        button_modif_affiche = new javax.swing.JButton();
         pan_button = new javax.swing.JPanel();
         pan_episode = new javax.swing.JPanel();
         cb_episode = new javax.swing.JComboBox<>();
@@ -63,7 +68,6 @@ public class frame_saison extends javax.swing.JFrame {
         button_ajout_ba = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         label_titre.setFont(label_titre.getFont().deriveFont(label_titre.getFont().getStyle() | java.awt.Font.BOLD, 11));
         label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -107,6 +111,16 @@ public class frame_saison extends javax.swing.JFrame {
         button_chgt_infos.setText("Changer les infos");
         pan_ajout.add(button_chgt_infos);
 
+        button_modif_affiche.setText("Modifier l'affiche");
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_modif_afficheActionPerformed(evt);
+            }
+        });
+        pan_ajout.add(button_modif_affiche);
+
         pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
 
         pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
@@ -124,8 +138,10 @@ public class frame_saison extends javax.swing.JFrame {
         pan_episode.add(cb_episode);
 
         button_episode.setText("Aller à l'épisode");
-        button_episode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_episode.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_episodeActionPerformed(evt);
             }
         });
@@ -139,8 +155,10 @@ public class frame_saison extends javax.swing.JFrame {
         pan_ba.setLayout(new java.awt.GridLayout(1, 2));
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_baActionPerformed(evt);
             }
         });
@@ -165,6 +183,28 @@ public class frame_saison extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_button_baActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_button_baActionPerformed
+    private void affichePhoto()
+    {
+        Graphics g = this.pan_image.getGraphics();
+        g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
+    }   
+    private void button_modif_afficheActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_modif_afficheActionPerformed
+    {//GEN-HEADEREND:event_button_modif_afficheActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une photo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "bmp", "jpg", "jpeg", "png");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de l'image
+            this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
+            this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
+            //TODO update dans la BD
+            this.affichePhoto();
+        }
+    }//GEN-LAST:event_button_modif_afficheActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,6 +244,7 @@ public class frame_saison extends javax.swing.JFrame {
     private javax.swing.JButton button_ba;
     private javax.swing.JButton button_chgt_infos;
     private javax.swing.JButton button_episode;
+    private javax.swing.JButton button_modif_affiche;
     private javax.swing.JComboBox<String> cb_episode;
     private javax.swing.JTextArea edition;
     private javax.swing.JLabel lab_ajout_affiche;
