@@ -5,7 +5,11 @@
  */
 package projetbdm;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -14,6 +18,8 @@ import javax.swing.JFileChooser;
 public class frame_jeu extends javax.swing.JFrame
 {
     boolean admin;
+    String cheminPhoto;
+    Image photo;
     /**
      * Creates new form frame_jeu
      */
@@ -26,10 +32,6 @@ public class frame_jeu extends javax.swing.JFrame
             this.pan_admin.removeAll();
             this.pan_buttons.setLayout(new java.awt.GridLayout(1, 1));
         }
-        else{
-            JFileChooser jf=new JFileChooser();
-            this.pan_ajout.add(jf);
-        }
     }
 
     /**
@@ -39,7 +41,8 @@ public class frame_jeu extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_titre = new javax.swing.JLabel();
         pan_buttons = new javax.swing.JPanel();
@@ -54,10 +57,10 @@ public class frame_jeu extends javax.swing.JFrame
         jLabel1 = new javax.swing.JLabel();
         pan_ajout = new javax.swing.JPanel();
         button_chgt_infos = new javax.swing.JButton();
+        button_modif_affiche = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(720, 600));
-        getContentPane().setLayout(new java.awt.BorderLayout());
 
         label_titre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -110,6 +113,16 @@ public class frame_jeu extends javax.swing.JFrame
         button_chgt_infos.setText("Changer les informations");
         pan_ajout.add(button_chgt_infos);
 
+        button_modif_affiche.setText("Modifier l'image de couverture");
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_modif_afficheActionPerformed(evt);
+            }
+        });
+        pan_ajout.add(button_modif_affiche);
+
         pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
 
         pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
@@ -120,7 +133,34 @@ public class frame_jeu extends javax.swing.JFrame
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void affiche()
+    {
+        Graphics g = this.pan_image.getGraphics();
+        g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
+    }                                                   
+    private void button_modif_afficheActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_modif_afficheActionPerformed
+    {//GEN-HEADEREND:event_button_modif_afficheActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une photo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "bmp", "jpg", "jpeg", "png");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de l'image
+            this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
+            this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
+            //TODO update dans la BD
+            this.affiche();
+        }
+    }//GEN-LAST:event_button_modif_afficheActionPerformed
+     public void paint(Graphics g)
+    {
+        super.paint(g);
+        if(this.photo!=null)
+            this.affiche();
+    }
     /**
      * @param args the command line arguments
      */
@@ -169,6 +209,7 @@ public class frame_jeu extends javax.swing.JFrame
     private javax.swing.JButton button_ajout_ba;
     private javax.swing.JButton button_ba;
     private javax.swing.JButton button_chgt_infos;
+    private javax.swing.JButton button_modif_affiche;
     private javax.swing.JTextArea edition;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel label_titre;

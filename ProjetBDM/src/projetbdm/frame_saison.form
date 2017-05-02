@@ -134,6 +134,14 @@
                         <Property name="text" type="java.lang.String" value="Changer les infos"/>
                       </Properties>
                     </Component>
+                    <Component class="javax.swing.JButton" name="button_modif_affiche">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Modifier l&apos;affiche"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_modif_afficheActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>

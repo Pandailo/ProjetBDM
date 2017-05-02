@@ -5,7 +5,11 @@
  */
 package projetbdm;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -14,6 +18,8 @@ import javax.swing.JFileChooser;
 public class frame_film extends javax.swing.JFrame
 {
     boolean admin;
+    private Image photo;
+    private String cheminPhoto;
     /**
      * Creates new form frame_film
      */
@@ -29,10 +35,7 @@ public class frame_film extends javax.swing.JFrame
             this.pan_bo.setLayout(new java.awt.GridLayout(1, 1));
             this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
         }
-        else{
-            JFileChooser jf=new JFileChooser();
-            this.pan_ajout.add(jf);
-        }
+
     }
 
     /**
@@ -42,7 +45,8 @@ public class frame_film extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         label_titre = new javax.swing.JLabel();
@@ -55,6 +59,7 @@ public class frame_film extends javax.swing.JFrame
         lab_ajout_affiche = new javax.swing.JLabel();
         pan_ajout = new javax.swing.JPanel();
         button_chgt_infos = new javax.swing.JButton();
+        button_modif_affiche = new javax.swing.JButton();
         pan_buttons = new javax.swing.JPanel();
         pan_bo = new javax.swing.JPanel();
         button_ajout_bo = new javax.swing.JButton();
@@ -64,7 +69,6 @@ public class frame_film extends javax.swing.JFrame
         button_ba = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(720, 600));
         getContentPane().setLayout(new java.awt.GridLayout(1, 1));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(720, 600));
@@ -85,20 +89,20 @@ public class frame_film extends javax.swing.JFrame
 
         pan_principal.add(pan_text);
 
-        pan_affiche.setLayout(new java.awt.BorderLayout());
+        pan_affiche.setLayout(new java.awt.GridLayout(2, 1));
 
         javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
         pan_image.setLayout(pan_imageLayout);
         pan_imageLayout.setHorizontalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 426, Short.MAX_VALUE)
         );
         pan_imageLayout.setVerticalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        pan_affiche.add(pan_image, java.awt.BorderLayout.NORTH);
+        pan_affiche.add(pan_image);
 
         pan_admin.setLayout(new java.awt.BorderLayout());
 
@@ -112,9 +116,19 @@ public class frame_film extends javax.swing.JFrame
         button_chgt_infos.setText("Changer les informations");
         pan_ajout.add(button_chgt_infos);
 
+        button_modif_affiche.setText("Modifier l'affiche");
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_modif_afficheActionPerformed(evt);
+            }
+        });
+        pan_ajout.add(button_modif_affiche);
+
         pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
 
-        pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
+        pan_affiche.add(pan_admin);
 
         pan_principal.add(pan_affiche);
 
@@ -148,6 +162,36 @@ public class frame_film extends javax.swing.JFrame
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    @Override
+    public void paint(Graphics g)
+    {
+        super.paint(g);
+        if(this.photo!=null)
+            this.affiche();
+    }
+    private void affiche()
+    {
+        Graphics g = this.pan_image.getGraphics();
+        g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
+        
+    }
+    private void button_modif_afficheActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_modif_afficheActionPerformed
+    {//GEN-HEADEREND:event_button_modif_afficheActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une photo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "bmp", "jpg", "jpeg", "png");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de l'image
+            this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
+            this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
+            //TODO update dans la BD
+            this.affiche();
+        }
+    }//GEN-LAST:event_button_modif_afficheActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,6 +242,7 @@ public class frame_film extends javax.swing.JFrame
     private javax.swing.JButton button_ba;
     private javax.swing.JButton button_bo;
     private javax.swing.JButton button_chgt_infos;
+    private javax.swing.JButton button_modif_affiche;
     private javax.swing.JTextArea edition;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lab_ajout_affiche;
