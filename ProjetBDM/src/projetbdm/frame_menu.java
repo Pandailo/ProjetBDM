@@ -25,7 +25,6 @@ public class frame_menu extends javax.swing.JFrame
             this.pan_principal.remove(pan_ajout);
             this.pan_principal.setLayout(new java.awt.GridLayout(1, 1));
         }
-        
     }
 
     /**
