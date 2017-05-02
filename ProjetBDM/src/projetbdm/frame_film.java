@@ -17,7 +17,7 @@ public class frame_film extends javax.swing.JFrame
     /**
      * Creates new form frame_film
      */
-    public frame_film(boolean admin)
+    public frame_film(boolean admin,int idF)
     {
         initComponents();
         this.admin=admin;

@@ -96,20 +96,26 @@ public class frame_menu extends javax.swing.JFrame
 
     private void film_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_film_buttonActionPerformed
     {//GEN-HEADEREND:event_film_buttonActionPerformed
+        /*
         frame_film ff=new frame_film(admin);
         ff.setVisible(true);
+        */
     }//GEN-LAST:event_film_buttonActionPerformed
 
     private void serie_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_serie_buttonActionPerformed
     {//GEN-HEADEREND:event_serie_buttonActionPerformed
+        /*
         frame_serie fs=new frame_serie(admin);
         fs.setVisible(true);
+        */
     }//GEN-LAST:event_serie_buttonActionPerformed
 
     private void jeu_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jeu_buttonActionPerformed
     {//GEN-HEADEREND:event_jeu_buttonActionPerformed
+       /* 
         frame_jeu fj=new frame_jeu(admin);
         fj.setVisible(true);
+        */
     }//GEN-LAST:event_jeu_buttonActionPerformed
 
     /**

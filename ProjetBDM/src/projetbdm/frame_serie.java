@@ -17,7 +17,7 @@ public class frame_serie extends javax.swing.JFrame
     /**
      * Creates new form frame_serie
      */
-    public frame_serie(boolean admin)
+    public frame_serie(boolean admin,int idS)
     {
         initComponents();
         this.admin=admin;

@@ -17,7 +17,7 @@ public class frame_jeu extends javax.swing.JFrame
     /**
      * Creates new form frame_jeu
      */
-    public frame_jeu(boolean admin)
+    public frame_jeu(boolean admin,int idJ)
     {
         initComponents();
         this.admin=admin;

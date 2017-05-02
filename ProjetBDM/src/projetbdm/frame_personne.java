@@ -14,7 +14,7 @@ public class frame_personne extends javax.swing.JFrame {
     /**
      * Creates new form frame_personne
      */
-    public frame_personne(boolean admin) {
+    public frame_personne(boolean admin,int idP) {
         initComponents();
         this.admin=admin;
         this.pan_admin.setVisible(admin);
