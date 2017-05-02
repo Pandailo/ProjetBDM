@@ -40,17 +40,38 @@ public class frame_menu extends javax.swing.JFrame
         menu_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setLayout(new java.awt.GridLayout(4, 1));
 
         film_button.setText("Rechercher un film");
+        film_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                film_buttonActionPerformed(evt);
+            }
+        });
         jPanel1.add(film_button);
 
         serie_button.setText("Rechercher une série");
+        serie_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                serie_buttonActionPerformed(evt);
+            }
+        });
         jPanel1.add(serie_button);
 
         jeu_button.setText("Rechercher un jeu");
+        jeu_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jeu_buttonActionPerformed(evt);
+            }
+        });
         jPanel1.add(jeu_button);
 
         menu_button.setText("Revenir au menu");
@@ -72,6 +93,24 @@ public class frame_menu extends javax.swing.JFrame
     {//GEN-HEADEREND:event_menu_buttonActionPerformed
         this.dispose();
     }//GEN-LAST:event_menu_buttonActionPerformed
+
+    private void film_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_film_buttonActionPerformed
+    {//GEN-HEADEREND:event_film_buttonActionPerformed
+        frame_film ff=new frame_film(admin);
+        ff.setVisible(true);
+    }//GEN-LAST:event_film_buttonActionPerformed
+
+    private void serie_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_serie_buttonActionPerformed
+    {//GEN-HEADEREND:event_serie_buttonActionPerformed
+        frame_serie fs=new frame_serie(admin);
+        fs.setVisible(true);
+    }//GEN-LAST:event_serie_buttonActionPerformed
+
+    private void jeu_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jeu_buttonActionPerformed
+    {//GEN-HEADEREND:event_jeu_buttonActionPerformed
+        frame_jeu fj=new frame_jeu(admin);
+        fj.setVisible(true);
+    }//GEN-LAST:event_jeu_buttonActionPerformed
 
     /**
      * @param args the command line arguments

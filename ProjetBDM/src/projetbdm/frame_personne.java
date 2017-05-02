@@ -10,12 +10,14 @@ package projetbdm;
  * @author Monsieur Blu
  */
 public class frame_personne extends javax.swing.JFrame {
-
+    boolean admin;
     /**
      * Creates new form frame_personne
      */
-    public frame_personne() {
+    public frame_personne(boolean admin) {
         initComponents();
+        this.admin=admin;
+        this.pan_admin.setVisible(admin);
     }
 
     /**
@@ -25,7 +27,8 @@ public class frame_personne extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_nom = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -33,9 +36,15 @@ public class frame_personne extends javax.swing.JFrame {
         edition = new javax.swing.JTextArea();
         pan_affiche = new javax.swing.JPanel();
         pan_image = new javax.swing.JPanel();
+        pan_admin = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        pan_ajout = new javax.swing.JPanel();
+        button_chgt_infos = new javax.swing.JButton();
         pan_button = new javax.swing.JPanel();
         vb_media = new javax.swing.JComboBox<>();
         button_media = new javax.swing.JButton();
+
+        setPreferredSize(new java.awt.Dimension(720, 600));
 
         label_nom.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         label_nom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -57,7 +66,7 @@ public class frame_personne extends javax.swing.JFrame {
         pan_image.setLayout(pan_imageLayout);
         pan_imageLayout.setHorizontalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 200, Short.MAX_VALUE)
+            .addGap(0, 223, Short.MAX_VALUE)
         );
         pan_imageLayout.setVerticalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -65,6 +74,21 @@ public class frame_personne extends javax.swing.JFrame {
         );
 
         pan_affiche.add(pan_image);
+
+        pan_admin.setLayout(new java.awt.BorderLayout());
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Ajouter une photo");
+        pan_admin.add(jLabel1, java.awt.BorderLayout.PAGE_START);
+
+        pan_ajout.setLayout(new java.awt.GridLayout(1, 2));
+
+        button_chgt_infos.setText("Changer les informations");
+        pan_ajout.add(button_chgt_infos);
+
+        pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
+
+        pan_affiche.add(pan_admin);
 
         pan_principal.add(pan_affiche);
 
@@ -112,18 +136,17 @@ public class frame_personne extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frame_personne().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button_chgt_infos;
     private javax.swing.JButton button_media;
     private javax.swing.JTextArea edition;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel label_nom;
+    private javax.swing.JPanel pan_admin;
     private javax.swing.JPanel pan_affiche;
+    private javax.swing.JPanel pan_ajout;
     private javax.swing.JPanel pan_button;
     private javax.swing.JPanel pan_image;
     private javax.swing.JPanel pan_principal;
