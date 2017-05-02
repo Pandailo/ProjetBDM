@@ -13,14 +13,13 @@ DROP TYPE PBDM_Serie_Type FORCE;
 DROP TYPE PBDM_Episodes_Type FORCE;
 DROP TYPE PBDM_SaisonRef_Type FORCE;
 DROP TYPE PBDM_Saisons_Type FORCE;
-DROP TYPE PBDM_Serie_Type FORCE;
 DROP TYPE PBDM_FilmRef_Type FORCE;
 DROP TYPE PBDM_Films_Type FORCE;
 DROP TYPE PBDM_MedVidActeur_Type;
 DROP TYPE PBDM_Realisateur_Type FORCE;
 
 CREATE Type PBDM_MediaVideo_Type AS OBJECT 
-(id NUMBER,dateSortie date, nom VARCHAR2(50), synopsis VARCHAR2(255)) 
+(id NUMBER,dateSortie date, nom VARCHAR2(50), synopsis VARCHAR2(1000)) 
 NOT FINAL;
 /
 CREATE TYPE PBDM_Realisateur_Type;
@@ -33,9 +32,9 @@ CREATE Type PBDM_Prenom_Type AS OBJECT(prenom VARCHAR2(25));
 /
 CREATE Type PBDM_PrenomsV_Type AS VARRAY(3) OF PBDM_Prenom_Type;
 /
-CREATE Type PBDM_Personne_Type AS OBJECT(id NUMBER,dateNaiss DATE,nom VARCHAR2(25), prenoms PBDM_PrenomsV_Type,INSTANTIABLE NOT FINAL MEMBER PROCEDURE affiche) NOT FINAL;
+CREATE Type PBDM_Personne_Type AS OBJECT(id NUMBER,dateNaiss VARCHAR2(25),nom VARCHAR2(25), prenoms PBDM_PrenomsV_Type,INSTANTIABLE FINAL MEMBER FUNCTION afficheP RETURN VARCHAR2,INSTANTIABLE NOT FINAL MEMBER FUNCTION affiche RETURN VARCHAR2) NOT FINAL;
 /
-CREATE Type PBDM_Acteur_Type UNDER PBDM_Personne_Type(OVERRIDING MEMBER PROCEDURE affiche);
+CREATE Type PBDM_Acteur_Type UNDER PBDM_Personne_Type(taille INTEGER,MEMBER FUNCTION afficheA RETURN VARCHAR2,OVERRIDING MEMBER FUNCTION affiche RETURN VARCHAR2);
 /
 CREATE Type PBDM_JeuVideo_Type UNDER PBDM_MediaVideo_Type(note INTEGER,photoC ORDSYS.ORDIMAGE);
 /
@@ -53,15 +52,13 @@ CREATE TYPE PBDM_SaisonRef_Type AS OBJECT(serieRef REF PBDM_Saison_Type);
 /
 CREATE TYPE PBDM_Saisons_Type AS TABLE OF PBDM_SaisonRef_Type;
 /
-CREATE Type PBDM_Serie_Type AS OBJECT (id NUMBER,affiche SI_StillImage, bandeA VARCHAR2(25),nombreS INTEGER,saisons PBDM_Saisons_Type);
+CREATE Type PBDM_Serie_Type AS OBJECT (id NUMBER,affiche SI_StillImage, bandeA ORDSYS.ORDVideo,nombreS INTEGER,saisons PBDM_Saisons_Type);
 /
 CREATE Type PBDM_FilmRef_Type AS OBJECT (filmRef REF PBDM_Film_Type);
 /
 CREATE Type PBDM_Films_Type AS TABLE OF PBDM_FilmRef_Type;
 /
-CREATE Type PBDM_Realisateur_Type UNDER PBDM_Personne_Type (filmsR PBDM_Films_Type,OVERRIDING MEMBER PROCEDURE affiche);
+CREATE Type PBDM_Realisateur_Type UNDER PBDM_Personne_Type (filmsR PBDM_Films_Type);
 /
 CREATE TYPE PBDM_MedVidActeur_Type AS OBJECT(ActeurMA REF PBDM_Acteur_Type,MedVidMA REF PBDM_MediaVideo_Type);
 /
-
-
