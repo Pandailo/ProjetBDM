@@ -287,10 +287,22 @@
               <referencedTypeMoniker Id="c4f75721-ad6f-4429-a8d0-cc1e2195f6cd" LastKnownName="Int" />
             </type_NamedElement>
           </property>
+          <property Id="6b3d99f8-d2c4-4408-993f-ff192455e384" name="Affiche" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="b6b0f328-43bf-4574-8678-a4c1a1aeb5cc" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="765a0f7b-cc57-4a66-b877-02b8feda3517" LastKnownName="Photo" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="ca60d2c6-3dc8-4a52-a971-d189e17e3937" name="Affiche" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="90c1f8f4-c100-4202-9d8c-01b6d6fce7cc" />
+          </operation>
+          <operation Id="c02a967d-3387-49b1-9fff-a8637d08974a" name="GetActeurs" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="de4bee86-d06a-43f6-aa7c-9872a5b8b887" />
+          </operation>
+          <operation Id="49c06e9a-79c7-4c4c-a478-815f2f053902" name="GetNbEpisode" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="32e3df5c-a4ef-4dca-8366-509a0569ff17" />
           </operation>
         </ownedOperationsInternal>
       </class>
@@ -517,6 +529,12 @@
               <referencedTypeMoniker Id="95ccb810-b31b-43e8-adef-cbd99e2f2a94" LastKnownName="Audio" />
             </type_NamedElement>
           </property>
+          <property Id="424c7698-f670-41dc-bf2a-901058e954f3" name="Affiche" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="4efdd1fe-2cb7-4642-9cbd-986b52eaf8ee" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="b8bc3008-357b-4cad-837b-e5cb8198ec32" LastKnownName="Photo" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="cdec368a-6168-4a6b-a30a-d2521d03122e" name="Affiche" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
@@ -583,6 +601,11 @@
     <packageHasNamedElement>
       <referencedType Id="590be840-a482-47b5-ac79-2bb73f803387" name="Video" isAbstract="false" isLeaf="false" cachedFullName="Video">
         <elementDefinition Id="6e0ec053-a907-47d8-80f8-fe276e435181" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="b8bc3008-357b-4cad-837b-e5cb8198ec32" name="Photo" isAbstract="false" isLeaf="false" cachedFullName="Photo">
+        <elementDefinition Id="3f966032-a62a-4183-9008-7929e9752dd3" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>

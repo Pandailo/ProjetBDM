@@ -636,11 +636,45 @@
                 LastKnownLocation="ProjetBDM_Model.uml" />
             </type_NamedElement>
           </property>
+          <property
+            Id="b6b0f328-43bf-4574-8678-a4c1a1aeb5cc"
+            name="Affiche"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="3f966032-a62a-4183-9008-7929e9752dd3"
+                LastKnownName="Photo"
+                LastKnownLocation="ProjetBDM_Model.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
             Id="90c1f8f4-c100-4202-9d8c-01b6d6fce7cc"
             name="Affiche"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="de4bee86-d06a-43f6-aa7c-9872a5b8b887"
+            name="GetActeurs"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false" />
+          <operation
+            Id="32e3df5c-a4ef-4dca-8366-509a0569ff17"
+            name="GetNbEpisode"
             isLeaf="false"
             isStatic="false"
             isAbstract="false"
@@ -1057,6 +1091,24 @@
               <undefinedTypeMoniker
                 Id="5ee90b27-6599-413a-89c7-34e78be660fe"
                 LastKnownName="Audio"
+                LastKnownLocation="ProjetBDM_Model.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="4efdd1fe-2cb7-4642-9cbd-986b52eaf8ee"
+            name="Affiche"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <undefinedTypeMoniker
+                Id="3f966032-a62a-4183-9008-7929e9752dd3"
+                LastKnownName="Photo"
                 LastKnownLocation="ProjetBDM_Model.uml" />
             </type_NamedElement>
           </property>
