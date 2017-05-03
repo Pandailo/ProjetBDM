@@ -38,4 +38,83 @@ CREATE OR REPLACE TYPE BODY PBDM_Acteur_Type AS
 	end affiche;
 END;
 /
-
+CREATE OR REPLACE TYPE BODY PBDM_JeuVideo_Type AS
+	MEMBER FUNCTION compareImage(id IN INTEGER,pond_AvgColor IN DOUBLE PRECISION, pond_colorhisto IN DOUBLE PRECISION, pond_poscol IN DOUBLE PRECISION,pond_text IN DOUBLE PRECISION) RETURN DOUBLE PRECISION IS
+		Simg1 SI_StillImage;
+		Simg2 SI_StillImage;
+		img1 ORDImage;
+		bl BLOB;
+		sig SI_FeatureList;
+		score DOUBLE PRECISION;
+	BEGIN
+		SELECT image INTO img1 FROM PBDM_JeuVideo WHERE id=id;
+		bl:=img1.source.localData;
+		Simg1:=new SI_StillImage(bl);
+		bl:=self.image.source.localData;
+		Simg2:=new SI_StillImage(bl);
+		sig:=new SI_FeatureList(new SI_AverageColor(Simg1),pond_AvgColor,new SI_ColorHistogram(Simg1),pond_colorhisto,new SI_PositionalColor(Simg1), pond_poscol,new SI_Texture(Simg1),pond_text);
+		score:=sig.SI_Score(Simg2);
+		return score;
+	END compareImage;
+END;
+/
+CREATE OR REPLACE TYPE BODY PBDM_Film_Type AS 
+	MEMBER FUNCTION compareImage(id IN INTEGER) RETURN DOUBLE PRECISION IS
+		Simg1 SI_StillImage;
+		Simg2 SI_StillImage;
+		img1 ORDImage;
+		bl BLOB;
+		sig SI_FeatureList;
+		score DOUBLE PRECISION;
+	BEGIN
+		SELECT image INTO img1 FROM PBDM_Film WHERE id=id;
+		bl:=img1.source.localData;
+		Simg1:=new SI_StillImage(bl);
+		bl:=self.image.source.localData;
+		Simg2:=new SI_StillImage(bl);
+		sig:=new SI_FeatureList(new SI_AverageColor(Simg1),1.0,new SI_ColorHistogram(Simg1),1.0,new SI_PositionalColor(Simg1),1.0,new SI_Texture(Simg1),1.0);
+		score:=sig.SI_Score(Simg2);
+		return score;
+	END compareImage;
+END;
+/
+CREATE OR REPLACE TYPE BODY PBDM_Saison_Type AS 
+	MEMBER FUNCTION compareImage(id IN INTEGER) RETURN DOUBLE PRECISION IS
+		Simg1 SI_StillImage;
+		Simg2 SI_StillImage;
+		img1 ORDImage;
+		bl BLOB;
+		sig SI_FeatureList;
+		score DOUBLE PRECISION;
+	BEGIN
+		SELECT image INTO img1 FROM PBDM_Saison WHERE id=id;
+		bl:=img1.source.localData;
+		Simg1:=new SI_StillImage(bl);
+		bl:=self.image.source.localData;
+		Simg2:=new SI_StillImage(bl);
+		sig:=new SI_FeatureList(new SI_AverageColor(Simg1),1.0,new SI_ColorHistogram(Simg1),1.0,new SI_PositionalColor(Simg1),1.0,new SI_Texture(Simg1),1.0);
+		score:=sig.SI_Score(Simg2);
+		return score;
+	END compareImage;
+END;
+/	
+CREATE OR REPLACE TYPE BODY PBDM_Serie_Type AS 
+	MEMBER FUNCTION compareImage(id IN INTEGER) RETURN DOUBLE PRECISION IS
+		Simg1 SI_StillImage;
+		Simg2 SI_StillImage;
+		img1 ORDImage;
+		bl BLOB;
+		sig SI_FeatureList;
+		score DOUBLE PRECISION;
+	BEGIN
+		SELECT image INTO img1 FROM PBDM_Serie WHERE id=id;
+		bl:=img1.source.localData;
+		Simg1:=new SI_StillImage(bl);
+		bl:=self.image.source.localData;
+		Simg2:=new SI_StillImage(bl);
+		sig:=new SI_FeatureList(new SI_AverageColor(Simg1),1.0,new SI_ColorHistogram(Simg1),1.0,new SI_PositionalColor(Simg1),1.0,new SI_Texture(Simg1),1.0);
+		score:=sig.SI_Score(Simg2);
+		return score;
+	END compareImage;
+END;
+/

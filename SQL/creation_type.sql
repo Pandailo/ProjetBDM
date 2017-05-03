@@ -19,7 +19,7 @@ DROP TYPE PBDM_MedVidActeur_Type;
 DROP TYPE PBDM_Realisateur_Type FORCE;
 
 CREATE Type PBDM_MediaVideo_Type AS OBJECT 
-(id NUMBER,dateSortie date, nom VARCHAR2(50), synopsis VARCHAR2(1000)) 
+(id NUMBER,dateSortie date, nom VARCHAR2(50), synopsis VARCHAR2(1000),genre VARCHAR2(50)) 
 NOT FINAL;
 /
 CREATE TYPE PBDM_Realisateur_Type;
@@ -32,13 +32,13 @@ CREATE Type PBDM_Prenom_Type AS OBJECT(prenom VARCHAR2(25));
 /
 CREATE Type PBDM_PrenomsV_Type AS VARRAY(3) OF PBDM_Prenom_Type;
 /
-CREATE Type PBDM_Personne_Type AS OBJECT(id NUMBER,dateNaiss VARCHAR2(25),nom VARCHAR2(25), prenoms PBDM_PrenomsV_Type,photo ORDSYS.ORDImage,INSTANTIABLE FINAL MEMBER FUNCTION afficheP RETURN VARCHAR2,INSTANTIABLE NOT FINAL MEMBER FUNCTION affiche RETURN VARCHAR2,INSTANTIABLE FINAL MEMBER FUNCTION compareImage(id IN INTEGER,tableI IN VARCHAR2) RETURN DOUBLE PRECISION ) NOT FINAL;
+CREATE Type PBDM_Personne_Type AS OBJECT(id NUMBER,dateNaiss VARCHAR2(25),nom VARCHAR2(25), prenoms PBDM_PrenomsV_Type,photo ORDSYS.ORDImage,INSTANTIABLE FINAL MEMBER FUNCTION afficheP RETURN VARCHAR2,INSTANTIABLE NOT FINAL MEMBER FUNCTION affiche RETURN VARCHAR2 ) NOT FINAL;
 /
 CREATE Type PBDM_Acteur_Type UNDER PBDM_Personne_Type(taille INTEGER,MEMBER FUNCTION afficheA RETURN VARCHAR2,OVERRIDING MEMBER FUNCTION affiche RETURN VARCHAR2);
 /
-CREATE Type PBDM_JeuVideo_Type UNDER PBDM_MediaVideo_Type(note INTEGER,photoC ORDSYS.ORDIMAGE);
+CREATE Type PBDM_JeuVideo_Type UNDER PBDM_MediaVideo_Type(note INTEGER,image ORDSYS.ORDIMAGE,MEMBER FUNCTION compareImage(id IN INTEGER,pond_AvgColor IN DOUBLE PRECISION, pond_colorhisto IN DOUBLE PRECISION, pond_poscol IN DOUBLE PRECISION,pond_text IN DOUBLE PRECISION) RETURN DOUBLE PRECISION);
 /
-CREATE Type PBDM_Film_Type UNDER PBDM_MediaVideo_Type (affiche ORDSYS.ORDImage,bandeA ORDSYS.ORDVideo, bandeO ORDSYS.ORDAudio,realisateur REF PBDM_Realisateur_Type);
+CREATE Type PBDM_Film_Type UNDER PBDM_MediaVideo_Type (image ORDSYS.ORDImage,bandeA ORDSYS.ORDVideo, bandeO ORDSYS.ORDAudio,realisateur REF PBDM_Realisateur_Type,MEMBER FUNCTION compareImage(id IN INTEGER) RETURN DOUBLE PRECISION);
 /
 CREATE Type PBDM_Episode_Type UNDER PBDM_MediaVideo_Type (duree INTEGER, nomE VARCHAR2(25), numero INTEGER,saison REF PBDM_Saison_Type);
 /
@@ -46,13 +46,13 @@ CREATE TYPE PBDM_Serie_Type;
 /
 CREATE TYPE PBDM_Episodes_Type AS TABLE OF PBDM_Episode_type;
 /
-CREATE Type PBDM_Saison_Type AS OBJECT (id NUMBER,nbE INTEGER, affiche ORDSYS.ORDImage,bandeA ORDSYS.ORDVideo,serie REF PBDM_Serie_Type,episodes PBDM_episodes_type);
+CREATE Type PBDM_Saison_Type AS OBJECT (id NUMBER,nbE INTEGER, image ORDSYS.ORDImage,bandeA ORDSYS.ORDVideo,serie REF PBDM_Serie_Type,episodes PBDM_episodes_type,MEMBER FUNCTION compareImage(id IN INTEGER) RETURN DOUBLE PRECISION);
 /
 CREATE TYPE PBDM_SaisonRef_Type AS OBJECT(serieRef REF PBDM_Saison_Type);
 /
 CREATE TYPE PBDM_Saisons_Type AS TABLE OF PBDM_SaisonRef_Type;
 /
-CREATE Type PBDM_Serie_Type AS OBJECT (id NUMBER,affiche SI_StillImage, bandeA ORDSYS.ORDVideo,nombreS INTEGER,saisons PBDM_Saisons_Type);
+CREATE Type PBDM_Serie_Type AS OBJECT (id NUMBER,image ORDSYS.ORDImage, bandeA ORDSYS.ORDVideo,nombreS INTEGER,saisons PBDM_Saisons_Type,MEMBER FUNCTION compareImage(id IN INTEGER) RETURN DOUBLE PRECISION);
 /
 CREATE Type PBDM_FilmRef_Type AS OBJECT (filmRef REF PBDM_Film_Type);
 /
