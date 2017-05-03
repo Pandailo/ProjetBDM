@@ -19,7 +19,7 @@ DROP TYPE PBDM_MedVidActeur_Type;
 DROP TYPE PBDM_Realisateur_Type FORCE;
 
 CREATE Type PBDM_MediaVideo_Type AS OBJECT 
-(id NUMBER,dateSortie date, nom VARCHAR2(50), synopsis VARCHAR2(1000),genre VARCHAR2(50)) 
+(id NUMBER,dateSortie VARCHAR2(25), nom VARCHAR2(50), synopsis VARCHAR2(1000),genre VARCHAR2(50)) 
 NOT FINAL;
 /
 CREATE TYPE PBDM_Realisateur_Type;
