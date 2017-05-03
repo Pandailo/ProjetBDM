@@ -37,7 +37,6 @@ public class frame_ajout_film extends javax.swing.JFrame {
     public void paint(Graphics g)
     {
         super.paint(g);
-        System.out.println(this.photo);    
         if(this.photo!=null)
             this.affiche();
     }
@@ -45,7 +44,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
     private void affiche()
     {
         Graphics g = this.pan_image.getGraphics();
-        this.pan_image.setSize(140,140*(photo.getWidth(null)/photo.getHeight(null)));
+        //this.pan_image.setSize(140,140*(photo.getWidth(null)/photo.getHeight(null)));
         g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
     }
 
@@ -56,8 +55,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jTextField1 = new javax.swing.JTextField();
         label_frame = new javax.swing.JLabel();
@@ -71,7 +69,9 @@ public class frame_ajout_film extends javax.swing.JFrame {
         edition_synopsis = new javax.swing.JTextArea();
         pan_image = new javax.swing.JPanel();
         button_image = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        label_genre = new javax.swing.JLabel();
+        field_genre = new javax.swing.JTextField();
+        pan_buttons = new javax.swing.JPanel();
         button_annuler = new javax.swing.JButton();
         button_valider = new javax.swing.JButton();
 
@@ -96,26 +96,27 @@ public class frame_ajout_film extends javax.swing.JFrame {
 
         pan_image.setMaximumSize(new java.awt.Dimension(300, 300));
         pan_image.setMinimumSize(new java.awt.Dimension(20, 20));
+        pan_image.setPreferredSize(new java.awt.Dimension(100, 125));
 
         javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
         pan_image.setLayout(pan_imageLayout);
         pan_imageLayout.setHorizontalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
         pan_imageLayout.setVerticalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 125, Short.MAX_VALUE)
         );
 
-        button_image.setText("Affiche");
-        button_image.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_image.setText("Image");
+        button_image.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_imageActionPerformed(evt);
             }
         });
+
+        label_genre.setText("Genre");
 
         javax.swing.GroupLayout pan_principalLayout = new javax.swing.GroupLayout(pan_principal);
         pan_principal.setLayout(pan_principalLayout);
@@ -124,27 +125,29 @@ public class frame_ajout_film extends javax.swing.JFrame {
             .addGroup(pan_principalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pan_principalLayout.createSequentialGroup()
+                    .addComponent(label_synopsis)
+                    .addComponent(pan_text, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_principalLayout.createSequentialGroup()
                         .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(label_titre)
-                            .addComponent(label_date))
+                            .addComponent(label_date)
+                            .addComponent(label_genre))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(field_titre, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                            .addComponent(field_date)))
-                    .addComponent(label_synopsis)
-                    .addComponent(pan_text, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pan_image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button_image, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
-                .addContainerGap())
+                            .addComponent(field_date)
+                            .addComponent(field_genre))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_image, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(56, 56, 56))
         );
         pan_principalLayout.setVerticalGroup(
             pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_principalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pan_principalLayout.createSequentialGroup()
                         .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(label_titre)
@@ -154,34 +157,37 @@ public class frame_ajout_film extends javax.swing.JFrame {
                             .addComponent(label_date)
                             .addComponent(field_date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(label_genre)
+                            .addComponent(field_genre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_synopsis)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pan_text, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pan_text)
+                        .addContainerGap())
                     .addGroup(pan_principalLayout.createSequentialGroup()
-                        .addComponent(pan_image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(button_image)))
-                .addContainerGap(52, Short.MAX_VALUE))
+                        .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addComponent(button_image)
+                        .addGap(50, 50, 50))))
         );
 
         getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
 
-        jPanel1.setLayout(new java.awt.GridLayout(1, 2));
+        pan_buttons.setLayout(new java.awt.GridLayout(1, 2));
 
         button_annuler.setText("Annuler");
-        jPanel1.add(button_annuler);
+        pan_buttons.add(button_annuler);
 
         button_valider.setText("Valider");
-        button_valider.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_valider.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_validerActionPerformed(evt);
             }
         });
-        jPanel1.add(button_valider);
+        pan_buttons.add(button_valider);
 
-        getContentPane().add(jPanel1, java.awt.BorderLayout.SOUTH);
+        getContentPane().add(pan_buttons, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -210,6 +216,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
         {
             int index=0;
             Connection con=connexionUtils2.getInstance();
+            con.setAutoCommit(false);
             Statement s=null;
             s = con.createStatement();
             OracleResultSet rs=null;
@@ -219,11 +226,11 @@ public class frame_ajout_film extends javax.swing.JFrame {
             {
                 index=rs.getInt(1);
             }
-            rs=null;
-            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Film VALUES("+index+","+this.field_date.getText()+","+this.field_titre.getText()+","+this.edition_synopsis.getText()+",ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),ORDSYS.ORDAudio.init(),(SELECT REF(r) FROM PBDM_Realisateur r WHERE r.id=1)");
-            rs=null;
+            System.out.println(index);
+            index++;
+            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Film VALUES("+index+",'"+this.field_date.getText()+"','"+this.field_titre.getText()+"','"+this.edition_synopsis.getText()+"','"+this.field_genre.getText()+"',ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),ORDSYS.ORDAudio.init(),(SELECT REF(r) FROM PBDM_Realisateur r WHERE r.id=1))");
             index=-1;
-            rs=(OracleResultSet)s.executeQuery("select id, affiche from PBDM_Film where nom="+this.field_titre.getText()+" for update");
+            rs=(OracleResultSet)s.executeQuery("select id, image from PBDM_Film where nom='"+this.field_titre.getText()+"' for update");
             while(rs.next())
             {
                 index=rs.getInt(1);
@@ -235,7 +242,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
                 {
                     System.out.println("affiche mise à jour");
                 }
-                OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set affiche=? where id="+index);
+                OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=? where id="+index);
                 stmt1.setORAData(1,imgObj);
                 stmt1.execute();
                 stmt1.close();
@@ -246,8 +253,11 @@ public class frame_ajout_film extends javax.swing.JFrame {
             s.close();
             con.commit();
         }
-        catch (SQLException | IOException ex)
+        catch (SQLException ex)
         {
+            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex) {
             Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -294,13 +304,15 @@ public class frame_ajout_film extends javax.swing.JFrame {
     private javax.swing.JButton button_valider;
     private javax.swing.JTextArea edition_synopsis;
     private javax.swing.JTextField field_date;
+    private javax.swing.JTextField field_genre;
     private javax.swing.JTextField field_titre;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel label_date;
     private javax.swing.JLabel label_frame;
+    private javax.swing.JLabel label_genre;
     private javax.swing.JLabel label_synopsis;
     private javax.swing.JLabel label_titre;
+    private javax.swing.JPanel pan_buttons;
     private javax.swing.JPanel pan_image;
     private javax.swing.JPanel pan_principal;
     private javax.swing.JScrollPane pan_text;
