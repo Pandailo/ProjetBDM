@@ -412,6 +412,14 @@
             <elementDefinition Id="412db85a-bd1c-421c-813d-106db54a2a0d" />
           </generalization>
         </generalsInternal>
+        <ownedAttributesInternal>
+          <property Id="0434d641-abf6-40b3-abea-cde0582d9bcc" name="Taille" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="b8e75f73-c618-46e8-a33a-da59d04f1d44" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="0cbe6a35-d488-4179-b8da-f801bc20c64e" LastKnownName="Integer" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="eedeb148-5ea7-4f61-bab8-5bca9ec4d5eb" name="Affiche" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
             <elementDefinition Id="fa2de261-14fa-4cd2-b55f-02442680b2ca" />
@@ -622,6 +630,11 @@
     <packageHasNamedElement>
       <referencedType Id="2d89b6e7-8759-4a60-a241-bb33d4f497eb" name="Photo" isAbstract="false" isLeaf="false" cachedFullName="Photo">
         <elementDefinition Id="3f966032-a62a-4183-9008-7929e9752dd3" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="0cbe6a35-d488-4179-b8da-f801bc20c64e" name="Integer" isAbstract="false" isLeaf="false" cachedFullName="Integer">
+        <elementDefinition Id="220a3521-e091-4221-bae9-3ef9018e845c" />
       </referencedType>
     </packageHasNamedElement>
   </packagedElements>
