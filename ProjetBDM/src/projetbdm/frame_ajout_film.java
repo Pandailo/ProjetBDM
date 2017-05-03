@@ -8,8 +8,17 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OraclePreparedStatement;
+import oracle.jdbc.OracleResultSet;
+import oracle.ord.im.OrdImage;
 
 /**
  *
@@ -47,7 +56,8 @@ public class frame_ajout_film extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jTextField1 = new javax.swing.JTextField();
         label_frame = new javax.swing.JLabel();
@@ -99,8 +109,10 @@ public class frame_ajout_film extends javax.swing.JFrame {
         );
 
         button_image.setText("Affiche");
-        button_image.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_image.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_imageActionPerformed(evt);
             }
         });
@@ -160,6 +172,13 @@ public class frame_ajout_film extends javax.swing.JFrame {
         jPanel1.add(button_annuler);
 
         button_valider.setText("Valider");
+        button_valider.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_validerActionPerformed(evt);
+            }
+        });
         jPanel1.add(button_valider);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.SOUTH);
@@ -184,6 +203,45 @@ public class frame_ajout_film extends javax.swing.JFrame {
             this.affiche();
         }
     }//GEN-LAST:event_button_imageActionPerformed
+
+    private void button_validerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_validerActionPerformed
+    {//GEN-HEADEREND:event_button_validerActionPerformed
+        try
+        {
+            int index=0;
+            Connection con=connexionUtils2.getInstance();
+            Statement s=null;
+            s = con.createStatement();
+            OracleResultSet rs=null;
+            rs=(OracleResultSet)s.executeQuery("select id, affiche from PBDM_Film where nom="+this.field_titre.getText()+" for update");
+            while(rs.next())
+            {
+                index=rs.getInt(1);
+                OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                String fich=this.cheminPhoto;
+                imgObj.loadDataFromFile(fich);
+                imgObj.setProperties();
+                if(imgObj.checkProperties())
+                {
+                    System.out.println("affiche mise à jour");
+                }
+                OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set affiche=? where id="+index);
+                stmt1.setORAData(1,imgObj);
+                stmt1.execute();
+                stmt1.close();
+                
+            }
+
+            rs.close();
+            s.close();
+            con.commit();
+        }
+        catch (SQLException | IOException ex)
+        {
+            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_button_validerActionPerformed
 
     /**
      * @param args the command line arguments
