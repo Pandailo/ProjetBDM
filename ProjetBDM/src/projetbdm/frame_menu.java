@@ -34,9 +34,9 @@ public class frame_menu extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
-        menu_button = new javax.swing.JButton();
         pan_principal = new javax.swing.JPanel();
         pan_recherche = new javax.swing.JPanel();
         film_button = new javax.swing.JButton();
@@ -48,46 +48,53 @@ public class frame_menu extends javax.swing.JFrame
         ajout_serie_button = new javax.swing.JButton();
         ajout_jeu_button = new javax.swing.JButton();
         ajout_personne_button = new javax.swing.JButton();
+        pan_buttons = new javax.swing.JPanel();
+        menu_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        menu_button.setText("Revenir à l'authentification");
-        menu_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_buttonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(menu_button, java.awt.BorderLayout.SOUTH);
 
         pan_principal.setLayout(new java.awt.GridLayout(1, 2));
 
         pan_recherche.setLayout(new java.awt.GridLayout(4, 1));
 
         film_button.setText("Rechercher un film");
-        film_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        film_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 film_buttonActionPerformed(evt);
             }
         });
         pan_recherche.add(film_button);
 
         serie_button.setText("Rechercher une série");
-        serie_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        serie_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 serie_buttonActionPerformed(evt);
             }
         });
         pan_recherche.add(serie_button);
 
         jeu_button.setText("Rechercher un jeu");
-        jeu_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jeu_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jeu_buttonActionPerformed(evt);
             }
         });
         pan_recherche.add(jeu_button);
 
         personne_button.setText("Rechercher une personne");
+        personne_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                personne_buttonActionPerformed(evt);
+            }
+        });
         pan_recherche.add(personne_button);
 
         pan_principal.add(pan_recherche);
@@ -95,32 +102,40 @@ public class frame_menu extends javax.swing.JFrame
         pan_ajout.setLayout(new java.awt.GridLayout(4, 0));
 
         ajout_film_button.setText("Ajouter un film");
-        ajout_film_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        ajout_film_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 ajout_film_buttonActionPerformed(evt);
             }
         });
         pan_ajout.add(ajout_film_button);
 
         ajout_serie_button.setText("Ajouter une série");
-        ajout_serie_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        ajout_serie_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 ajout_serie_buttonActionPerformed(evt);
             }
         });
         pan_ajout.add(ajout_serie_button);
 
         ajout_jeu_button.setText("Ajouter un jeu");
-        ajout_jeu_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        ajout_jeu_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 ajout_jeu_buttonActionPerformed(evt);
             }
         });
         pan_ajout.add(ajout_jeu_button);
 
         ajout_personne_button.setText("Ajouter une personne");
-        ajout_personne_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        ajout_personne_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 ajout_personne_buttonActionPerformed(evt);
             }
         });
@@ -129,6 +144,20 @@ public class frame_menu extends javax.swing.JFrame
         pan_principal.add(pan_ajout);
 
         getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
+
+        pan_buttons.setLayout(new java.awt.GridLayout(1, 1));
+
+        menu_button.setText("Revenir à l'authentification");
+        menu_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                menu_buttonActionPerformed(evt);
+            }
+        });
+        pan_buttons.add(menu_button);
+
+        getContentPane().add(pan_buttons, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -144,6 +173,8 @@ public class frame_menu extends javax.swing.JFrame
         frame_film ff=new frame_film(admin);
         ff.setVisible(true);
         */
+        frame_recherche fr=new frame_recherche(this.admin,"film");
+        fr.setVisible(true);
     }//GEN-LAST:event_film_buttonActionPerformed
 
     private void serie_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_serie_buttonActionPerformed
@@ -152,6 +183,8 @@ public class frame_menu extends javax.swing.JFrame
         frame_serie fs=new frame_serie(admin);
         fs.setVisible(true);
         */
+        frame_recherche fr=new frame_recherche(this.admin,"serie");
+        fr.setVisible(true);
     }//GEN-LAST:event_serie_buttonActionPerformed
 
     private void jeu_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jeu_buttonActionPerformed
@@ -160,6 +193,8 @@ public class frame_menu extends javax.swing.JFrame
         frame_jeu fj=new frame_jeu(admin);
         fj.setVisible(true);
         */
+        frame_recherche fr=new frame_recherche(this.admin,"jeu");
+        fr.setVisible(true);
     }//GEN-LAST:event_jeu_buttonActionPerformed
 
     private void ajout_film_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ajout_film_buttonActionPerformed
@@ -182,6 +217,12 @@ public class frame_menu extends javax.swing.JFrame
         frame_ajout_personne fap=new frame_ajout_personne();
         fap.setVisible(true);
     }//GEN-LAST:event_ajout_personne_buttonActionPerformed
+
+    private void personne_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_personne_buttonActionPerformed
+    {//GEN-HEADEREND:event_personne_buttonActionPerformed
+       frame_recherche fr=new frame_recherche(this.admin,"personne");
+        fr.setVisible(true);
+    }//GEN-LAST:event_personne_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -235,6 +276,7 @@ public class frame_menu extends javax.swing.JFrame
     private javax.swing.JButton jeu_button;
     private javax.swing.JButton menu_button;
     private javax.swing.JPanel pan_ajout;
+    private javax.swing.JPanel pan_buttons;
     private javax.swing.JPanel pan_principal;
     private javax.swing.JPanel pan_recherche;
     private javax.swing.JButton personne_button;

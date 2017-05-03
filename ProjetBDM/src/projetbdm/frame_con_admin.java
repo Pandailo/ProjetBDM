@@ -148,8 +148,7 @@ public class frame_con_admin extends javax.swing.JFrame {
                 ArrayList<String> unames=new ArrayList();
                 //vérif de la bonne entrée des infos de connexion
 
-                 Connection con=null;
-                con=connexionUtils2.getInstance();
+                Connection con=connexionUtils.getInstance().getConnexion();
                 Statement st=con.createStatement();
                 ResultSet rset = st.executeQuery("SELECT uname FROM PBDM_table_connexion");
                 while(rset.next())

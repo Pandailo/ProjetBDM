@@ -22,10 +22,15 @@ public class ProjetBDM {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) 
+    public static void main(String[] args) throws SQLException 
     {
-        frame_con test= new frame_con();
-        test.setVisible(true);
+        //frame_con test= new frame_con();
+        //test.setVisible(true);
+        Connection con=null;
+            con=connexionUtils.getInstance().getConnexion();
+            Statement st=con.createStatement();
+       //     st.executeQuery("INSERT INTO PBDM_table_connexion VALUES('admin','"+pw+"','admin')");
+        
        /* MD5Password md5=new MD5Password();
         String pw=md5.getEncodedPassword("admin");
         try {

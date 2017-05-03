@@ -200,7 +200,7 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
         try
         {
             int index=0;
-            Connection con=connexionUtils2.getInstance();
+            Connection con=connexionUtils.getInstance().getConnexion();
             con.setAutoCommit(false);
             Statement s=null;
             s = con.createStatement();
