@@ -34,8 +34,7 @@ public class frame_menu extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         menu_button = new javax.swing.JButton();
         pan_principal = new javax.swing.JPanel();
@@ -43,18 +42,18 @@ public class frame_menu extends javax.swing.JFrame
         film_button = new javax.swing.JButton();
         serie_button = new javax.swing.JButton();
         jeu_button = new javax.swing.JButton();
+        personne_button = new javax.swing.JButton();
         pan_ajout = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        ajout_film_button = new javax.swing.JButton();
+        ajout_serie_button = new javax.swing.JButton();
+        ajout_jeu_button = new javax.swing.JButton();
+        ajout_personne_button = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         menu_button.setText("Revenir à l'authentification");
-        menu_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        menu_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menu_buttonActionPerformed(evt);
             }
         });
@@ -62,57 +61,70 @@ public class frame_menu extends javax.swing.JFrame
 
         pan_principal.setLayout(new java.awt.GridLayout(1, 2));
 
-        pan_recherche.setLayout(new java.awt.GridLayout(3, 1));
+        pan_recherche.setLayout(new java.awt.GridLayout(4, 1));
 
         film_button.setText("Rechercher un film");
-        film_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        film_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 film_buttonActionPerformed(evt);
             }
         });
         pan_recherche.add(film_button);
 
         serie_button.setText("Rechercher une série");
-        serie_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        serie_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 serie_buttonActionPerformed(evt);
             }
         });
         pan_recherche.add(serie_button);
 
         jeu_button.setText("Rechercher un jeu");
-        jeu_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jeu_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jeu_buttonActionPerformed(evt);
             }
         });
         pan_recherche.add(jeu_button);
 
+        personne_button.setText("Rechercher une personne");
+        pan_recherche.add(personne_button);
+
         pan_principal.add(pan_recherche);
 
-        pan_ajout.setLayout(new java.awt.GridLayout(3, 0));
+        pan_ajout.setLayout(new java.awt.GridLayout(4, 0));
 
-        jButton1.setText("Ajouter un film");
-        jButton1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jButton1ActionPerformed(evt);
+        ajout_film_button.setText("Ajouter un film");
+        ajout_film_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajout_film_buttonActionPerformed(evt);
             }
         });
-        pan_ajout.add(jButton1);
+        pan_ajout.add(ajout_film_button);
 
-        jButton2.setText("Ajouter une série");
-        pan_ajout.add(jButton2);
+        ajout_serie_button.setText("Ajouter une série");
+        ajout_serie_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajout_serie_buttonActionPerformed(evt);
+            }
+        });
+        pan_ajout.add(ajout_serie_button);
 
-        jButton3.setText("Ajouter un jeu");
-        pan_ajout.add(jButton3);
+        ajout_jeu_button.setText("Ajouter un jeu");
+        ajout_jeu_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajout_jeu_buttonActionPerformed(evt);
+            }
+        });
+        pan_ajout.add(ajout_jeu_button);
+
+        ajout_personne_button.setText("Ajouter une personne");
+        ajout_personne_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ajout_personne_buttonActionPerformed(evt);
+            }
+        });
+        pan_ajout.add(ajout_personne_button);
 
         pan_principal.add(pan_ajout);
 
@@ -150,11 +162,26 @@ public class frame_menu extends javax.swing.JFrame
         */
     }//GEN-LAST:event_jeu_buttonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
-    {//GEN-HEADEREND:event_jButton1ActionPerformed
+    private void ajout_film_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_ajout_film_buttonActionPerformed
+    {//GEN-HEADEREND:event_ajout_film_buttonActionPerformed
         frame_ajout_film faf=new frame_ajout_film();
         faf.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_ajout_film_buttonActionPerformed
+
+    private void ajout_serie_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajout_serie_buttonActionPerformed
+        frame_ajout_serie fas=new frame_ajout_serie();
+        fas.setVisible(true);
+    }//GEN-LAST:event_ajout_serie_buttonActionPerformed
+
+    private void ajout_jeu_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajout_jeu_buttonActionPerformed
+        frame_ajout_jeu faj=new frame_ajout_jeu();
+        faj.setVisible(true);
+    }//GEN-LAST:event_ajout_jeu_buttonActionPerformed
+
+    private void ajout_personne_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ajout_personne_buttonActionPerformed
+        frame_ajout_personne fap=new frame_ajout_personne();
+        fap.setVisible(true);
+    }//GEN-LAST:event_ajout_personne_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,15 +227,17 @@ public class frame_menu extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ajout_film_button;
+    private javax.swing.JButton ajout_jeu_button;
+    private javax.swing.JButton ajout_personne_button;
+    private javax.swing.JButton ajout_serie_button;
     private javax.swing.JButton film_button;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jeu_button;
     private javax.swing.JButton menu_button;
     private javax.swing.JPanel pan_ajout;
     private javax.swing.JPanel pan_principal;
     private javax.swing.JPanel pan_recherche;
+    private javax.swing.JButton personne_button;
     private javax.swing.JButton serie_button;
     // End of variables declaration//GEN-END:variables
 }

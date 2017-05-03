@@ -29,6 +29,12 @@
               <referencedTypeMoniker Id="86298e2f-e0c0-4649-9aa7-319839a2b138" LastKnownName="Acteur" />
             </type_NamedElement>
           </property>
+          <property Id="073cc22f-1abd-4d3c-83b1-50cdb98c3c4d" name="Genre" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="ddbd6b86-cbb3-41f3-8fee-64be786d98e6" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="05c1980c-a82f-4beb-a16c-715d6e33d3f9" LastKnownName="String" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="5ea3da48-d584-45ae-9528-c9c9136df9d2" name="Affiche" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
@@ -165,10 +171,10 @@
               <referencedTypeMoniker Id="590be840-a482-47b5-ac79-2bb73f803387" LastKnownName="Video" />
             </type_NamedElement>
           </property>
-          <property Id="d430a264-184b-42b6-9279-908b5d71e065" name="PhotoC" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="d430a264-184b-42b6-9279-908b5d71e065" name="Image" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="1d1e3153-131e-49a6-960a-3f5af867b030" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="8d8d13d8-330f-407f-91ac-4d1372b9c8d7" LastKnownName="Photo" />
+              <referencedTypeMoniker Id="0a58a8ee-e034-4e84-b7a9-ff09c7a1d7fd" LastKnownName="Photo" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -211,10 +217,10 @@
           </association>
         </targetEnds>
         <ownedAttributesInternal>
-          <property Id="e51fc290-5535-47b2-bc1c-fdd2b717d583" name="Affiche" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="e51fc290-5535-47b2-bc1c-fdd2b717d583" name="Image" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="ee10501e-b18d-4f2e-ac43-8043995d2d0d" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="765a0f7b-cc57-4a66-b877-02b8feda3517" LastKnownName="Photo" />
+              <referencedTypeMoniker Id="c1ea8a36-a0e3-4606-a9f2-9c67e861c2c3" LastKnownName="Photo" />
             </type_NamedElement>
           </property>
           <property Id="32cd7fb2-bbc2-4478-bd1f-4c297f1fd3f6" name="Bande annonce" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
@@ -287,7 +293,7 @@
               <referencedTypeMoniker Id="c4f75721-ad6f-4429-a8d0-cc1e2195f6cd" LastKnownName="Int" />
             </type_NamedElement>
           </property>
-          <property Id="6b3d99f8-d2c4-4408-993f-ff192455e384" name="Affiche" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="6b3d99f8-d2c4-4408-993f-ff192455e384" name="Image" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="b6b0f328-43bf-4574-8678-a4c1a1aeb5cc" />
             <type_NamedElement>
               <referencedTypeMoniker Id="765a0f7b-cc57-4a66-b877-02b8feda3517" LastKnownName="Photo" />
@@ -329,10 +335,10 @@
               <referencedTypeMoniker Id="bd6305c1-476e-477a-a5d2-0c58f43e73f7" LastKnownName="Date" />
             </type_NamedElement>
           </property>
-          <property Id="f117ac0a-dbe1-467f-bc45-e57020f913e8" name="PhotoP" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
-            <elementDefinition Id="c1a2a74b-88a9-43f8-be48-a1ef2ada7c06" />
+          <property Id="57239ebb-2950-4a9c-a0ad-0877534b66f9" name="Image" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="c16af751-3e7a-43d1-89e4-c5e0894e7de2" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="765a0f7b-cc57-4a66-b877-02b8feda3517" LastKnownName="Photo" />
+              <referencedTypeMoniker Id="2d89b6e7-8759-4a60-a241-bb33d4f497eb" LastKnownName="Photo" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -529,10 +535,10 @@
               <referencedTypeMoniker Id="95ccb810-b31b-43e8-adef-cbd99e2f2a94" LastKnownName="Audio" />
             </type_NamedElement>
           </property>
-          <property Id="424c7698-f670-41dc-bf2a-901058e954f3" name="Affiche" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+          <property Id="424c7698-f670-41dc-bf2a-901058e954f3" name="Image" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
             <elementDefinition Id="4efdd1fe-2cb7-4642-9cbd-986b52eaf8ee" />
             <type_NamedElement>
-              <referencedTypeMoniker Id="b8bc3008-357b-4cad-837b-e5cb8198ec32" LastKnownName="Photo" />
+              <referencedTypeMoniker Id="f4ac857b-ba39-4841-8708-1ce2b698b635" LastKnownName="Photo" />
             </type_NamedElement>
           </property>
         </ownedAttributesInternal>
@@ -555,11 +561,6 @@
     </packageHasNamedElement>
     <packageHasNamedElement>
       <referencedType Id="765a0f7b-cc57-4a66-b877-02b8feda3517" name="Photo" isAbstract="false" isLeaf="false" cachedFullName="Photo">
-        <elementDefinition Id="3f966032-a62a-4183-9008-7929e9752dd3" />
-      </referencedType>
-    </packageHasNamedElement>
-    <packageHasNamedElement>
-      <referencedType Id="8d8d13d8-330f-407f-91ac-4d1372b9c8d7" name="Photo" isAbstract="false" isLeaf="false" cachedFullName="Photo">
         <elementDefinition Id="3f966032-a62a-4183-9008-7929e9752dd3" />
       </referencedType>
     </packageHasNamedElement>
@@ -604,7 +605,22 @@
       </referencedType>
     </packageHasNamedElement>
     <packageHasNamedElement>
-      <referencedType Id="b8bc3008-357b-4cad-837b-e5cb8198ec32" name="Photo" isAbstract="false" isLeaf="false" cachedFullName="Photo">
+      <referencedType Id="c1ea8a36-a0e3-4606-a9f2-9c67e861c2c3" name="Photo" isAbstract="false" isLeaf="false" cachedFullName="Photo">
+        <elementDefinition Id="3f966032-a62a-4183-9008-7929e9752dd3" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="f4ac857b-ba39-4841-8708-1ce2b698b635" name="Photo" isAbstract="false" isLeaf="false" cachedFullName="Photo">
+        <elementDefinition Id="3f966032-a62a-4183-9008-7929e9752dd3" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="0a58a8ee-e034-4e84-b7a9-ff09c7a1d7fd" name="Photo" isAbstract="false" isLeaf="false" cachedFullName="Photo">
+        <elementDefinition Id="3f966032-a62a-4183-9008-7929e9752dd3" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="2d89b6e7-8759-4a60-a241-bb33d4f497eb" name="Photo" isAbstract="false" isLeaf="false" cachedFullName="Photo">
         <elementDefinition Id="3f966032-a62a-4183-9008-7929e9752dd3" />
       </referencedType>
     </packageHasNamedElement>

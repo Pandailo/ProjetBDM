@@ -98,6 +98,24 @@
                 LastKnownLocation="ProjetBDM_Model.uml" />
             </type_NamedElement>
           </property>
+          <property
+            Id="ddbd6b86-cbb3-41f3-8fee-64be786d98e6"
+            name="Genre"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                LastKnownName="String"
+                LastKnownLocation="ProjetBDM_Model.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -366,7 +384,7 @@
           </property>
           <property
             Id="1d1e3153-131e-49a6-960a-3f5af867b030"
-            name="PhotoC"
+            name="Image"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -458,7 +476,7 @@
         <ownedAttributesInternal>
           <property
             Id="ee10501e-b18d-4f2e-ac43-8043995d2d0d"
-            name="Affiche"
+            name="Image"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -638,7 +656,7 @@
           </property>
           <property
             Id="b6b0f328-43bf-4574-8678-a4c1a1aeb5cc"
-            name="Affiche"
+            name="Image"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -746,8 +764,8 @@
             </type_NamedElement>
           </property>
           <property
-            Id="c1a2a74b-88a9-43f8-be48-a1ef2ada7c06"
-            name="PhotoP"
+            Id="c16af751-3e7a-43d1-89e4-c5e0894e7de2"
+            name="Image"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
@@ -1096,7 +1114,7 @@
           </property>
           <property
             Id="4efdd1fe-2cb7-4642-9cbd-986b52eaf8ee"
-            name="Affiche"
+            name="Image"
             isLeaf="false"
             isStatic="false"
             isReadOnly="false"
