@@ -24,11 +24,11 @@ public class ProjetBDM {
      */
     public static void main(String[] args) throws SQLException 
     {
-        //frame_con test= new frame_con();
-        //test.setVisible(true);
-        Connection con=null;
-            con=connexionUtils.getInstance().getConnexion();
-            Statement st=con.createStatement();
+        frame_con test= new frame_con();
+        test.setVisible(true);
+        //Connection con=null;
+          //  con=connexionUtils.getInstance().getConnexion();
+           // Statement st=con.createStatement();
        //     st.executeQuery("INSERT INTO PBDM_table_connexion VALUES('admin','"+pw+"','admin')");
         
        /* MD5Password md5=new MD5Password();
