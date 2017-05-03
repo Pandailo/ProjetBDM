@@ -5,12 +5,19 @@
  */
 package projetbdm;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author al128785
  */
 public class frame_ajout_personne extends javax.swing.JFrame {
-
+    String cheminPhoto="";
+    Image photo;
     /**
      * Creates new form frame_ajout_personne
      */
@@ -18,6 +25,21 @@ public class frame_ajout_personne extends javax.swing.JFrame {
         initComponents();
     }
 
+    public void paint(Graphics g)
+    {
+        super.paint(g);
+        if(this.photo!=null)
+            this.affiche();
+    }
+    
+    private void affiche()
+    {
+        Graphics g = this.pan_image.getGraphics();
+        //this.pan_image.setSize(140,140*(photo.getWidth(null)/photo.getHeight(null)));
+        g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,21 +49,168 @@ public class frame_ajout_personne extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        label_frame = new javax.swing.JLabel();
+        pan_principal = new javax.swing.JPanel();
+        label_nom = new javax.swing.JLabel();
+        field_nom = new javax.swing.JTextField();
+        label_prenoms = new javax.swing.JLabel();
+        field_prenoms = new javax.swing.JTextField();
+        label_date = new javax.swing.JLabel();
+        field_date = new javax.swing.JTextField();
+        pan_image = new javax.swing.JPanel();
+        image_button = new javax.swing.JButton();
+        jRadioButton2 = new javax.swing.JRadioButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        pan_button = new javax.swing.JPanel();
+        annuler_button = new javax.swing.JButton();
+        valider_button = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        label_frame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_frame.setText("Ajout d'une personne");
+        getContentPane().add(label_frame, java.awt.BorderLayout.NORTH);
+
+        label_nom.setText("Nom");
+
+        label_prenoms.setText("Prenoms");
+
+        label_date.setText("Date de naissance");
+
+        pan_image.setPreferredSize(new java.awt.Dimension(100, 125));
+
+        javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
+        pan_image.setLayout(pan_imageLayout);
+        pan_imageLayout.setHorizontalGroup(
+            pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        pan_imageLayout.setVerticalGroup(
+            pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 125, Short.MAX_VALUE)
         );
+
+        image_button.setText("Image");
+        image_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                image_buttonActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(jRadioButton2);
+        jRadioButton2.setText("Réalisateur");
+
+        buttonGroup1.add(jRadioButton1);
+        jRadioButton1.setText("Acteur");
+
+        jLabel1.setText("Taille");
+
+        javax.swing.GroupLayout pan_principalLayout = new javax.swing.GroupLayout(pan_principal);
+        pan_principal.setLayout(pan_principalLayout);
+        pan_principalLayout.setHorizontalGroup(
+            pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_principalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pan_principalLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_principalLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pan_principalLayout.createSequentialGroup()
+                                .addComponent(label_nom)
+                                .addGap(133, 133, 133))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pan_principalLayout.createSequentialGroup()
+                                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(label_date, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label_prenoms, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(field_prenoms, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(field_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(field_date, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pan_principalLayout.createSequentialGroup()
+                        .addComponent(jRadioButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jRadioButton2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(image_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pan_image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(61, 61, 61))
+        );
+        pan_principalLayout.setVerticalGroup(
+            pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_principalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pan_principalLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(label_nom)
+                            .addComponent(field_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(label_prenoms)
+                            .addComponent(field_prenoms, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(label_date)
+                            .addComponent(field_date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButton2)
+                            .addComponent(jRadioButton1))))
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pan_principalLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(image_button))
+                    .addGroup(pan_principalLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
+
+        pan_button.setLayout(new java.awt.GridLayout(1, 2));
+
+        annuler_button.setText("Annuler");
+        pan_button.add(annuler_button);
+
+        valider_button.setText("Valider");
+        pan_button.add(valider_button);
+
+        getContentPane().add(pan_button, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void image_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_image_buttonActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une photo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "bmp", "jpg", "jpeg", "png");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de l'image
+            this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
+            this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
+            //TODO update dans la BD
+            this.affiche();
+        }
+    }//GEN-LAST:event_image_buttonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +248,23 @@ public class frame_ajout_personne extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton annuler_button;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JTextField field_date;
+    private javax.swing.JTextField field_nom;
+    private javax.swing.JTextField field_prenoms;
+    private javax.swing.JButton image_button;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JLabel label_date;
+    private javax.swing.JLabel label_frame;
+    private javax.swing.JLabel label_nom;
+    private javax.swing.JLabel label_prenoms;
+    private javax.swing.JPanel pan_button;
+    private javax.swing.JPanel pan_image;
+    private javax.swing.JPanel pan_principal;
+    private javax.swing.JButton valider_button;
     // End of variables declaration//GEN-END:variables
 }
