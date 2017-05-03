@@ -67,9 +67,16 @@ public class frame_recherche extends javax.swing.JFrame
         lab_typeM.setText("Recherche");
         getContentPane().add(lab_typeM, java.awt.BorderLayout.PAGE_START);
 
-        jPanel4.setLayout(new java.awt.GridLayout());
+        jPanel4.setLayout(new java.awt.GridLayout(1, 0));
 
         annuler_button.setText("Annuler");
+        annuler_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                annuler_buttonActionPerformed(evt);
+            }
+        });
         jPanel4.add(annuler_button);
 
         valider_button.setText("Valider");
@@ -150,6 +157,11 @@ public class frame_recherche extends javax.swing.JFrame
             }
         }
     }//GEN-LAST:event_valider_buttonActionPerformed
+
+    private void annuler_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_annuler_buttonActionPerformed
+    {//GEN-HEADEREND:event_annuler_buttonActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_annuler_buttonActionPerformed
 
     /**
      * @param args the command line arguments
