@@ -61,8 +61,6 @@ public class frame_recherche extends javax.swing.JFrame
         realisateur_chb = new javax.swing.JCheckBox();
         acteur_chb = new javax.swing.JCheckBox();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         lab_typeM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lab_typeM.setText("Recherche");
         getContentPane().add(lab_typeM, java.awt.BorderLayout.PAGE_START);
