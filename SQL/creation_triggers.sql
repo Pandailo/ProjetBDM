@@ -1,0 +1,9 @@
+CREATE OR REPLACE TRIGGER trigger_PBDM_idF BEFORE INSERT ON PBDM_Film FOR EACH ROW
+DECLARE
+	idm INTEGER;
+BEGIN
+	SELECT max(id) INTO idm FROM PBDM_Film;
+	idm:=idm+1; 
+	:new.id := idm;
+END;
+/

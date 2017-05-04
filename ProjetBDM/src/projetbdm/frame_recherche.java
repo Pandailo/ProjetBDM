@@ -7,7 +7,10 @@ package projetbdm;
 
 import java.awt.GridLayout;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 
 /**
@@ -150,7 +153,14 @@ public class frame_recherche extends javax.swing.JFrame
         {
             for(int i=0;i<l_types.size();i++)
             {
-                Connection con=connexionUtils2.getInstance();
+                try
+                {
+                    Connection con=connexionUtils.getInstance().getConnexion();
+                }
+                catch (SQLException ex)
+                {
+                    Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
         }
