@@ -67,10 +67,7 @@
                       </Group>
                   </Group>
                   <EmptySpace pref="71" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="pan_image" max="32767" attributes="0"/>
-                      <Component id="button_image" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="pan_image" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -82,9 +79,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="pan_image" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
-                          <Component id="button_image" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="52" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -109,7 +104,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="label_synopsis" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="pan_text" max="32767" attributes="0"/>
+                          <Component id="pan_text" pref="116" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -179,14 +174,6 @@
             </DimensionLayout>
           </Layout>
         </Container>
-        <Component class="javax.swing.JButton" name="button_image">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Image"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_imageActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JLabel" name="label_note">
           <Properties>
             <Property name="text" type="java.lang.String" value="Note"/>
@@ -205,9 +192,25 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
         <Property name="columns" type="int" value="2"/>
-        <Property name="rows" type="int" value="1"/>
+        <Property name="rows" type="int" value="2"/>
       </Layout>
       <SubComponents>
+        <Component class="javax.swing.JButton" name="button_ba">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Bande-annonce"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_baActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="button_image">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Image"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_imageActionPerformed"/>
+          </Events>
+        </Component>
         <Component class="javax.swing.JButton" name="button_annuler">
           <Properties>
             <Property name="text" type="java.lang.String" value="Annuler"/>

@@ -6,17 +6,39 @@
 
 package projetbdm;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author al128785
  */
 public class frame_ajout_saison extends javax.swing.JFrame {
-
+    String cheminPhoto="";
+    Image photo;
     /** Creates new form frame_ajout_saison */
     public frame_ajout_saison() {
         initComponents();
     }
 
+    
+    public void paint(Graphics g)
+    {
+        super.paint(g);
+        if(this.photo!=null)
+            this.affiche();
+    }
+    
+    private void affiche()
+    {
+        Graphics g = this.pan_image.getGraphics();
+        //this.pan_image.setSize(140,140*(photo.getWidth(null)/photo.getHeight(null)));
+        g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
+    }
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -26,21 +48,106 @@ public class frame_ajout_saison extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        label_frame = new javax.swing.JLabel();
+        pan_principal = new javax.swing.JPanel();
+        label_num = new javax.swing.JLabel();
+        field_num = new javax.swing.JTextField();
+        pan_image = new javax.swing.JPanel();
+        pan_buttons = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        button_annuler = new javax.swing.JButton();
+        button_valider = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        label_frame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_frame.setText("Ajout d'une saison");
+        getContentPane().add(label_frame, java.awt.BorderLayout.NORTH);
+
+        label_num.setText("Numero de saison");
+
+        pan_image.setMinimumSize(new java.awt.Dimension(100, 125));
+        pan_image.setPreferredSize(new java.awt.Dimension(100, 125));
+
+        javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
+        pan_image.setLayout(pan_imageLayout);
+        pan_imageLayout.setHorizontalGroup(
+            pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        pan_imageLayout.setVerticalGroup(
+            pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 125, Short.MAX_VALUE)
         );
+
+        javax.swing.GroupLayout pan_principalLayout = new javax.swing.GroupLayout(pan_principal);
+        pan_principal.setLayout(pan_principalLayout);
+        pan_principalLayout.setHorizontalGroup(
+            pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_principalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(label_num)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addComponent(field_num, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71)
+                .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
+        );
+        pan_principalLayout.setVerticalGroup(
+            pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_principalLayout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(label_num, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(field_num, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(117, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
+
+        pan_buttons.setLayout(new java.awt.GridLayout(2, 2));
+
+        jButton2.setText("jButton2");
+        pan_buttons.add(jButton2);
+
+        jButton1.setText("Image");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        pan_buttons.add(jButton1);
+
+        button_annuler.setText("Annuler");
+        pan_buttons.add(button_annuler);
+
+        button_valider.setText("Valider");
+        pan_buttons.add(button_valider);
+
+        getContentPane().add(pan_buttons, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une photo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "bmp", "jpg", "jpeg", "png");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de l'image
+            this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
+            this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
+            //TODO update dans la BD
+            this.affiche();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,6 +185,16 @@ public class frame_ajout_saison extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button_annuler;
+    private javax.swing.JButton button_valider;
+    private javax.swing.JTextField field_num;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel label_frame;
+    private javax.swing.JLabel label_num;
+    private javax.swing.JPanel pan_buttons;
+    private javax.swing.JPanel pan_image;
+    private javax.swing.JPanel pan_principal;
     // End of variables declaration//GEN-END:variables
 
 }

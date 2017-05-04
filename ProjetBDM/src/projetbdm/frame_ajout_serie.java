@@ -48,17 +48,18 @@ public class frame_ajout_serie extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel2 = new javax.swing.JLabel();
         label_frame = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
         label_nom = new javax.swing.JLabel();
         field_nom = new javax.swing.JTextField();
         label_genre = new javax.swing.JLabel();
         field_genre = new javax.swing.JTextField();
-        button_image = new javax.swing.JButton();
         pan_image = new javax.swing.JPanel();
-
-        jLabel2.setText("jLabel2");
+        pan_buttons = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        button_image = new javax.swing.JButton();
+        button_annuler = new javax.swing.JButton();
+        button_valider = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,13 +71,6 @@ public class frame_ajout_serie extends javax.swing.JFrame {
         label_nom.setText("Nom");
 
         label_genre.setText("Genre");
-
-        button_image.setText("Image");
-        button_image.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_imageActionPerformed(evt);
-            }
-        });
 
         pan_image.setPreferredSize(new java.awt.Dimension(100, 125));
 
@@ -97,22 +91,15 @@ public class frame_ajout_serie extends javax.swing.JFrame {
             pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_principalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pan_principalLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(button_image, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pan_principalLayout.createSequentialGroup()
-                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label_nom)
-                            .addComponent(label_genre))
-                        .addGap(107, 107, 107)
-                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(field_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pan_principalLayout.createSequentialGroup()
-                                .addComponent(field_genre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(97, 97, 97)
-                        .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(label_nom)
+                    .addComponent(label_genre))
+                .addGap(107, 107, 107)
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(field_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(field_genre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57))
         );
         pan_principalLayout.setVerticalGroup(
@@ -121,20 +108,40 @@ public class frame_ajout_serie extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pan_principalLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
                         .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(label_nom)
                             .addComponent(field_nom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(label_genre)
                             .addComponent(field_genre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addComponent(button_image)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
         );
 
         getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
+
+        pan_buttons.setLayout(new java.awt.GridLayout(2, 2));
+
+        jButton1.setText("Bande-annonce");
+        pan_buttons.add(jButton1);
+
+        button_image.setText("Image");
+        button_image.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_imageActionPerformed(evt);
+            }
+        });
+        pan_buttons.add(button_image);
+
+        button_annuler.setText("Annuler");
+        pan_buttons.add(button_annuler);
+
+        button_valider.setText("Valider");
+        pan_buttons.add(button_valider);
+
+        getContentPane().add(pan_buttons, java.awt.BorderLayout.SOUTH);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -192,13 +199,16 @@ public class frame_ajout_serie extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button_annuler;
     private javax.swing.JButton button_image;
+    private javax.swing.JButton button_valider;
     private javax.swing.JTextField field_genre;
     private javax.swing.JTextField field_nom;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel label_frame;
     private javax.swing.JLabel label_genre;
     private javax.swing.JLabel label_nom;
+    private javax.swing.JPanel pan_buttons;
     private javax.swing.JPanel pan_image;
     private javax.swing.JPanel pan_principal;
     // End of variables declaration//GEN-END:variables
