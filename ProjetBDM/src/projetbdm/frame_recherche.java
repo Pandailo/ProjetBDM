@@ -8,10 +8,12 @@ package projetbdm;
 import java.awt.GridLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JCheckBox;
+import oracle.jdbc.OracleResultSet;
 
 /**
  *
@@ -21,6 +23,7 @@ public class frame_recherche extends javax.swing.JFrame
 {
     boolean admin;
     String type_media;
+    Connection con;
     /**
      * Creates new form frame_recherche
      */
@@ -30,11 +33,13 @@ public class frame_recherche extends javax.swing.JFrame
         this.admin=admin;
         this.type_media=typeM;
         switch (this.type_media) {
-                case "film" : this.film_chb.setSelected(true);break;
-                case "serie": this.serie_chb.setSelected(true);break;
-                case "jeu" : this.jeuvideo_chb.setSelected(true);break;
+                case "film" : this.film_chb.setSelected(true);this.film_chb.setEnabled(false);break;
+                case "serie": this.serie_chb.setSelected(true);this.serie_chb.setEnabled(false);break;
+                case "jeu" : this.jeuvideo_chb.setSelected(true);this.jeuvideo_chb.setEnabled(false);break;
                 case "personne" : this.acteur_chb.setSelected(true);
-                                    this.realisateur_chb.setSelected(true);break;
+                                    this.realisateur_chb.setSelected(true);
+                                    this.acteur_chb.setEnabled(false);this.realisateur_chb.setEnabled(false);break;
+                                    
         }
     }
 
@@ -48,6 +53,7 @@ public class frame_recherche extends javax.swing.JFrame
     private void initComponents()
     {
 
+        groupe_button = new javax.swing.ButtonGroup();
         lab_typeM = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         annuler_button = new javax.swing.JButton();
@@ -104,21 +110,27 @@ public class frame_recherche extends javax.swing.JFrame
 
         pan_chb.setLayout(new java.awt.GridLayout(3, 2));
 
+        groupe_button.add(jeuvideo_chb);
         jeuvideo_chb.setText("Jeu vidéo");
         pan_chb.add(jeuvideo_chb);
 
+        groupe_button.add(film_chb);
         film_chb.setText("Film");
         pan_chb.add(film_chb);
 
+        groupe_button.add(serie_chb);
         serie_chb.setText("Serie");
         pan_chb.add(serie_chb);
 
+        groupe_button.add(saison_chb);
         saison_chb.setText("Saison");
         pan_chb.add(saison_chb);
 
+        groupe_button.add(realisateur_chb);
         realisateur_chb.setText("Réalisateur");
         pan_chb.add(realisateur_chb);
 
+        groupe_button.add(acteur_chb);
         acteur_chb.setText("Acteur");
         pan_chb.add(acteur_chb);
 
@@ -131,39 +143,112 @@ public class frame_recherche extends javax.swing.JFrame
 
     private void valider_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_valider_buttonActionPerformed
     {//GEN-HEADEREND:event_valider_buttonActionPerformed
-        ArrayList<String> l_types=new ArrayList();
-        for(int i=0;i<((GridLayout)(this.pan_chb.getLayout())).getColumns()*((GridLayout)(this.pan_chb.getLayout())).getRows();i++)
+        ArrayList<Integer> list_id=new ArrayList();
+        int index=0;
+        frame_transition ft=new frame_transition(this.admin,"",new ArrayList());
+        if(this.tf_rech_nom.getText()!=null&&(!this.tf_rech_nom.getText().equals("")))
         {
-            
-            if(this.pan_chb.getComponent(i).getClass()==JCheckBox.class)
-            {
-                JCheckBox jb=((JCheckBox)(this.pan_chb.getComponent(i)));
-                if(jb.isSelected())
-                {
-                    String type=jb.getName();
-                    l_types.add(type); 
-                }
-            }
-        }
-        if(this.tf_rech_nom.getText()!=null&&this.tf_rech_nom.getText()!="")
-        {
-            //Recherche avec InterMediaText
-        }
-        else
-        {
-            for(int i=0;i<l_types.size();i++)
-            {
-                try
-                {
-                    Connection con=connexionUtils.getInstance().getConnexion();
-                }
-                catch (SQLException ex)
-                {
-                    Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
+            try {
+                con=connexionUtils.getInstance().getConnexion();
+                Statement st=con.createStatement();
+                OracleResultSet rs=null;
+                switch (this.type_media) {
+                    case "film" : 
+                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film WHERE CONTAINS(nom,'"+this.tf_rech_nom.getText()+"',10)>0");
+                        while(rs.next())
+                        {
+                            index=rs.getInt(2);
+                            list_id.add(index);
+                        }
+                        ft=new frame_transition(this.admin,this.type_media,list_id);
+                        break;
+                    case "jeu" : 
+                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_JeuVideo WHERE CONTAINS(nom,"+this.tf_rech_nom.getText()+",10)>0");
+                        while(rs.next())
+                        {
+                            index=rs.getInt(2);
+                            list_id.add(index);
+                        }
+                        ft=new frame_transition(this.admin,this.type_media,list_id);
+                        break;
+                    case "serie" : 
+                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Serie WHERE CONTAINS(nom,"+this.tf_rech_nom.getText()+",10)>0");
+                        while(rs.next())
+                        {
+                            index=rs.getInt(2);
+                            list_id.add(index);
+                        }
+                        ft=new frame_transition(this.admin,this.type_media,list_id);
+                        break;           
+                    case "personne" : 
+                        rs=(OracleResultSet)st.executeQuery("SELECT a.nom,a.id,r.nom,r.id FROM PBDM_Acteur,PBDM_Realisateur WHERE CONTAINS(a.nom,"+this.tf_rech_nom.getText()+",10)>0 OR CONTAINS(r.nom,"+this.tf_rech_nom.getText()+",10)>0");
+                        while(rs.next())
+                        {
+                            index=rs.getInt(2);
+                            list_id.add(index);
+                        }
+                        ft=new frame_transition(this.admin,this.type_media,list_id);
+                        break;
                 }
                 
             }
+            catch (SQLException ex) {
+                Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
         }
+        else
+        {
+            try {
+                con=connexionUtils.getInstance().getConnexion();
+                Statement st=con.createStatement();
+                OracleResultSet rs=null;
+                switch (this.type_media) {
+                    case "film" : 
+                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film");
+                        while(rs.next())
+                        {
+                            index=rs.getInt(2);
+                            list_id.add(index);
+                        }
+                        ft=new frame_transition(this.admin,this.type_media,list_id);
+                        break;
+                    case "jeu" : 
+                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_JeuVideo");
+                        while(rs.next())
+                        {
+                            index=rs.getInt(2);
+                            list_id.add(index);
+                        }
+                        ft=new frame_transition(this.admin,this.type_media,list_id);
+                        break;
+                    case "serie" : 
+                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Serie");
+                        while(rs.next())
+                        {
+                            index=rs.getInt(2);
+                            list_id.add(index);
+                        }
+                        ft=new frame_transition(this.admin,this.type_media,list_id);
+                        break;           
+                    case "personne" :  
+                        rs=(OracleResultSet)st.executeQuery("SELECT a.nom,a.id,r.nom,r.id FROM PBDM_Acteur,PBDM_Realisateur");
+                        while(rs.next())
+                        {
+                            index=rs.getInt(2);
+                            list_id.add(index);
+                        }
+                        ft=new frame_transition(this.admin,this.type_media,list_id);
+                        break;
+                }
+                
+            }
+            catch (SQLException ex) {
+                Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        ft.setVisible(true);
     }//GEN-LAST:event_valider_buttonActionPerformed
 
     private void annuler_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_annuler_buttonActionPerformed
@@ -217,6 +302,7 @@ public class frame_recherche extends javax.swing.JFrame
     private javax.swing.JCheckBox acteur_chb;
     private javax.swing.JButton annuler_button;
     private javax.swing.JCheckBox film_chb;
+    private javax.swing.ButtonGroup groupe_button;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="javax.swing.ButtonGroup" name="groupe_button">
+    </Component>
+  </NonVisualComponents>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
@@ -98,31 +102,49 @@
           <SubComponents>
             <Component class="javax.swing.JCheckBox" name="jeuvideo_chb">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="groupe_button"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Jeu vid&#xe9;o"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="film_chb">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="groupe_button"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Film"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="serie_chb">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="groupe_button"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Serie"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="saison_chb">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="groupe_button"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Saison"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="realisateur_chb">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="groupe_button"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="R&#xe9;alisateur"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="acteur_chb">
               <Properties>
+                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+                  <ComponentRef name="groupe_button"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Acteur"/>
               </Properties>
             </Component>
