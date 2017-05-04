@@ -241,7 +241,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
                 stmt1.close();
                 
             }
-
+            rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexF REBUILD");
             rs.close();
             s.close();
             con.commit();
