@@ -133,6 +133,7 @@ public class frame_serie extends javax.swing.JFrame
         pan_saison.setLayout(new java.awt.GridLayout(1, 3));
 
         cb_saison.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cb_saison.setSelectedIndex(-1);
         pan_saison.add(cb_saison);
 
         button_saison.setText("Aller à la saison");
