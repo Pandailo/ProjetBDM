@@ -165,6 +165,12 @@
               <referencedTypeMoniker Id="7f4183c6-8197-48e6-9b3c-b4ca9cb80327" LastKnownName="String" />
             </type_NamedElement>
           </property>
+          <property Id="0ee521e6-b7c1-41e0-98de-0fb786b9ece5" name="Genre" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="d7e4ad65-44b3-4e64-ac04-ba8eed0a91f9" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="05c1980c-a82f-4beb-a16c-715d6e33d3f9" LastKnownName="String" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation Id="a64475b1-7e06-4b28-800f-cc762e722c4a" name="Affiche" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">

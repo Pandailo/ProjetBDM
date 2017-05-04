@@ -30,6 +30,9 @@ public class frame_ajout_serie extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         label_frame = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
+        label_nom = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
 
@@ -40,15 +43,36 @@ public class frame_ajout_serie extends javax.swing.JFrame {
         label_frame.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         getContentPane().add(label_frame, java.awt.BorderLayout.NORTH);
 
+        label_nom.setText("Nom");
+
+        jLabel1.setText("jLabel1");
+
         javax.swing.GroupLayout pan_principalLayout = new javax.swing.GroupLayout(pan_principal);
         pan_principal.setLayout(pan_principalLayout);
         pan_principalLayout.setHorizontalGroup(
             pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(pan_principalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pan_principalLayout.createSequentialGroup()
+                        .addComponent(label_nom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(191, 191, 191))
+                    .addGroup(pan_principalLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pan_principalLayout.setVerticalGroup(
             pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 285, Short.MAX_VALUE)
+            .addGroup(pan_principalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(label_nom)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addContainerGap(294, Short.MAX_VALUE))
         );
 
         getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
@@ -92,8 +116,11 @@ public class frame_ajout_serie extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel label_frame;
+    private javax.swing.JLabel label_nom;
     private javax.swing.JPanel pan_principal;
     // End of variables declaration//GEN-END:variables
 }

@@ -414,6 +414,24 @@
                 LastKnownLocation="ProjetBDM_Model.uml" />
             </type_NamedElement>
           </property>
+          <property
+            Id="d7e4ad65-44b3-4e64-ac04-ba8eed0a91f9"
+            name="Genre"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                LastKnownName="String"
+                LastKnownLocation="ProjetBDM_Model.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
