@@ -8,8 +8,14 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OracleResultSet;
 
 /**
  *
@@ -20,23 +26,47 @@ public class frame_film extends javax.swing.JFrame
     boolean admin;
     private Image photo;
     private String cheminPhoto;
+    Connection con;
     /**
      * Creates new form frame_film
      */
     public frame_film(boolean admin,int idF)
     {
-        initComponents();
-        this.admin=admin;
-
-        if(!admin){
-            this.pan_bo.remove(button_ajout_bo);
-            this.pan_ba.remove(button_ajout_ba);
-            this.pan_admin.removeAll();
-            this.pan_bo.setLayout(new java.awt.GridLayout(1, 1));
-            this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
+        try
+        {
+            initComponents();
+            this.admin=admin;
+            
+            if(!admin){
+                this.pan_bo.remove(button_ajout_bo);
+                this.pan_ba.remove(button_ajout_ba);
+                this.pan_admin.removeAll();
+                this.pan_bo.setLayout(new java.awt.GridLayout(1, 1));
+                this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
+            }
+            con=connexionUtils.getInstance().getConnexion();
+            Statement st=con.createStatement();
+            String titre="";
+            String synopsis="";
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Film WHERE id="+idF);
+            while(rs.next())
+            {
+                titre=rs.getString(1);
+            }
+            this.label_titre.setText(titre);
+            rs=(OracleResultSet)st.executeQuery("SELECT synopsis FROM PBDM_Film WHERE id="+idF);
+            while(rs.next())
+            {
+                synopsis=rs.getString(1);
+            }
+            this.edition.append(titre+"\n");
+            this.edition.append(synopsis+"\n");
         }
-
-    }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,7 +75,8 @@ public class frame_film extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         label_titre = new javax.swing.JLabel();
@@ -68,7 +99,6 @@ public class frame_film extends javax.swing.JFrame
         button_ajout_ba = new javax.swing.JButton();
         button_ba = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(1, 1));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(720, 600));
@@ -137,8 +167,10 @@ public class frame_film extends javax.swing.JFrame
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_afficheActionPerformed(evt);
             }
         });
