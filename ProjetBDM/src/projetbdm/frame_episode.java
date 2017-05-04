@@ -38,8 +38,6 @@ public class frame_episode extends javax.swing.JFrame {
         pan_admin = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
 
-        getContentPane().setLayout(new java.awt.BorderLayout());
-
         label_titre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_titre.setText("titre episode");
@@ -55,7 +53,7 @@ public class frame_episode extends javax.swing.JFrame {
 
         pan_affiche.setLayout(new java.awt.BorderLayout());
 
-        pan_admin.setLayout(new java.awt.GridLayout(1, 2));
+        pan_admin.setLayout(new java.awt.GridLayout(1, 1));
 
         jButton1.setText("Changer les infos");
         pan_admin.add(jButton1);

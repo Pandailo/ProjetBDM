@@ -36,10 +36,6 @@ public class frame_serie extends javax.swing.JFrame
             this.pan_saison.setLayout(new java.awt.GridLayout(1, 2));
             this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
         }
-        /*this.button_ajout_ba.setVisible(admin);
-        this.button_ajout_saison.setVisible(admin);
-        this.lab_ajout_affiche.setVisible(admin);
-        this.pan_admin.setVisible(admin);*/
     }
 
     /**
@@ -250,7 +246,7 @@ public class frame_serie extends javax.swing.JFrame
         //</editor-fold>
 
         /* Create and display the form */
-        frame_serie oui = new frame_serie(false,1);
+        frame_serie oui = new frame_serie(true,1);
         oui.setVisible(true);
     }
 

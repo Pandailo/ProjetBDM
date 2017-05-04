@@ -27,18 +27,31 @@ public class frame_ajout_serie extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
+        label_frame = new javax.swing.JLabel();
+        pan_principal = new javax.swing.JPanel();
+
+        jLabel2.setText("jLabel2");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        label_frame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        label_frame.setText("Ajout d'une série");
+        label_frame.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(label_frame, java.awt.BorderLayout.NORTH);
+
+        javax.swing.GroupLayout pan_principalLayout = new javax.swing.GroupLayout(pan_principal);
+        pan_principal.setLayout(pan_principalLayout);
+        pan_principalLayout.setHorizontalGroup(
+            pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 400, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        pan_principalLayout.setVerticalGroup(
+            pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 285, Short.MAX_VALUE)
         );
+
+        getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -79,5 +92,8 @@ public class frame_ajout_serie extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel label_frame;
+    private javax.swing.JPanel pan_principal;
     // End of variables declaration//GEN-END:variables
 }

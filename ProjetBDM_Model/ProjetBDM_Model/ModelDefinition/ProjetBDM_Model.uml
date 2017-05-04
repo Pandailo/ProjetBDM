@@ -146,72 +146,6 @@
               LastKnownLocation="ProjetBDM_Model.uml" />
           </generalization>
         </generalsInternal>
-        <targetEnds>
-          <association
-            Id="0a0201d3-9907-4c99-8788-66d76b687921"
-            isDerived="false"
-            sourceEndRoleName=""
-            targetEndRoleName=""
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="9363e9de-bd15-476d-854d-f1a2390cf7a3"
-              LastKnownName="Acteur"
-              LastKnownLocation="ProjetBDM_Model.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="19213b7e-268c-49e7-a552-c12f5536270e"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="e1cdfc30-d827-4ffb-adb2-238cdfd07b68"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="24e2bb89-6a1f-4e0f-8ad4-7483a5cfa1de"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="a956ed82-b306-4eaa-ba3f-95ddcb32af84"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="d7d13846-cb0d-496a-9cc5-5173eaf623a8"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="6ca09c18-a72f-497a-a860-737899f399fc"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="49c8976e-0fde-4812-a1df-1e24e9be5a37"
@@ -297,72 +231,6 @@
               LastKnownLocation="ProjetBDM_Model.uml" />
           </generalization>
         </generalsInternal>
-        <targetEnds>
-          <association
-            Id="2b19801b-1f5e-44d0-b097-9100bce7f94c"
-            isDerived="false"
-            sourceEndRoleName=""
-            targetEndRoleName=""
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="9363e9de-bd15-476d-854d-f1a2390cf7a3"
-              LastKnownName="Acteur"
-              LastKnownLocation="ProjetBDM_Model.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="d55fd6a7-42c3-4285-9e43-063d59da0030"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="e6b6f040-c675-4b2d-9f10-1398e12dc685"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="a2b2017c-2b63-4da6-a62d-0406ded61de7"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="8ac567dd-f5c5-4bea-ab72-b22f7260be12"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="4d663bcc-a5d6-4c2f-9438-67aba58cd745"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="5dc27a00-2b82-42a5-82bd-e14bedf2d148"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="1589420e-fcca-41d6-aa26-2bcf30e6df44"
@@ -528,6 +396,24 @@
                 LastKnownLocation="ProjetBDM_Model.uml" />
             </type_NamedElement>
           </property>
+          <property
+            Id="560e2993-d715-46ac-8718-fcf53467d970"
+            name="NomS"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+                LastKnownName="String"
+                LastKnownLocation="ProjetBDM_Model.uml" />
+            </type_NamedElement>
+          </property>
         </ownedAttributesInternal>
         <ownedOperationsInternal>
           <operation
@@ -669,6 +555,24 @@
               <undefinedTypeMoniker
                 Id="3f966032-a62a-4183-9008-7929e9752dd3"
                 LastKnownName="Photo"
+                LastKnownLocation="ProjetBDM_Model.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="2f5172e7-acbf-4d2e-86a3-1a66f77161d7"
+            name="NumS"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isUnique="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
                 LastKnownLocation="ProjetBDM_Model.uml" />
             </type_NamedElement>
           </property>
@@ -906,6 +810,72 @@
               LastKnownLocation="ProjetBDM_Model.uml" />
           </generalization>
         </generalsInternal>
+        <targetEnds>
+          <association
+            Id="7b2023c6-cd08-40c2-abe6-45837d983d82"
+            isDerived="false"
+            sourceEndRoleName=""
+            targetEndRoleName=""
+            isLeaf="false"
+            isAbstract="false">
+            <classMoniker
+              Id="1c72d36d-165b-4098-a593-839c269c7bc3"
+              LastKnownName="Media Video"
+              LastKnownLocation="ProjetBDM_Model.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ba0f37ea-2fcf-49b2-b195-a0e2685dd39a"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="0df9d517-6a16-4c8e-aeba-1188dc85bd4f"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="098edde7-3969-4da6-a783-da32dd64faa4"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="4125a510-76d7-40ca-aa38-b0ca4caf6754"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false">
+                  <lowerValueInternal>
+                    <literalString
+                      Id="277e8baa-2175-4102-9384-aac15c3266a6"
+                      name="Lower"
+                      value="*" />
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString
+                      Id="0f092aca-0a90-4c20-8dbb-d879df4ca9ef"
+                      name="Upper"
+                      value="*" />
+                  </upperValueInternal>
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
         <ownedAttributesInternal>
           <property
             Id="b8e75f73-c618-46e8-a33a-da59d04f1d44"
@@ -1025,70 +995,6 @@
                       Id="d6886b87-9a4f-4863-9cfb-8902bffb5b1b"
                       name="Upper"
                       value="1-*" />
-                  </upperValueInternal>
-                </memberEnd>
-              </associationHasOwnedEnds>
-            </relationshipOwnedElementsInternal>
-          </association>
-          <association
-            Id="a85cb7c7-6475-46b2-b8b3-8d9478b9d222"
-            isDerived="false"
-            sourceEndRoleName=""
-            targetEndRoleName=""
-            isLeaf="false"
-            isAbstract="false">
-            <classMoniker
-              Id="9363e9de-bd15-476d-854d-f1a2390cf7a3"
-              LastKnownName="Acteur"
-              LastKnownLocation="ProjetBDM_Model.uml" />
-            <relationshipOwnedElementsInternal>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="ff8c15a7-7ac9-4236-b10f-e6d9eddd9aae"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="6cfd7b52-9295-4160-b3e6-23abbcc8c2d2"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="283f8f88-8e3b-4065-8e06-ac76f29b722d"
-                      name="Upper"
-                      value="*" />
-                  </upperValueInternal>
-                </memberEnd>
-              </associationHasOwnedEnds>
-              <associationHasOwnedEnds>
-                <memberEnd
-                  Id="49854c57-7d3c-43ce-a0d5-a2a824feb1a3"
-                  isLeaf="false"
-                  isStatic="false"
-                  isReadOnly="false"
-                  isDerived="false"
-                  isDerivedUnion="false"
-                  aggregation="None"
-                  isComposite="false"
-                  isNavigableOwned="false">
-                  <lowerValueInternal>
-                    <literalString
-                      Id="8dbe474c-ce08-4ea6-a3c0-cfec88a444bd"
-                      name="Lower"
-                      value="*" />
-                  </lowerValueInternal>
-                  <upperValueInternal>
-                    <literalString
-                      Id="360de5df-924a-4a85-9d2b-3e333510e7a8"
-                      name="Upper"
-                      value="*" />
                   </upperValueInternal>
                 </memberEnd>
               </associationHasOwnedEnds>

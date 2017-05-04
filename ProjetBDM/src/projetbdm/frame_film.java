@@ -45,8 +45,7 @@ public class frame_film extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         label_titre = new javax.swing.JLabel();
@@ -55,6 +54,7 @@ public class frame_film extends javax.swing.JFrame
         edition = new javax.swing.JTextArea();
         pan_affiche = new javax.swing.JPanel();
         pan_image = new javax.swing.JPanel();
+        pan_imaffiche = new javax.swing.JPanel();
         pan_admin = new javax.swing.JPanel();
         lab_ajout_affiche = new javax.swing.JLabel();
         pan_ajout = new javax.swing.JPanel();
@@ -89,20 +89,40 @@ public class frame_film extends javax.swing.JFrame
 
         pan_principal.add(pan_text);
 
-        pan_affiche.setLayout(new java.awt.GridLayout(2, 1));
+        pan_affiche.setLayout(new java.awt.BorderLayout());
+
+        pan_imaffiche.setMinimumSize(new java.awt.Dimension(100, 125));
+        pan_imaffiche.setPreferredSize(new java.awt.Dimension(100, 125));
+
+        javax.swing.GroupLayout pan_imafficheLayout = new javax.swing.GroupLayout(pan_imaffiche);
+        pan_imaffiche.setLayout(pan_imafficheLayout);
+        pan_imafficheLayout.setHorizontalGroup(
+            pan_imafficheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        pan_imafficheLayout.setVerticalGroup(
+            pan_imafficheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 125, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
         pan_image.setLayout(pan_imageLayout);
         pan_imageLayout.setHorizontalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGroup(pan_imageLayout.createSequentialGroup()
+                .addGap(226, 226, 226)
+                .addComponent(pan_imaffiche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(226, Short.MAX_VALUE))
         );
         pan_imageLayout.setVerticalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_imageLayout.createSequentialGroup()
+                .addContainerGap(158, Short.MAX_VALUE)
+                .addComponent(pan_imaffiche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        pan_affiche.add(pan_image);
+        pan_affiche.add(pan_image, java.awt.BorderLayout.CENTER);
 
         pan_admin.setLayout(new java.awt.BorderLayout());
 
@@ -117,10 +137,8 @@ public class frame_film extends javax.swing.JFrame
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -128,7 +146,7 @@ public class frame_film extends javax.swing.JFrame
 
         pan_admin.add(pan_ajout, java.awt.BorderLayout.CENTER);
 
-        pan_affiche.add(pan_admin);
+        pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
 
         pan_principal.add(pan_affiche);
 
@@ -172,7 +190,7 @@ public class frame_film extends javax.swing.JFrame
     private void affiche()
     {
         Graphics g = this.pan_image.getGraphics();
-        g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
+        g.drawImage(this.photo, 0, 0, this.pan_imaffiche.getWidth(), this.pan_imaffiche.getHeight(), this);
         
     }
     private void button_modif_afficheActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_modif_afficheActionPerformed
@@ -253,6 +271,7 @@ public class frame_film extends javax.swing.JFrame
     private javax.swing.JPanel pan_ba;
     private javax.swing.JPanel pan_bo;
     private javax.swing.JPanel pan_buttons;
+    private javax.swing.JPanel pan_imaffiche;
     private javax.swing.JPanel pan_image;
     private javax.swing.JPanel pan_principal;
     private javax.swing.JScrollPane pan_text;
