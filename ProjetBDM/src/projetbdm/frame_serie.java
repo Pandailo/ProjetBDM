@@ -53,6 +53,7 @@ public class frame_serie extends javax.swing.JFrame
         edition = new javax.swing.JTextArea();
         pan_affiche = new javax.swing.JPanel();
         pan_image = new javax.swing.JPanel();
+        pan_imaffiche = new javax.swing.JPanel();
         pan_admin = new javax.swing.JPanel();
         lab_ajout_affiche = new javax.swing.JLabel();
         pan_ajout = new javax.swing.JPanel();
@@ -87,15 +88,34 @@ public class frame_serie extends javax.swing.JFrame
 
         pan_affiche.setLayout(new java.awt.BorderLayout());
 
+        pan_imaffiche.setMinimumSize(new java.awt.Dimension(100, 125));
+
+        javax.swing.GroupLayout pan_imafficheLayout = new javax.swing.GroupLayout(pan_imaffiche);
+        pan_imaffiche.setLayout(pan_imafficheLayout);
+        pan_imafficheLayout.setHorizontalGroup(
+            pan_imafficheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        pan_imafficheLayout.setVerticalGroup(
+            pan_imafficheLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 125, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
         pan_image.setLayout(pan_imageLayout);
         pan_imageLayout.setHorizontalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(pan_imageLayout.createSequentialGroup()
+                .addGap(160, 160, 160)
+                .addComponent(pan_imaffiche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(166, Short.MAX_VALUE))
         );
         pan_imageLayout.setVerticalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(pan_imageLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(pan_imaffiche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(63, Short.MAX_VALUE))
         );
 
         pan_affiche.add(pan_image, java.awt.BorderLayout.NORTH);
@@ -176,7 +196,7 @@ public class frame_serie extends javax.swing.JFrame
     private void affiche()
     {
         Graphics g = this.pan_image.getGraphics();
-        g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
+        g.drawImage(this.photo, 0, 0, this.pan_imaffiche.getWidth(), this.pan_imaffiche.getHeight(), this);
     }   
     private void button_modif_afficheActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_modif_afficheActionPerformed
     {//GEN-HEADEREND:event_button_modif_afficheActionPerformed
@@ -267,6 +287,7 @@ public class frame_serie extends javax.swing.JFrame
     private javax.swing.JPanel pan_ajout;
     private javax.swing.JPanel pan_ba;
     private javax.swing.JPanel pan_button;
+    private javax.swing.JPanel pan_imaffiche;
     private javax.swing.JPanel pan_image;
     private javax.swing.JPanel pan_principal;
     private javax.swing.JPanel pan_saison;

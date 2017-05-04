@@ -26,6 +26,8 @@ import oracle.ord.im.OrdImage;
  */
 public class frame_ajout_film extends javax.swing.JFrame {
     String cheminPhoto="";
+    String cheminBA="";
+    String cheminBO="";
     Image photo;
     /**
      * Creates new form frame_ajout_film
@@ -72,6 +74,8 @@ public class frame_ajout_film extends javax.swing.JFrame {
         label_genre = new javax.swing.JLabel();
         field_genre = new javax.swing.JTextField();
         pan_buttons = new javax.swing.JPanel();
+        button_ba = new javax.swing.JButton();
+        button_bo = new javax.swing.JButton();
         button_annuler = new javax.swing.JButton();
         button_valider = new javax.swing.JButton();
 
@@ -167,14 +171,30 @@ public class frame_ajout_film extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(pan_principalLayout.createSequentialGroup()
                         .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                         .addComponent(button_image)
                         .addGap(50, 50, 50))))
         );
 
         getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
 
-        pan_buttons.setLayout(new java.awt.GridLayout(1, 2));
+        pan_buttons.setLayout(new java.awt.GridLayout(2, 2));
+
+        button_ba.setText("Bande-annonce");
+        button_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_baActionPerformed(evt);
+            }
+        });
+        pan_buttons.add(button_ba);
+
+        button_bo.setText("Bande originale");
+        button_bo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_boActionPerformed(evt);
+            }
+        });
+        pan_buttons.add(button_bo);
 
         button_annuler.setText("Annuler");
         pan_buttons.add(button_annuler);
@@ -256,6 +276,36 @@ public class frame_ajout_film extends javax.swing.JFrame {
 
     }//GEN-LAST:event_button_validerActionPerformed
 
+    private void button_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_baActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une vidéo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Videos", "avi", "mkv", "mp4");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de la video
+            this.cheminBA = fileChooser.getSelectedFile().getAbsolutePath();
+            //TODO update dans la BD
+        }
+    }//GEN-LAST:event_button_baActionPerformed
+
+    private void button_boActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_boActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une musique");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Musiques", "mp3", "wav","midi","flac");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération du fichier son
+            this.cheminBO = fileChooser.getSelectedFile().getAbsolutePath();
+            //TODO update dans la BD
+        }
+    }//GEN-LAST:event_button_boActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -293,6 +343,8 @@ public class frame_ajout_film extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_annuler;
+    private javax.swing.JButton button_ba;
+    private javax.swing.JButton button_bo;
     private javax.swing.JButton button_image;
     private javax.swing.JButton button_valider;
     private javax.swing.JTextArea edition_synopsis;

@@ -19,6 +19,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 import oracle.ord.im.OrdImage;
+import oracle.ord.im.OrdVideo;
 
 /**
  *
@@ -26,7 +27,9 @@ import oracle.ord.im.OrdImage;
  */
 public class frame_ajout_jeu extends javax.swing.JFrame {
     String cheminPhoto="";
+    String cheminBA="";
     Image photo;
+    
     /**
      * Creates new form frame_ajout_jeu
      */
@@ -68,10 +71,11 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
         pan_text = new javax.swing.JScrollPane();
         edition_synopsis = new javax.swing.JTextArea();
         pan_image = new javax.swing.JPanel();
-        button_image = new javax.swing.JButton();
         label_note = new javax.swing.JLabel();
         field_note = new javax.swing.JTextField();
         pan_buttons = new javax.swing.JPanel();
+        button_ba = new javax.swing.JButton();
+        button_image = new javax.swing.JButton();
         button_annuler = new javax.swing.JButton();
         button_valider = new javax.swing.JButton();
 
@@ -107,13 +111,6 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
             .addGap(0, 125, Short.MAX_VALUE)
         );
 
-        button_image.setText("Image");
-        button_image.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_imageActionPerformed(evt);
-            }
-        });
-
         label_note.setText("Note");
 
         javax.swing.GroupLayout pan_principalLayout = new javax.swing.GroupLayout(pan_principal);
@@ -138,9 +135,7 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
                             .addComponent(field_titre, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
                             .addComponent(field_note))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pan_image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(button_image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(53, 53, 53))
         );
         pan_principalLayout.setVerticalGroup(
@@ -150,9 +145,7 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
                 .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pan_principalLayout.createSequentialGroup()
                         .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(button_image)
-                        .addGap(0, 52, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pan_principalLayout.createSequentialGroup()
                         .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(label_titre)
@@ -172,13 +165,29 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_synopsis)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pan_text)))
+                        .addComponent(pan_text, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
         getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
 
-        pan_buttons.setLayout(new java.awt.GridLayout(1, 2));
+        pan_buttons.setLayout(new java.awt.GridLayout(2, 2));
+
+        button_ba.setText("Bande-annonce");
+        button_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_baActionPerformed(evt);
+            }
+        });
+        pan_buttons.add(button_ba);
+
+        button_image.setText("Image");
+        button_image.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_imageActionPerformed(evt);
+            }
+        });
+        pan_buttons.add(button_image);
 
         button_annuler.setText("Annuler");
         pan_buttons.add(button_annuler);
@@ -215,20 +224,28 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
             index++;
             rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_JeuVideo VALUES("+index+",'"+this.field_date.getText()+"','"+this.field_titre.getText()+"','"+this.edition_synopsis.getText()+"','"+this.field_genre.getText()+"',"+this.field_note.getText()+",ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init())");
             index=-1;
-            rs=(OracleResultSet)s.executeQuery("select id, image from PBDM_JeuVideo where nom='"+this.field_titre.getText()+"' for update");
+            rs=(OracleResultSet)s.executeQuery("select id, image, bandeA from PBDM_JeuVideo where nom='"+this.field_titre.getText()+"' for update");
             while(rs.next())
             {
                 index=rs.getInt(1);
                 OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                //OrdVideo vidObj= (OrdVideo)rs.getORAData(3,OrdVideo.getORADataFactory());
                 String fich=this.cheminPhoto;
+                String vid=this.cheminBA;
                 imgObj.loadDataFromFile(fich);
+                //vidObj.loadDataFromFile(vid);
                 imgObj.setProperties();
+                //vidObj.setProperties(null);
                 if(imgObj.checkProperties())
                 {
                     System.out.println("affiche mise à jour");
-                }
+                }/*if(vidObj.checkProperties(null))
+                {
+                    System.out.println("BA mise à jour");
+                }*/
                 OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_JeuVideo set image=? where id="+index);
                 stmt1.setORAData(1,imgObj);
+                //stmt1.setORAData(2,vidObj);
                 stmt1.execute();
                 stmt1.close();
                 
@@ -265,6 +282,21 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
             this.affiche();
         }
     }//GEN-LAST:event_button_imageActionPerformed
+
+    private void button_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_baActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une vidéo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Videos", "avi", "mkv", "mp4");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de la video
+            this.cheminBA = fileChooser.getSelectedFile().getAbsolutePath();
+            //TODO update dans la BD
+        }
+    }//GEN-LAST:event_button_baActionPerformed
 
     /**
      * @param args the command line arguments
@@ -303,6 +335,7 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_annuler;
+    private javax.swing.JButton button_ba;
     private javax.swing.JButton button_image;
     private javax.swing.JButton button_valider;
     private javax.swing.JTextArea edition_synopsis;
