@@ -243,7 +243,7 @@ public class frame_ajout_serie extends javax.swing.JFrame {
             s = con.createStatement();
             OracleResultSet rs=null;
 
-            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Serie VALUES("+index+",'"+this.field_nom.getText()+"','"+this.ta_synopsis.getText()+"',new ORDSYS.ORDImage,new ORDSYS.ORDVideo,0,'"+this.field_genre.getText()+"')");
+            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Serie VALUES("+index+",'"+this.field_nom.getText()+"','"+this.ta_synopsis.getText()+"',new ORDSYS.ORDImage.init(),new ORDSYS.ORDVideo.init(),0,'"+this.field_genre.getText()+"')");
             index=-1;
             rs=(OracleResultSet)s.executeQuery("select id, image, bandeA from PBDM_Serie where nom='"+this.field_nom.getText()+"' for update");
             while(rs.next())

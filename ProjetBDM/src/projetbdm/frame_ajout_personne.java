@@ -327,7 +327,7 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                         stmt1.setORAData(1,imgObj);
                         stmt1.execute();
                         stmt1.close();
-
+                    con.createStatement().execute("ALTER INDEX PBDM_indexA REBUILD");
                     con.commit();
                     s.close();
                 }
@@ -357,6 +357,7 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                         stmt1.setORAData(1,imgObj);
                         stmt1.execute();
                         stmt1.close();
+                        con.createStatement().execute("ALTER INDEX PBDM_indexR REBUILD");
                        con.commit();
                         s.close();
             }

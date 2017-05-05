@@ -189,7 +189,7 @@ public class frame_recherche extends javax.swing.JFrame
                         case "personne" :
                             rs=(OracleResultSet)st.executeQuery("SELECT a.nom,a.id,r.nom,r.id FROM PBDM_Acteur,PBDM_Realisateur WHERE CONTAINS(a.nom,'"+this.tf_rech_nom.getText()+"')>0 OR CONTAINS(r.nom,'"+this.tf_rech_nom.getText()+"')>0");
                             while(rs.next())
-                            {
+                            {   
                                 index=rs.getInt(2);
                                 list_id.add(index);
                             }
