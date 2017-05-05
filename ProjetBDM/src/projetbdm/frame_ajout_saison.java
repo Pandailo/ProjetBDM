@@ -18,6 +18,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class frame_ajout_saison extends javax.swing.JFrame {
     String cheminPhoto="";
+    String cheminBA="";
     Image photo;
     /** Creates new form frame_ajout_saison */
     public frame_ajout_saison() {
@@ -54,8 +55,8 @@ public class frame_ajout_saison extends javax.swing.JFrame {
         field_num = new javax.swing.JTextField();
         pan_image = new javax.swing.JPanel();
         pan_buttons = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        button_ba = new javax.swing.JButton();
+        button_image = new javax.swing.JButton();
         button_annuler = new javax.swing.JButton();
         button_valider = new javax.swing.JButton();
 
@@ -110,16 +111,21 @@ public class frame_ajout_saison extends javax.swing.JFrame {
 
         pan_buttons.setLayout(new java.awt.GridLayout(2, 2));
 
-        jButton2.setText("jButton2");
-        pan_buttons.add(jButton2);
-
-        jButton1.setText("Image");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        button_ba.setText("Bande-annonce");
+        button_ba.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                button_baActionPerformed(evt);
             }
         });
-        pan_buttons.add(jButton1);
+        pan_buttons.add(button_ba);
+
+        button_image.setText("Image");
+        button_image.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_imageActionPerformed(evt);
+            }
+        });
+        pan_buttons.add(button_image);
 
         button_annuler.setText("Annuler");
         pan_buttons.add(button_annuler);
@@ -132,7 +138,7 @@ public class frame_ajout_saison extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void button_imageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_imageActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choisir une photo");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "bmp", "jpg", "jpeg", "png");
@@ -144,10 +150,23 @@ public class frame_ajout_saison extends javax.swing.JFrame {
             //Récupération de l'image
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
-            //TODO update dans la BD
             this.affiche();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_button_imageActionPerformed
+
+    private void button_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_baActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une vidéo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Videos", "avi", "mkv", "mp4");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de la video
+            this.cheminBA = fileChooser.getSelectedFile().getAbsolutePath();
+        }
+    }//GEN-LAST:event_button_baActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,10 +205,10 @@ public class frame_ajout_saison extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_annuler;
+    private javax.swing.JButton button_ba;
+    private javax.swing.JButton button_image;
     private javax.swing.JButton button_valider;
     private javax.swing.JTextField field_num;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel label_frame;
     private javax.swing.JLabel label_num;
     private javax.swing.JPanel pan_buttons;

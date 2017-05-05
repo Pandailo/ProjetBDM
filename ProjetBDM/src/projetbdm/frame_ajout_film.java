@@ -18,7 +18,9 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
+import oracle.ord.im.OrdAudio;
 import oracle.ord.im.OrdImage;
+import oracle.ord.im.OrdVideo;
 
 /**
  *
@@ -46,7 +48,6 @@ public class frame_ajout_film extends javax.swing.JFrame {
     private void affiche()
     {
         Graphics g = this.pan_image.getGraphics();
-        //this.pan_image.setSize(140,140*(photo.getWidth(null)/photo.getHeight(null)));
         g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
     }
 
@@ -234,7 +235,6 @@ public class frame_ajout_film extends javax.swing.JFrame {
             //Récupération de l'image
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
-            //TODO update dans la BD
             this.affiche();
         }
     }//GEN-LAST:event_button_imageActionPerformed
@@ -252,23 +252,29 @@ public class frame_ajout_film extends javax.swing.JFrame {
 
             rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Film VALUES("+index+",'"+this.field_date.getText()+"','"+this.field_titre.getText()+"','"+this.edition_synopsis.getText()+"','"+this.field_genre.getText()+"',ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),ORDSYS.ORDAudio.init(),(SELECT REF(r) FROM PBDM_Realisateur r WHERE r.id=1))");
             index=-1;
-            rs=(OracleResultSet)s.executeQuery("select id, image from PBDM_Film where nom='"+this.field_titre.getText()+"' for update");
+            rs=(OracleResultSet)s.executeQuery("select id, image, bandeA, bandeO from PBDM_Film where nom='"+this.field_titre.getText()+"' for update");
             while(rs.next())
             {
                 index=rs.getInt(1);
                 OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                OrdVideo vidObj= (OrdVideo)rs.getORAData(3,OrdVideo.getORADataFactory());
+                OrdAudio sonObj= (OrdAudio)rs.getORAData(4,OrdAudio.getORADataFactory());
                 String fich=this.cheminPhoto;
+                String vid=this.cheminBA;
+                String son=this.cheminBO;
                 imgObj.loadDataFromFile(fich);
+                vidObj.loadDataFromFile(vid);
+                sonObj.loadDataFromFile(son);
+                byte[] ctx[] = new byte [4000][1];
                 imgObj.setProperties();
-                if(imgObj.checkProperties())
-                {
-                    System.out.println("affiche mise à jour");
-                }
-                OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=? where id="+index);
+                vidObj.setProperties(ctx);
+                sonObj.setProperties(ctx);
+                OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=?,bandeA=?,bandeO=? where id="+index);
                 stmt1.setORAData(1,imgObj);
+                stmt1.setORAData(2,vidObj);
+                stmt1.setORAData(3,sonObj);
                 stmt1.execute();
-                stmt1.close();
-                
+                stmt1.close();   
             }
             rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexF REBUILD");
             rs.close();
@@ -286,7 +292,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
         {
             Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        this.dispose();
     }//GEN-LAST:event_button_validerActionPerformed
 
     private void button_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_baActionPerformed
@@ -300,7 +306,6 @@ public class frame_ajout_film extends javax.swing.JFrame {
         {
             //Récupération de la video
             this.cheminBA = fileChooser.getSelectedFile().getAbsolutePath();
-            //TODO update dans la BD
         }
     }//GEN-LAST:event_button_baActionPerformed
 
@@ -315,7 +320,6 @@ public class frame_ajout_film extends javax.swing.JFrame {
         {
             //Récupération du fichier son
             this.cheminBO = fileChooser.getSelectedFile().getAbsolutePath();
-            //TODO update dans la BD
         }
     }//GEN-LAST:event_button_boActionPerformed
 
