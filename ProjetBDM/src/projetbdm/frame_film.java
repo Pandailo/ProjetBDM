@@ -32,6 +32,7 @@ public class frame_film extends javax.swing.JFrame
     private Image photo;
     private String cheminPhoto;
     int id;
+    String fich,vid,aud;
     Connection con;
     /**
      * Creates new form frame_film
@@ -101,7 +102,7 @@ public class frame_film extends javax.swing.JFrame
             while(rs.next())
             {
                 OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
-                String fich="im_temp.jpg";
+                fich="im_temp.jpg";
                 imgObj.getDataInFile(fich);
                 photo=this.pan_affiche.getToolkit().getImage(fich);
                 affiche();  
@@ -150,6 +151,14 @@ public class frame_film extends javax.swing.JFrame
         button_ajout_ba = new javax.swing.JButton();
         button_ba = new javax.swing.JButton();
 
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
         getContentPane().setLayout(new java.awt.GridLayout(1, 1));
 
         jPanel1.setPreferredSize(new java.awt.Dimension(720, 600));
@@ -319,7 +328,7 @@ public class frame_film extends javax.swing.JFrame
 
     private void button_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_baActionPerformed
         try {
-            String vid="";
+            vid="";
             con=connexionUtils.getInstance().getConnexion();
             Statement st=con.createStatement();
             OracleResultSet rs=(OracleResultSet)st.executeQuery("select bandeA from PBDM_Film where id="+id);
@@ -341,7 +350,7 @@ public class frame_film extends javax.swing.JFrame
 
     private void button_boActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_boActionPerformed
         try {
-            String aud="";
+            aud="";
             con=connexionUtils.getInstance().getConnexion();
             Statement st=con.createStatement();
             OracleResultSet rs=(OracleResultSet)st.executeQuery("select bandeO from PBDM_Film where id="+id);
@@ -359,6 +368,22 @@ public class frame_film extends javax.swing.JFrame
             Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_boActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+
+    }//GEN-LAST:event_formWindowClosed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        File imagetemp = new File(fich);
+        File videotemp = new File(vid);
+        File audiotemp = new File(aud);
+        if(imagetemp.exists())
+            imagetemp.delete();
+        if(videotemp.exists())
+            videotemp.delete();
+        if(audiotemp.exists())
+            audiotemp.delete();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
