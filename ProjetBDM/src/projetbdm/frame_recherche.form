@@ -138,18 +138,12 @@
             </Component>
             <Component class="javax.swing.JCheckBox" name="realisateur_chb">
               <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="groupe_button"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="R&#xe9;alisateur"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="acteur_chb">
               <Properties>
-                <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-                  <ComponentRef name="groupe_button"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Acteur"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>

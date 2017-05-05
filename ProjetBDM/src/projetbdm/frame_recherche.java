@@ -38,8 +38,8 @@ public class frame_recherche extends javax.swing.JFrame
                 case "serie": this.serie_chb.setSelected(true);this.serie_chb.setEnabled(false);break;
                 case "jeu" : this.jeuvideo_chb.setSelected(true);this.jeuvideo_chb.setEnabled(false);break;
                 case "personne" : this.acteur_chb.setSelected(true);
-                                    this.realisateur_chb.setSelected(true);
-                                    this.acteur_chb.setEnabled(false);this.realisateur_chb.setEnabled(false);break;
+                                  this.realisateur_chb.setSelected(true);this.acteur_chb.setSelected(true);
+                                  this.acteur_chb.setEnabled(false);this.realisateur_chb.setEnabled(false);break;
                                     
         }
     }
@@ -131,12 +131,10 @@ public class frame_recherche extends javax.swing.JFrame
         saison_chb.setEnabled(false);
         pan_chb.add(saison_chb);
 
-        groupe_button.add(realisateur_chb);
         realisateur_chb.setText("Réalisateur");
         realisateur_chb.setEnabled(false);
         pan_chb.add(realisateur_chb);
 
-        groupe_button.add(acteur_chb);
         acteur_chb.setText("Acteur");
         acteur_chb.setEnabled(false);
         pan_chb.add(acteur_chb);
