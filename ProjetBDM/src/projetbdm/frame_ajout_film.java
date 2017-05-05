@@ -254,7 +254,6 @@ public class frame_ajout_film extends javax.swing.JFrame {
             Statement s=null;
             s = con.createStatement();
             OracleResultSet rs=null;
-
             rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Film VALUES("+index+",'"+this.field_date.getText()+"','"+this.field_titre.getText()+"','"+this.edition_synopsis.getText()+"','"+this.field_genre.getText()+"',ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),ORDSYS.ORDAudio.init(),(SELECT REF(r) FROM PBDM_Realisateur r WHERE r.id=1))");
             index=-1;
             rs=(OracleResultSet)s.executeQuery("select id, image, bandeA, bandeO from PBDM_Film where nom='"+this.field_titre.getText()+"' for update");
@@ -306,14 +305,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
             s.close();
             con.commit();
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex) {
-            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
+        catch (SQLException | IOException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
         }

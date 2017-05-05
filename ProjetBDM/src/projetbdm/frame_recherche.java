@@ -5,7 +5,6 @@
  */
 package projetbdm;
 
-import java.awt.GridLayout;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JCheckBox;
 import oracle.jdbc.OracleResultSet;
 
 /**

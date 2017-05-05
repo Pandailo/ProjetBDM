@@ -8,6 +8,7 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -16,8 +17,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 import oracle.ord.im.OrdImage;
+import oracle.ord.im.OrdVideo;
 
 /**
  *
@@ -27,12 +30,16 @@ public class frame_jeu extends javax.swing.JFrame
 {
     boolean admin;
     String cheminPhoto;
+    int id;
+    String fich="",vid="",aud="";
     Image photo;
+    Connection con;
     /**
      * Creates new form frame_jeu
      */
     public frame_jeu(boolean admin,int idJ) throws SQLException, IOException
     {
+        this.id=idJ;
         try
         {
             initComponents();
@@ -42,9 +49,7 @@ public class frame_jeu extends javax.swing.JFrame
                 this.pan_admin.removeAll();
                 this.pan_buttons.setLayout(new java.awt.GridLayout(1, 1));
             }
-            Connection con;
             con=connexionUtils.getInstance().getConnexion();
-            //con=connexionUtils2.getInstance();
             Statement st=con.createStatement();
             String titre="";
             String synopsis="";
@@ -86,7 +91,7 @@ public class frame_jeu extends javax.swing.JFrame
             while(rs.next())
             {
                 OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
-                String fich="DS.jpg";
+                fich="im_temp.jpg";
                 imgObj.getDataInFile(fich);
                 photo=this.pan_affiche.getToolkit().getImage(fich);
                 affiche();
@@ -126,6 +131,11 @@ public class frame_jeu extends javax.swing.JFrame
         button_modif_affiche = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         label_titre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -135,6 +145,11 @@ public class frame_jeu extends javax.swing.JFrame
         pan_buttons.setLayout(new java.awt.GridLayout(1, 2));
 
         button_ba.setText("Bande-annonce");
+        button_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_baActionPerformed(evt);
+            }
+        });
         pan_buttons.add(button_ba);
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
@@ -241,8 +256,71 @@ public class frame_jeu extends javax.swing.JFrame
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
             //TODO update dans la BD
             this.affiche();
+            try
+            {
+                int index=0;
+                con=connexionUtils.getInstance().getConnexion();
+                con.setAutoCommit(false);
+                Statement s=null;
+                s = con.createStatement();
+                OracleResultSet rs=null;
+                rs=(OracleResultSet)s.executeQuery("select id, image from PBDM_JeuVideo where nom='"+this.label_titre.getText()+"' for update");
+                while(rs.next())
+                {
+                    index=rs.getInt(1);
+                    OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                    String img=this.cheminPhoto;
+                    imgObj.loadDataFromFile(img);
+                    imgObj.setProperties();
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_JeuVideo set image=? where id="+index);
+                    stmt1.setORAData(1,imgObj);
+                    stmt1.execute();
+                    stmt1.close();   
+                }
+                rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexJ REBUILD");
+                rs.close();
+                s.close();
+                con.commit();
+            }
+            catch (SQLException | IOException | ClassNotFoundException ex)
+            {
+                Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+            }  
         }
     }//GEN-LAST:event_button_modif_afficheActionPerformed
+
+    private void button_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_baActionPerformed
+        try {
+            vid="";
+            con=connexionUtils.getInstance().getConnexion();
+            Statement st=con.createStatement();
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("select bandeA from PBDM_Film where id="+id);
+            while(rs.next())
+            {
+            OrdVideo vidObj= (OrdVideo)rs.getORAData(1,OrdVideo.getORADataFactory());
+            vid="vid_temp.avi";
+            vidObj.getDataInFile(vid);
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec("vlc "+vid);
+            }
+            rs.close();
+            st.close();
+            
+        } catch (SQLException | ClassNotFoundException | IOException ex) {
+            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_baActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        File imagetemp = new File(fich);
+        File videotemp=null;
+        if (vid!="")
+            videotemp = new File(vid);
+        if(imagetemp.exists())
+            imagetemp.delete();
+        if(videotemp!=null)
+            videotemp.delete();
+    }//GEN-LAST:event_formWindowClosing
      public void paint(Graphics g)
     {
         super.paint(g);
