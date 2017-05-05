@@ -5,12 +5,6 @@
  */
 package projetbdm;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Yann

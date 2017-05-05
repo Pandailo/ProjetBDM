@@ -7,10 +7,7 @@ package projetbdm;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import static javafx.scene.input.DataFormat.URL;
 import javax.media.*;
 import javax.swing.*;
 

@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package projetbdm;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
