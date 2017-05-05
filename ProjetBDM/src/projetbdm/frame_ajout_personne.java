@@ -269,6 +269,7 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                 try
                 {
                     taille=Integer.parseInt(this.jTextField1.getText());
+                    System.out.println(taille);
                 }
                 catch(NumberFormatException  e)
                 {
@@ -293,7 +294,7 @@ public class frame_ajout_personne extends javax.swing.JFrame {
             {
                 if(this.jRadioButton1.isSelected()&&taille!=-1)
                 {
-                    OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("INSERT INTO PBDM_Acteur VALUES(0,?,?,PBDM_PrenomsV_Type(PBDM_prenom_type(?),PBDM_prenom_type(?),PBDM_prenom_type(?)),?,ORDImage.init())"); 
+                    OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("INSERT INTO PBDM_Acteur VALUES(0,?,?,PBDM_PrenomsV_Type(PBDM_prenom_type(?),PBDM_prenom_type(?),PBDM_prenom_type(?)),ORDImage.init(),?)"); 
                     s.setString(1, ddn);
                     s.setString(2, nom);
                     s.setString(3, prenoms[0]);
