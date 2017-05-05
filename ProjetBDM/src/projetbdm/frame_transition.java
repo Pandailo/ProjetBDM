@@ -101,8 +101,7 @@ public class frame_transition extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         lab_typeM = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -111,6 +110,9 @@ public class frame_transition extends javax.swing.JFrame
         jPanel2 = new javax.swing.JPanel();
         annuler_button = new javax.swing.JButton();
         aller_button = new javax.swing.JButton();
+
+        setMinimumSize(new java.awt.Dimension(270, 200));
+        setPreferredSize(new java.awt.Dimension(270, 200));
 
         lab_typeM.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         getContentPane().add(lab_typeM, java.awt.BorderLayout.PAGE_START);
@@ -127,20 +129,16 @@ public class frame_transition extends javax.swing.JFrame
         jPanel2.setLayout(new java.awt.GridLayout(1, 2));
 
         annuler_button.setText("Annuler");
-        annuler_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        annuler_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 annuler_buttonActionPerformed(evt);
             }
         });
         jPanel2.add(annuler_button);
 
         aller_button.setText("Aller au média");
-        aller_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        aller_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aller_buttonActionPerformed(evt);
             }
         });

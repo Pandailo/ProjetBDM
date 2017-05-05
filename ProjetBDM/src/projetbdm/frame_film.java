@@ -8,6 +8,7 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -15,11 +16,11 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
+import oracle.ord.im.OrdAudio;
 import oracle.ord.im.OrdImage;
+import oracle.ord.im.OrdVideo;
 
 /**
  *
@@ -30,12 +31,14 @@ public class frame_film extends javax.swing.JFrame
     boolean admin;
     private Image photo;
     private String cheminPhoto;
+    int id;
     Connection con;
     /**
      * Creates new form frame_film
      */
     public frame_film(boolean admin,int idF) throws ClassNotFoundException, IOException
     {
+        this.id=idF;
         try
         {
             initComponents();
@@ -49,7 +52,6 @@ public class frame_film extends javax.swing.JFrame
                 this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
             }
             con=connexionUtils.getInstance().getConnexion();
-            //con=connexionUtils2.getInstance();
             Statement st=con.createStatement();
             String titre="";
             String synopsis="";
@@ -98,18 +100,23 @@ public class frame_film extends javax.swing.JFrame
             rs=(OracleResultSet)st.executeQuery("select image from PBDM_Film where id="+idF);
             while(rs.next())
             {
-               OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
-                String fich="DS.jpg";
+                OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
+                String fich="im_temp.jpg";
                 imgObj.getDataInFile(fich);
                 photo=this.pan_affiche.getToolkit().getImage(fich);
-                affiche();
-                
+                affiche();  
+                File fichiertemp = new File(fich);
+                if(fichiertemp.exists())
+                    fichiertemp.delete();
             }
+            rs.close();
+            st.close();
         }
         catch (SQLException ex)
         {
             Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
    }
       
     /**
@@ -119,8 +126,7 @@ public class frame_film extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         label_titre = new javax.swing.JLabel();
@@ -218,10 +224,8 @@ public class frame_film extends javax.swing.JFrame
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -243,6 +247,11 @@ public class frame_film extends javax.swing.JFrame
         pan_bo.add(button_ajout_bo);
 
         button_bo.setText("Bande originale");
+        button_bo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_boActionPerformed(evt);
+            }
+        });
         pan_bo.add(button_bo);
 
         pan_buttons.add(pan_bo);
@@ -250,9 +259,19 @@ public class frame_film extends javax.swing.JFrame
         pan_ba.setLayout(new java.awt.GridLayout(2, 1));
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
+        button_ajout_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_ajout_baActionPerformed(evt);
+            }
+        });
         pan_ba.add(button_ajout_ba);
 
         button_ba.setText("Bande-annonce");
+        button_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_baActionPerformed(evt);
+            }
+        });
         pan_ba.add(button_ba);
 
         pan_buttons.add(pan_ba);
@@ -293,6 +312,53 @@ public class frame_film extends javax.swing.JFrame
             this.affiche();
         }
     }//GEN-LAST:event_button_modif_afficheActionPerformed
+
+    private void button_ajout_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ajout_baActionPerformed
+
+    }//GEN-LAST:event_button_ajout_baActionPerformed
+
+    private void button_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_baActionPerformed
+        try {
+            String vid="";
+            con=connexionUtils.getInstance().getConnexion();
+            Statement st=con.createStatement();
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("select bandeA from PBDM_Film where id="+id);
+            while(rs.next())
+            {
+            OrdVideo vidObj= (OrdVideo)rs.getORAData(1,OrdVideo.getORADataFactory());
+            vid="vid_temp.avi";
+            vidObj.getDataInFile(vid);
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec("vlc "+vid);
+            }
+            rs.close();
+            st.close();
+            
+        } catch (SQLException | ClassNotFoundException | IOException ex) {
+            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_baActionPerformed
+
+    private void button_boActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_boActionPerformed
+        try {
+            String aud="";
+            con=connexionUtils.getInstance().getConnexion();
+            Statement st=con.createStatement();
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("select bandeO from PBDM_Film where id="+id);
+            while(rs.next())
+            {
+            OrdAudio audObj= (OrdAudio)rs.getORAData(1,OrdAudio.getORADataFactory());
+            aud="son_temp.mp3";
+            audObj.getDataInFile(aud);
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec("vlc "+aud);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException | ClassNotFoundException | IOException ex) {
+            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_boActionPerformed
 
     /**
      * @param args the command line arguments
