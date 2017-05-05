@@ -39,14 +39,16 @@ public class frame_personne extends javax.swing.JFrame {
         String nom="";
         String ddn="";
         String pnom="";
+        int taille=-1;
         OrdImage imgObj;
         Connection con=connexionUtils.getInstance().getConnexion();
         Statement st=con.createStatement();
-        OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss,prenoms FROM PBDM_Acteur WHERE nom='"+nomP+"'");
+        OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss,prenoms,taille FROM PBDM_Acteur WHERE nom='"+nomP+"'");
         if(rs.next())
         {
             nom=rs.getString(2);
             ddn=rs.getString(3);
+            taille=rs.getInt(5);
             ARRAY prenoms = rs.getARRAY(4);
             Object[] pnoms = (Object[])prenoms.getArray();
             pnom=(((STRUCT)pnoms[0]).getAttributes()[0].toString())+" ";
@@ -94,6 +96,8 @@ public class frame_personne extends javax.swing.JFrame {
         this.edition.append("Nom :"+nom+"\n");
         this.edition.append("Prenom :"+pnom+" \n");
         this.edition.append("Date de naissance :"+ddn+"\n");
+        if(taille!=-1)
+            this.edition.append("Taille :"+taille);
     }
 
     /**
