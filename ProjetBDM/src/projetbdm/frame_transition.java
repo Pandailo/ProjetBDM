@@ -28,63 +28,86 @@ public class frame_transition extends javax.swing.JFrame
      * @param typeM
      * @param l_id
      */
-    public frame_transition(boolean admin,String typeM,List<Integer> l_id) throws ClassNotFoundException
+    public frame_transition(boolean admin,String typeM,List<Integer> l_id,List<String> l_noms) throws ClassNotFoundException, SQLException
     {
-        try
+        this.admin=admin;
+        initComponents();
+        this.cb_listM.removeAllItems();
+        this.lab_typeM.setText("Choisissez un(e) "+typeM); 
+        con=connexionUtils.getInstance().getConnexion();
+        Statement st=con.createStatement();
+        this.type_media=typeM;
+        OracleResultSet rs=null;
+        String nom="";
+        if(l_id!=null)
         {
-            this.admin=admin;
-            initComponents();
-            this.cb_listM.removeAllItems();
-            this.lab_typeM.setText("Choisissez un(e) "+typeM); 
-            con=connexionUtils.getInstance().getConnexion();
-            Statement st=con.createStatement();
-            this.type_media=typeM;
-            OracleResultSet rs=null;
-            String nom="";
-            for(int i=0;i<l_id.size();i++)
+                for(int i=0;i<l_id.size();i++)
+                {
+                    switch (this.type_media) {
+                        case "film" :
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Film WHERE id ="+l_id.get(i));
+                            while(rs.next())
+                            {
+                                nom=rs.getString(1);
+                                this.cb_listM.addItem(nom);
+                            }
+                            break;
+                        case "jeu" : 
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_JeuVideo WHERE id ="+l_id.get(i));
+                            while(rs.next())
+                            {
+                                nom=rs.getString(1);
+                                this.cb_listM.addItem(nom);
+                            }
+                            break;
+                        case "serie" : 
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Serie WHERE id ="+l_id.get(i));
+                            while(rs.next())
+                            {
+                                nom=rs.getString(1);
+                                this.cb_listM.addItem(nom);
+                            }
+                            break;
+                        case "personne" : 
+                            rs=(OracleResultSet)st.executeQuery("SELECT a.nom,r.nom FROM PBDM_Acteur a,PBDM_Realisateur r WHERE id ="+l_id.get(i));
+                            while(rs.next())
+                            {
+                                nom=rs.getString(1);
+                                this.cb_listM.addItem(nom);
+                            }
+                            break;
+                    }
+                }
+        }
+        else
+        {
+            
+            if(this.type_media.equals("personne"))
             {
-                switch (this.type_media) {
-                    case "film" :
-                        rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Film WHERE id ="+l_id.get(i));
-                        while(rs.next())
+                for(int i=0;i<l_noms.size();i++)
+                {
+                        rs=(OracleResultSet)st.executeQuery("SELECT a.nom,r.nom FROM PBDM_Acteur a,PBDM_Realisateur r WHERE nom ="+l_noms.get(i)+"'");
+                        if(rs!=null)
                         {
-                            nom=rs.getString(1);
-                            this.cb_listM.addItem(nom);
+                            while(rs.next())
+                            {
+                                nom=rs.getString(1);
+                                this.cb_listM.addItem(nom);
+                            }
                         }
-                        break;
-                    case "jeu" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_JeuVideo WHERE id ="+l_id.get(i));
-                        while(rs.next())
+                        else
                         {
-                            nom=rs.getString(1);
-                            this.cb_listM.addItem(nom);
-                        }
-                        break;
-                    case "serie" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Serie WHERE id ="+l_id.get(i));
-                        while(rs.next())
-                        {
-                            nom=rs.getString(1);
-                            this.cb_listM.addItem(nom);
-                        }
-                        break;
-                    case "personne" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT a.nom,r.nom FROM PBDM_Acteur a,PBDM_Realisateur r WHERE id ="+l_id.get(i));
-                        while(rs.next())
-                        {
-                            nom=rs.getString(1);
-                            this.cb_listM.addItem(nom);
+                             rs=(OracleResultSet)st.executeQuery("SELECT a.nom,r.nom FROM PBDM_Acteur a,PBDM_Realisateur r WHERE nom ="+l_noms.get(i)+"'");
+                             nom=rs.getString(2);
+                                this.cb_listM.addItem(nom);
                         }
                         break;
                 }
             }
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_transition.class.getName()).log(Level.SEVERE, null, ex);
-        }
         
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -186,11 +209,23 @@ public class frame_transition extends javax.swing.JFrame
                         }
                         break;
                     case "personne" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT a.id,r.id FROM PBDM_Acteur a PBDM_Realisaeur r WHERE a.nom ='"+this.cb_listM.getSelectedItem()+"'");
-                        while(rs.next())
+                        rs=(OracleResultSet)st.executeQuery("SELECT a.id FROM PBDM_Acteur a WHERE a.nom ='"+this.cb_listM.getSelectedItem()+"'");
+                        if(rs!=null)
                         {
-                            index=rs.getInt(1);    
-                            frame_personne fp=new frame_personne(this.admin,index);
+                            while(rs.next())
+                            {
+                                index=rs.getInt(1);    
+                                frame_personne fp=new frame_personne(this.admin, (String) this.cb_listM.getSelectedItem());
+                            }
+                        }
+                        else
+                        {
+                            rs=(OracleResultSet)st.executeQuery("SELECT r.id FROM PBDM_Realisateur r WHERE r.nom ='"+this.cb_listM.getSelectedItem()+"'");
+                            while(rs.next())
+                            {
+                                index=rs.getInt(1);    
+                                frame_personne fp=new frame_personne(this.admin,(String)this.cb_listM.getSelectedItem());
+                            }
                         }
                         break;
                 }

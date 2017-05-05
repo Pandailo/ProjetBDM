@@ -8,8 +8,17 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OraclePreparedStatement;
+import oracle.jdbc.OracleResultSet;
+import oracle.ord.im.OrdImage;
 
 /**
  *
@@ -47,7 +56,8 @@ public class frame_ajout_personne extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         label_frame = new javax.swing.JLabel();
@@ -94,17 +104,33 @@ public class frame_ajout_personne extends javax.swing.JFrame {
         );
 
         image_button.setText("Image");
-        image_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        image_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 image_buttonActionPerformed(evt);
             }
         });
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Réalisateur");
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setText("Acteur");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Taille");
 
@@ -188,6 +214,13 @@ public class frame_ajout_personne extends javax.swing.JFrame {
         pan_button.add(annuler_button);
 
         valider_button.setText("Valider");
+        valider_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                valider_buttonActionPerformed(evt);
+            }
+        });
         pan_button.add(valider_button);
 
         getContentPane().add(pan_button, java.awt.BorderLayout.SOUTH);
@@ -211,6 +244,124 @@ public class frame_ajout_personne extends javax.swing.JFrame {
             this.affiche();
         }
     }//GEN-LAST:event_image_buttonActionPerformed
+
+    private void valider_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_valider_buttonActionPerformed
+    {//GEN-HEADEREND:event_valider_buttonActionPerformed
+        try
+        {
+            Connection con=connexionUtils.getInstance().getConnexion();
+            con.setAutoCommit(false);
+            Statement s=null;
+            s = con.createStatement();
+            OracleResultSet rs=null;
+            String nom=this.field_nom.getSelectedText();
+            String ddn=this.field_date.getSelectedText();
+            String[] split=this.field_prenoms.getSelectedText().split(" ");
+            String[] prenoms=new String[3];
+            int taille=-1;
+            int index=-1;
+            if(this.jRadioButton1.isSelected())
+            {
+                try
+                {
+                    taille=Integer.parseInt(this.jTextField1.getSelectedText());
+                }
+                catch(NumberFormatException  e)
+                {
+                    //message erreur
+                }
+            }
+            if(split.length<=3)
+            {
+                for(int i=0;i<3;i++)
+                {
+                    if(split.length>=i+1)
+                    {
+                        prenoms[i]=split[i];
+                    }
+                    else
+                    {
+                        prenoms[i]="";
+                    }
+                }
+            }
+            if(this.cheminPhoto!=""&&this.cheminPhoto!=null)
+            {
+                if(this.jRadioButton1.isSelected()&&taille!=-1)
+                {
+                    rs=(OracleResultSet)s.executeQuery("INSERT INTO PBDM_Acteur VALUES(0,'"+ddn+"','"+nom+"',{'"+prenoms[1]+"','"+prenoms[2]+"','"+prenoms[2]+"',ORDSYS.ORDImage.init()");
+                    rs=(OracleResultSet)s.executeQuery("select id, photo from PBDM_Acteur where nom='"+nom+"' for update");
+                    while(rs.next())
+                    {
+                        index=rs.getInt(1);
+                        OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                        String fich=this.cheminPhoto;
+                        imgObj.loadDataFromFile(fich);
+                        imgObj.setProperties();
+                        if(imgObj.checkProperties())
+                        {
+                            System.out.println("photo mise à jour");
+                        }
+                        OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Acteur set photo=? where id="+index);
+                        stmt1.setORAData(1,imgObj);
+                        stmt1.execute();
+                        stmt1.close();
+
+                    }
+                }
+                else
+                {
+                     rs=(OracleResultSet)s.executeQuery("INSERT INTO PBDM_Realisateur VALUES(0,'"+ddn+"','"+nom+"',{'"+prenoms[1]+"','"+prenoms[2]+"','"+prenoms[2]+"',ORDSYS.ORDImage.init()");
+                    rs=(OracleResultSet)s.executeQuery("select id, photo from PBDM_Acteur where nom='"+nom+"' for update");
+                    while(rs.next())
+                    {
+                        index=rs.getInt(1);
+                        OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                        String fich=this.cheminPhoto;
+                        imgObj.loadDataFromFile(fich);
+                        imgObj.setProperties();
+                        if(imgObj.checkProperties())
+                        {
+                            System.out.println("photo mise à jour");
+                        }
+                        OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Realisateur set photo=? where id="+index);
+                        stmt1.setORAData(1,imgObj);
+                        stmt1.execute();
+                        stmt1.close();
+                }
+            }
+        }
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_ajout_personne.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(frame_ajout_personne.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_ajout_personne.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_valider_buttonActionPerformed
+
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioButton2ActionPerformed
+    {//GEN-HEADEREND:event_jRadioButton2ActionPerformed
+        if(this.jRadioButton2.isSelected())
+        {
+            this.jLabel1.setVisible(false);
+            this.jTextField1.setVisible(false);
+        }
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jRadioButton1ActionPerformed
+    {//GEN-HEADEREND:event_jRadioButton1ActionPerformed
+        this.jLabel1.setVisible(true);
+        this.jTextField1.setVisible(true);
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     /**
      * @param args the command line arguments

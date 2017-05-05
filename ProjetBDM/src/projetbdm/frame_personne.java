@@ -10,6 +10,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.sql.*;
+import oracle.jdbc.OracleResultSet;
 
 /**
  *
@@ -22,14 +24,33 @@ public class frame_personne extends javax.swing.JFrame {
     /**
      * Creates new form frame_personne
      */
-    public frame_personne(boolean admin,int idP) {
+    public frame_personne(boolean admin,String nomP) throws SQLException, ClassNotFoundException {
         initComponents();
         this.admin=admin;
         
         if(!admin){
             this.pan_admin.removeAll();
         }
-
+        String nom="";
+        String ddn="";
+        String pnom="";
+        Connection con=connexionUtils.getInstance().getConnexion();
+        Statement st=con.createStatement();
+        OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss FROM PBDM_Acteur WHERE nom='"+nomP+"'");
+        if(rs!=null)
+        {
+            nom=rs.getString(2);
+            ddn=rs.getString(2);
+            
+        }
+        else
+        {
+            rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss FROM PBDM_Realisateur WHERE nom='"+nomP+"'");
+            nom=rs.getString(2);
+            ddn=rs.getString(2);
+        }
+        this.edition.append(nom+"\n");
+        this.edition.append(ddn+"\n");
     }
 
     /**
@@ -188,7 +209,7 @@ public class frame_personne extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws SQLException, ClassNotFoundException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -213,7 +234,7 @@ public class frame_personne extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        frame_personne oui = new frame_personne(true,1);
+        frame_personne oui = new frame_personne(true,"");
             oui.setVisible(true);
     }
 

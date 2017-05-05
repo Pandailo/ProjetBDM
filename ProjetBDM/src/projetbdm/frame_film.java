@@ -159,7 +159,6 @@ public class frame_film extends javax.swing.JFrame
         edition.setEditable(false);
         edition.setColumns(20);
         edition.setRows(5);
-        edition.setEnabled(false);
         pan_text.setViewportView(edition);
 
         pan_principal.add(pan_text);
