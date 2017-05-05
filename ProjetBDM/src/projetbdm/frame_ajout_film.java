@@ -57,7 +57,8 @@ public class frame_ajout_film extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jTextField1 = new javax.swing.JTextField();
         label_frame = new javax.swing.JLabel();
@@ -114,8 +115,10 @@ public class frame_ajout_film extends javax.swing.JFrame {
         );
 
         button_image.setText("Image");
-        button_image.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_image.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_imageActionPerformed(evt);
             }
         });
@@ -181,16 +184,20 @@ public class frame_ajout_film extends javax.swing.JFrame {
         pan_buttons.setLayout(new java.awt.GridLayout(2, 2));
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_baActionPerformed(evt);
             }
         });
         pan_buttons.add(button_ba);
 
         button_bo.setText("Bande originale");
-        button_bo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_bo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_boActionPerformed(evt);
             }
         });
@@ -200,8 +207,10 @@ public class frame_ajout_film extends javax.swing.JFrame {
         pan_buttons.add(button_annuler);
 
         button_valider.setText("Valider");
-        button_valider.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_valider.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_validerActionPerformed(evt);
             }
         });
@@ -271,6 +280,10 @@ public class frame_ajout_film extends javax.swing.JFrame {
             Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch (IOException ex) {
+            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
             Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
         }
 

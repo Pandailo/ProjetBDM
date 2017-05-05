@@ -33,7 +33,7 @@ public class connexionUtils {
 	{
 		return connexionUtilsHolder.instance;
 	}
-	public static Connection getConnexion() throws SQLException
+	public static Connection getConnexion() throws SQLException, ClassNotFoundException
 	{
             Connection con=null;
             try 
@@ -44,10 +44,14 @@ public class connexionUtils {
             {
                     con=getConnexion(URLDIST);
             } 
+            catch (ClassNotFoundException ex)
+            {
+                Logger.getLogger(connexionUtils.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
             return con;
 	}
-	private static Connection getConnexion(String url) throws SQLException
+	/*private static Connection getConnexion(String url) throws SQLException
 	{
 		Connection con=null;
 		try 
@@ -70,6 +74,13 @@ public class connexionUtils {
         {
             Logger.getLogger(connexionUtils.class.getSimpleName()).log(Level.SEVERE, null, ex);
         }
+		return con;
+	}*/
+        private static Connection getConnexion(String url) throws SQLException, ClassNotFoundException
+	{
+		Connection con=null;
+                    Class.forName("oracle.jdbc.driver.OracleDriver");
+                    con = DriverManager.getConnection(url, LOGIN, PASS);
 		return con;
 	}
 }

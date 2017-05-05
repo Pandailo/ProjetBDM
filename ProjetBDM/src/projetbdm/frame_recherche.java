@@ -112,26 +112,32 @@ public class frame_recherche extends javax.swing.JFrame
 
         groupe_button.add(jeuvideo_chb);
         jeuvideo_chb.setText("Jeu vidéo");
+        jeuvideo_chb.setEnabled(false);
         pan_chb.add(jeuvideo_chb);
 
         groupe_button.add(film_chb);
         film_chb.setText("Film");
+        film_chb.setEnabled(false);
         pan_chb.add(film_chb);
 
         groupe_button.add(serie_chb);
         serie_chb.setText("Serie");
+        serie_chb.setEnabled(false);
         pan_chb.add(serie_chb);
 
         groupe_button.add(saison_chb);
         saison_chb.setText("Saison");
+        saison_chb.setEnabled(false);
         pan_chb.add(saison_chb);
 
         groupe_button.add(realisateur_chb);
         realisateur_chb.setText("Réalisateur");
+        realisateur_chb.setEnabled(false);
         pan_chb.add(realisateur_chb);
 
         groupe_button.add(acteur_chb);
         acteur_chb.setText("Acteur");
+        acteur_chb.setEnabled(false);
         pan_chb.add(acteur_chb);
 
         jPanel1.add(pan_chb);
@@ -143,112 +149,123 @@ public class frame_recherche extends javax.swing.JFrame
 
     private void valider_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_valider_buttonActionPerformed
     {//GEN-HEADEREND:event_valider_buttonActionPerformed
-        ArrayList<Integer> list_id=new ArrayList();
-        int index=0;
-        frame_transition ft=new frame_transition(this.admin,"",new ArrayList());
-        if(this.tf_rech_nom.getText()!=null&&(!this.tf_rech_nom.getText().equals("")))
+        try
         {
-            try {
-                con=connexionUtils.getInstance().getConnexion();
-                Statement st=con.createStatement();
-                OracleResultSet rs=null;
-                switch (this.type_media) {
-                    case "film" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film WHERE CONTAINS(nom,'"+this.tf_rech_nom.getText()+"',10)>0");
-                        while(rs.next())
-                        {
-                            index=rs.getInt(2);
-                            list_id.add(index);
-                        }
-                        ft=new frame_transition(this.admin,this.type_media,list_id);
-                        break;
-                    case "jeu" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_JeuVideo WHERE CONTAINS(nom,"+this.tf_rech_nom.getText()+",10)>0");
-                        while(rs.next())
-                        {
-                            index=rs.getInt(2);
-                            list_id.add(index);
-                        }
-                        ft=new frame_transition(this.admin,this.type_media,list_id);
-                        break;
-                    case "serie" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Serie WHERE CONTAINS(nom,"+this.tf_rech_nom.getText()+",10)>0");
-                        while(rs.next())
-                        {
-                            index=rs.getInt(2);
-                            list_id.add(index);
-                        }
-                        ft=new frame_transition(this.admin,this.type_media,list_id);
-                        break;           
-                    case "personne" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT a.nom,a.id,r.nom,r.id FROM PBDM_Acteur,PBDM_Realisateur WHERE CONTAINS(a.nom,"+this.tf_rech_nom.getText()+",10)>0 OR CONTAINS(r.nom,"+this.tf_rech_nom.getText()+",10)>0");
-                        while(rs.next())
-                        {
-                            index=rs.getInt(2);
-                            list_id.add(index);
-                        }
-                        ft=new frame_transition(this.admin,this.type_media,list_id);
-                        break;
+            ArrayList<Integer> list_id=new ArrayList();
+            int index=0;
+            frame_transition ft=new frame_transition(this.admin,"",new ArrayList());
+            if(this.tf_rech_nom.getText()!=null&&(!this.tf_rech_nom.getText().equals("")))
+            {
+                try {
+                    con=connexionUtils.getInstance().getConnexion();
+                    Statement st=con.createStatement();
+                    OracleResultSet rs=null;
+                    switch (this.type_media) {
+                        case "film" :
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film WHERE CONTAINS(nom,'"+this.tf_rech_nom.getText()+"',10)>0");
+                            while(rs.next())
+                            {
+                                index=rs.getInt(2);
+                                list_id.add(index);
+                            }
+                            ft=new frame_transition(this.admin,this.type_media,list_id);
+                            break;
+                        case "jeu" :
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_JeuVideo WHERE CONTAINS(nom,"+this.tf_rech_nom.getText()+",10)>0");
+                            while(rs.next())
+                            {
+                                index=rs.getInt(2);
+                                list_id.add(index);
+                            }
+                            ft=new frame_transition(this.admin,this.type_media,list_id);
+                            break;
+                        case "serie" :
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Serie WHERE CONTAINS(nom,"+this.tf_rech_nom.getText()+",10)>0");
+                            while(rs.next())
+                            {
+                                index=rs.getInt(2);
+                                list_id.add(index);
+                            }
+                            ft=new frame_transition(this.admin,this.type_media,list_id);
+                            break;
+                        case "personne" :
+                            rs=(OracleResultSet)st.executeQuery("SELECT a.nom,a.id,r.nom,r.id FROM PBDM_Acteur,PBDM_Realisateur WHERE CONTAINS(a.nom,"+this.tf_rech_nom.getText()+",10)>0 OR CONTAINS(r.nom,"+this.tf_rech_nom.getText()+",10)>0");
+                            while(rs.next())
+                            {
+                                index=rs.getInt(2);
+                                list_id.add(index);
+                            }
+                            ft=new frame_transition(this.admin,this.type_media,list_id);
+                            break;
+                    }
+                    
+                }
+                catch (SQLException ex) {
+                    Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                catch (ClassNotFoundException ex)
+                {
+                    Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
-            }
-            catch (SQLException ex) {
-                Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            
-        }
-        else
-        {
-            try {
-                con=connexionUtils.getInstance().getConnexion();
-                Statement st=con.createStatement();
-                OracleResultSet rs=null;
-                switch (this.type_media) {
-                    case "film" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film");
-                        while(rs.next())
-                        {
-                            index=rs.getInt(2);
-                            list_id.add(index);
-                        }
-                        ft=new frame_transition(this.admin,this.type_media,list_id);
-                        break;
-                    case "jeu" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_JeuVideo");
-                        while(rs.next())
-                        {
-                            index=rs.getInt(2);
-                            list_id.add(index);
-                        }
-                        ft=new frame_transition(this.admin,this.type_media,list_id);
-                        break;
-                    case "serie" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Serie");
-                        while(rs.next())
-                        {
-                            index=rs.getInt(2);
-                            list_id.add(index);
-                        }
-                        ft=new frame_transition(this.admin,this.type_media,list_id);
-                        break;           
-                    case "personne" :  
-                        rs=(OracleResultSet)st.executeQuery("SELECT a.nom,a.id,r.nom,r.id FROM PBDM_Acteur,PBDM_Realisateur");
-                        while(rs.next())
-                        {
-                            index=rs.getInt(2);
-                            list_id.add(index);
-                        }
-                        ft=new frame_transition(this.admin,this.type_media,list_id);
-                        break;
-                }
                 
             }
-            catch (SQLException ex) {
-                Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
+            else
+            {
+                try {
+                    con=connexionUtils.getInstance().getConnexion();
+                    Statement st=con.createStatement();
+                    OracleResultSet rs=null;
+                    switch (this.type_media) {
+                        case "film" :
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film");
+                            while(rs.next())
+                            {
+                                index=rs.getInt(2);
+                                list_id.add(index);
+                            }
+                            ft=new frame_transition(this.admin,this.type_media,list_id);
+                            break;
+                        case "jeu" :
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_JeuVideo");
+                            while(rs.next())
+                            {
+                                index=rs.getInt(2);
+                                list_id.add(index);
+                            }
+                            ft=new frame_transition(this.admin,this.type_media,list_id);
+                            break;
+                        case "serie" :
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Serie");
+                            while(rs.next())
+                            {
+                                index=rs.getInt(2);
+                                list_id.add(index);
+                            }
+                            ft=new frame_transition(this.admin,this.type_media,list_id);
+                            break;
+                        case "personne" :
+                            rs=(OracleResultSet)st.executeQuery("SELECT a.nom,a.id,r.nom,r.id FROM PBDM_Acteur,PBDM_Realisateur");
+                            while(rs.next())
+                            {
+                                index=rs.getInt(2);
+                                list_id.add(index);
+                            }
+                            ft=new frame_transition(this.admin,this.type_media,list_id);
+                            break;
+                    }
+                    
+                }
+                catch (SQLException ex) {
+                    Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+            ft.setVisible(true);
         }
-        ft.setVisible(true);
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_valider_buttonActionPerformed
 
     private void annuler_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_annuler_buttonActionPerformed

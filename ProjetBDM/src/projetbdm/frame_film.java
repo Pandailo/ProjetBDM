@@ -8,14 +8,18 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
+import oracle.ord.im.OrdImage;
 
 /**
  *
@@ -30,7 +34,7 @@ public class frame_film extends javax.swing.JFrame
     /**
      * Creates new form frame_film
      */
-    public frame_film(boolean admin,int idF)
+    public frame_film(boolean admin,int idF) throws ClassNotFoundException, IOException
     {
         try
         {
@@ -45,29 +49,69 @@ public class frame_film extends javax.swing.JFrame
                 this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
             }
             con=connexionUtils.getInstance().getConnexion();
+            //con=connexionUtils2.getInstance();
             Statement st=con.createStatement();
             String titre="";
             String synopsis="";
-            OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Film WHERE id="+idF);
+            String nomR="";
+            String temp="";
+            String nomA="";
+            String genre="";
+            String DDS="";
+            //REMPLISSAGE DU RESUME
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom,synopsis,genre,dateSortie FROM PBDM_Film WHERE id="+idF);
             while(rs.next())
             {
                 titre=rs.getString(1);
+                synopsis=rs.getString(2);
+                genre=rs.getString(3);
+                DDS=rs.getString(4);
             }
             this.label_titre.setText(titre);
-            rs=(OracleResultSet)st.executeQuery("SELECT synopsis FROM PBDM_Film WHERE id="+idF);
+            rs=(OracleResultSet)st.executeQuery("SELECT DEREF(realisateur).nom FROM PBDM_Film f WHERE f.id="+idF);
             while(rs.next())
             {
-                synopsis=rs.getString(1);
+                nomR=rs.getString(1);
+                if(nomR==null)
+                {
+                    nomR="";
+                }
             }
-            this.edition.append(titre+"\n");
-            this.edition.append(synopsis+"\n");
+            rs=(OracleResultSet)st.executeQuery("SELECT DEREF(acteurMA).nom FROM PBDM_MedVidActeur WHERE DEREF(MedVidMa).id="+idF);
+            while(rs.next())
+            {
+                temp=rs.getString(1);
+                if(temp==null)
+                {
+                    temp="";
+                }
+                nomA+=temp+"\n";
+            }
+            this.edition.append("Titre du film : "+titre+"\n");
+            this.edition.append("Nom du réalisateur : "+nomR+"\n");
+            this.edition.append("Acteurs :"+nomA+"\n");
+            this.edition.append("Genre :"+genre+"\n");
+            this.edition.append("Date de sortie :"+DDS+"\n");
+            this.edition.append("Synopsis : "+synopsis+"\n");
+            
+            //AFFICHAGE DE L'IMAGE
+            rs=(OracleResultSet)st.executeQuery("select image from PBDM_Film where id="+idF);
+            while(rs.next())
+            {
+               OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
+                String fich="DS.jpg";
+                imgObj.getDataInFile(fich);
+                photo=this.pan_affiche.getToolkit().getImage(fich);
+                affiche();
+                
+            }
         }
         catch (SQLException ex)
         {
             Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
         }
    }
-
+      
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,6 +130,7 @@ public class frame_film extends javax.swing.JFrame
         pan_affiche = new javax.swing.JPanel();
         pan_image = new javax.swing.JPanel();
         pan_imaffiche = new javax.swing.JPanel();
+        compareFilm_button = new javax.swing.JButton();
         pan_admin = new javax.swing.JPanel();
         lab_ajout_affiche = new javax.swing.JLabel();
         pan_ajout = new javax.swing.JPanel();
@@ -135,6 +180,8 @@ public class frame_film extends javax.swing.JFrame
             .addGap(0, 125, Short.MAX_VALUE)
         );
 
+        compareFilm_button.setText("Rechercher des films à ambiance similaire");
+
         javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
         pan_image.setLayout(pan_imageLayout);
         pan_imageLayout.setHorizontalGroup(
@@ -143,12 +190,17 @@ public class frame_film extends javax.swing.JFrame
                 .addGap(226, 226, 226)
                 .addComponent(pan_imaffiche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(226, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_imageLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(compareFilm_button, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         pan_imageLayout.setVerticalGroup(
             pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_imageLayout.createSequentialGroup()
-                .addContainerGap(158, Short.MAX_VALUE)
+                .addContainerGap(137, Short.MAX_VALUE)
                 .addComponent(pan_imaffiche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(compareFilm_button)
                 .addContainerGap())
         );
 
@@ -246,7 +298,7 @@ public class frame_film extends javax.swing.JFrame
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[])
+    public static void main(String args[]) throws ClassNotFoundException, IOException
     {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -293,6 +345,7 @@ public class frame_film extends javax.swing.JFrame
     private javax.swing.JButton button_bo;
     private javax.swing.JButton button_chgt_infos;
     private javax.swing.JButton button_modif_affiche;
+    private javax.swing.JButton compareFilm_button;
     private javax.swing.JTextArea edition;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lab_ajout_affiche;

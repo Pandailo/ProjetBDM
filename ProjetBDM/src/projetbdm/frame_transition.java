@@ -5,6 +5,7 @@
  */
 package projetbdm;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -27,7 +28,7 @@ public class frame_transition extends javax.swing.JFrame
      * @param typeM
      * @param l_id
      */
-    public frame_transition(boolean admin,String typeM,List<Integer> l_id)
+    public frame_transition(boolean admin,String typeM,List<Integer> l_id) throws ClassNotFoundException
     {
         try
         {
@@ -167,7 +168,7 @@ public class frame_transition extends javax.swing.JFrame
                         }
                         break;
                     case "jeu" : 
-                        rs=(OracleResultSet)st.executeQuery("SELECT id FROM PBDM_Jeu WHERE nom ='"+this.cb_listM.getSelectedItem()+"'");
+                        rs=(OracleResultSet)st.executeQuery("SELECT id FROM PBDM_JeuVideo WHERE nom ='"+this.cb_listM.getSelectedItem()+"'");
                         while(rs.next())
                         {
                             index=rs.getInt(1);
@@ -196,6 +197,14 @@ public class frame_transition extends javax.swing.JFrame
             }
         }
         catch (SQLException ex)
+        {
+            Logger.getLogger(frame_transition.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_transition.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex)
         {
             Logger.getLogger(frame_transition.class.getName()).log(Level.SEVERE, null, ex);
         }

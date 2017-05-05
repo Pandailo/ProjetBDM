@@ -8,8 +8,16 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OracleResultSet;
+import oracle.ord.im.OrdImage;
 
 /**
  *
@@ -23,17 +31,74 @@ public class frame_jeu extends javax.swing.JFrame
     /**
      * Creates new form frame_jeu
      */
-    public frame_jeu(boolean admin,int idJ)
+    public frame_jeu(boolean admin,int idJ) throws SQLException, IOException
     {
-        initComponents();
-        this.admin=admin;
-        if(!admin){
-            this.pan_buttons.remove(button_ajout_ba);
-            this.pan_admin.removeAll();
-            this.pan_buttons.setLayout(new java.awt.GridLayout(1, 1));
+        try
+        {
+            initComponents();
+            this.admin=admin;
+            if(!admin){
+                this.pan_buttons.remove(button_ajout_ba);
+                this.pan_admin.removeAll();
+                this.pan_buttons.setLayout(new java.awt.GridLayout(1, 1));
+            }
+            Connection con;
+            con=connexionUtils.getInstance().getConnexion();
+            //con=connexionUtils2.getInstance();
+            Statement st=con.createStatement();
+            String titre="";
+            String synopsis="";
+            String temp="";
+            String nomA="";
+            String genre="";
+            String DDS="";
+            int note=0;
+            //REMPLISSAGE DU RESUME
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom,synopsis,genre,dateSortie,note FROM PBDM_JeuVideo WHERE id="+idJ);
+            while(rs.next())
+            {
+                titre=rs.getString(1);
+                synopsis=rs.getString(2);
+                genre=rs.getString(3);
+                DDS=rs.getString(4);
+                note=rs.getInt(5);
+            }
+            this.label_titre.setText(titre);
+            rs=(OracleResultSet)st.executeQuery("SELECT DEREF(acteurMA).nom FROM PBDM_MedVidActeur WHERE DEREF(MedVidMa).id="+idJ);
+            while(rs.next())
+            {
+                temp=rs.getString(1);
+                if(temp==null)
+                {
+                    temp="";
+                }
+                nomA+=temp+"\n";
+            }
+            this.edition.append("Titre du jeu : "+titre+"\n");
+            this.edition.append("Note moyenne obtenue : "+note+"\n");
+            this.edition.append("Acteurs :"+nomA+"\n");
+            this.edition.append("Genre :"+genre+"\n");
+            this.edition.append("Date de sortie :"+DDS+"\n");
+            this.edition.append("Synopsis : "+synopsis+"\n");
+            
+            //AFFICHAGE DE L'IMAGE
+            rs=(OracleResultSet)st.executeQuery("select image from PBDM_JeuVideo where id="+idJ);
+            while(rs.next())
+            {
+                OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
+                String fich="DS.jpg";
+                imgObj.getDataInFile(fich);
+                photo=this.pan_affiche.getToolkit().getImage(fich);
+                affiche();
+                
+            }
+            
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -189,7 +254,7 @@ public class frame_jeu extends javax.swing.JFrame
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[])
+    public static void main(String args[]) throws SQLException, IOException
     {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

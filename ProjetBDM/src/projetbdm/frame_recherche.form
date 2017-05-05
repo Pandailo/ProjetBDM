@@ -106,6 +106,7 @@
                   <ComponentRef name="groupe_button"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Jeu vid&#xe9;o"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="film_chb">
@@ -114,6 +115,7 @@
                   <ComponentRef name="groupe_button"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Film"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="serie_chb">
@@ -122,6 +124,7 @@
                   <ComponentRef name="groupe_button"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Serie"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="saison_chb">
@@ -130,6 +133,7 @@
                   <ComponentRef name="groupe_button"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Saison"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="realisateur_chb">
@@ -138,6 +142,7 @@
                   <ComponentRef name="groupe_button"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="R&#xe9;alisateur"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="acteur_chb">
@@ -146,6 +151,7 @@
                   <ComponentRef name="groupe_button"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Acteur"/>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
           </SubComponents>

@@ -186,6 +186,10 @@ public class frame_con_admin extends javax.swing.JFrame {
             {
                 Logger.getLogger(frame_con_admin.class.getName()).log(Level.SEVERE, null, ex);
             }
+            catch (ClassNotFoundException ex)
+            {
+                Logger.getLogger(frame_con_admin.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else
         {

@@ -261,6 +261,10 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
         }
         catch (IOException ex) {
             Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_ajout_jeu.class.getName()).log(Level.SEVERE, null, ex);
         }            
     }//GEN-LAST:event_button_validerActionPerformed
 
