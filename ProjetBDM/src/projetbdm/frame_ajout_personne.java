@@ -210,6 +210,13 @@ public class frame_ajout_personne extends javax.swing.JFrame {
         pan_button.setLayout(new java.awt.GridLayout(1, 2));
 
         annuler_button.setText("Annuler");
+        annuler_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                annuler_buttonActionPerformed(evt);
+            }
+        });
         pan_button.add(annuler_button);
 
         valider_button.setText("Valider");
@@ -385,6 +392,11 @@ public class frame_ajout_personne extends javax.swing.JFrame {
         this.jLabel1.setVisible(true);
         this.jTextField1.setVisible(true);
     }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void annuler_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_annuler_buttonActionPerformed
+    {//GEN-HEADEREND:event_annuler_buttonActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_annuler_buttonActionPerformed
 
     /**
      * @param args the command line arguments

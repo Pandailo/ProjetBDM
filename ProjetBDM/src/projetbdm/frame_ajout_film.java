@@ -83,8 +83,6 @@ public class frame_ajout_film extends javax.swing.JFrame {
 
         jTextField1.setText("jTextField1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         label_frame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_frame.setText("Ajout d'un film");
         label_frame.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -205,6 +203,13 @@ public class frame_ajout_film extends javax.swing.JFrame {
         pan_buttons.add(button_bo);
 
         button_annuler.setText("Annuler");
+        button_annuler.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_annulerActionPerformed(evt);
+            }
+        });
         pan_buttons.add(button_annuler);
 
         button_valider.setText("Valider");
@@ -322,6 +327,11 @@ public class frame_ajout_film extends javax.swing.JFrame {
             this.cheminBO = fileChooser.getSelectedFile().getAbsolutePath();
         }
     }//GEN-LAST:event_button_boActionPerformed
+
+    private void button_annulerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_annulerActionPerformed
+    {//GEN-HEADEREND:event_button_annulerActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_button_annulerActionPerformed
 
     /**
      * @param args the command line arguments

@@ -57,7 +57,8 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_frame = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -78,8 +79,6 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
         button_image = new javax.swing.JButton();
         button_annuler = new javax.swing.JButton();
         button_valider = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         label_frame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_frame.setText("Ajout d'un jeu");
@@ -174,27 +173,40 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
         pan_buttons.setLayout(new java.awt.GridLayout(2, 2));
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_baActionPerformed(evt);
             }
         });
         pan_buttons.add(button_ba);
 
         button_image.setText("Image");
-        button_image.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_image.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_imageActionPerformed(evt);
             }
         });
         pan_buttons.add(button_image);
 
         button_annuler.setText("Annuler");
+        button_annuler.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_annulerActionPerformed(evt);
+            }
+        });
         pan_buttons.add(button_annuler);
 
         button_valider.setText("Valider");
-        button_valider.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_valider.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_validerActionPerformed(evt);
             }
         });
@@ -293,6 +305,11 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
             this.cheminBA = fileChooser.getSelectedFile().getAbsolutePath();
         }
     }//GEN-LAST:event_button_baActionPerformed
+
+    private void button_annulerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_annulerActionPerformed
+    {//GEN-HEADEREND:event_button_annulerActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_button_annulerActionPerformed
 
     /**
      * @param args the command line arguments
