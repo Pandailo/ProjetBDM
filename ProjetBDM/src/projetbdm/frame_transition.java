@@ -86,22 +86,7 @@ public class frame_transition extends javax.swing.JFrame
             {
                 for(int i=0;i<l_noms.size();i++)
                 {
-                        rs=(OracleResultSet)st.executeQuery("SELECT a.nom,r.nom FROM PBDM_Acteur a,PBDM_Realisateur r WHERE nom ="+l_noms.get(i)+"'");
-                        if(rs!=null)
-                        {
-                            while(rs.next())
-                            {
-                                nom=rs.getString(1);
-                                this.cb_listM.addItem(nom);
-                            }
-                        }
-                        else
-                        {
-                             rs=(OracleResultSet)st.executeQuery("SELECT a.nom,r.nom FROM PBDM_Acteur a,PBDM_Realisateur r WHERE nom ="+l_noms.get(i)+"'");
-                             nom=rs.getString(2);
-                                this.cb_listM.addItem(nom);
-                        }
-                        break;
+                    this.cb_listM.addItem(l_noms.get(i));    
                 }
             }
         }
@@ -208,13 +193,12 @@ public class frame_transition extends javax.swing.JFrame
                         break;
                     case "personne" : 
                         rs=(OracleResultSet)st.executeQuery("SELECT a.id FROM PBDM_Acteur a WHERE a.nom ='"+this.cb_listM.getSelectedItem()+"'");
-                        if(rs!=null)
+                        if(rs.next())
                         {
-                            while(rs.next())
-                            {
+
                                 index=rs.getInt(1);    
                                 frame_personne fp=new frame_personne(this.admin, (String) this.cb_listM.getSelectedItem());
-                            }
+                                fp.setVisible(true);
                         }
                         else
                         {
@@ -223,6 +207,7 @@ public class frame_transition extends javax.swing.JFrame
                             {
                                 index=rs.getInt(1);    
                                 frame_personne fp=new frame_personne(this.admin,(String)this.cb_listM.getSelectedItem());
+                                fp.setVisible(true);
                             }
                         }
                         break;

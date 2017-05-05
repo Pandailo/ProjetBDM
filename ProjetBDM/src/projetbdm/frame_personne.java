@@ -8,10 +8,15 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.sql.*;
-import oracle.jdbc.OracleResultSet;
+import oracle.jdbc.*;
+
+import oracle.ord.im.OrdImage;
+import oracle.sql.ARRAY;
+import oracle.sql.STRUCT;
 
 /**
  *
@@ -24,7 +29,7 @@ public class frame_personne extends javax.swing.JFrame {
     /**
      * Creates new form frame_personne
      */
-    public frame_personne(boolean admin,String nomP) throws SQLException, ClassNotFoundException {
+    public frame_personne(boolean admin,String nomP) throws SQLException, ClassNotFoundException, IOException {
         initComponents();
         this.admin=admin;
         
@@ -34,23 +39,61 @@ public class frame_personne extends javax.swing.JFrame {
         String nom="";
         String ddn="";
         String pnom="";
+        OrdImage imgObj;
         Connection con=connexionUtils.getInstance().getConnexion();
         Statement st=con.createStatement();
-        OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss FROM PBDM_Acteur WHERE nom='"+nomP+"'");
-        if(rs!=null)
+        OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss,prenoms FROM PBDM_Acteur WHERE nom='"+nomP+"'");
+        if(rs.next())
         {
             nom=rs.getString(2);
-            ddn=rs.getString(2);
+            ddn=rs.getString(3);
+            ARRAY prenoms = rs.getARRAY(4);
+            Object[] pnoms = (Object[])prenoms.getArray();
+            pnom=(((STRUCT)pnoms[0]).getAttributes()[0].toString())+" ";
+            if(((STRUCT)pnoms[1]).getAttributes()[0]!=null)
+                pnom=(((STRUCT)pnoms[1]).getAttributes()[0].toString())+" ";
+            if(((STRUCT)pnoms[2]).getAttributes()[0]!=null)
+                pnom=(((STRUCT)pnoms[2]).getAttributes()[0].toString())+" ";
+        }
+        else
+        {
+            rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss,prenoms FROM PBDM_Realisateur WHERE nom='"+nomP+"'");
+            rs.next();
+            nom=rs.getString(2);
+            ddn=rs.getString(3);
+            ARRAY prenoms = rs.getARRAY(4);
+            Object[] pnoms = (Object[])prenoms.getArray();
+            pnom=(((STRUCT)pnoms[0]).getAttributes()[0].toString())+"\n";
+            if(((STRUCT)pnoms[1]).getAttributes()[0]!=null)
+                pnom=(((STRUCT)pnoms[1]).getAttributes()[0].toString())+"\n";
+            if(((STRUCT)pnoms[2]).getAttributes()[0]!=null)
+                pnom=(((STRUCT)pnoms[2]).getAttributes()[0].toString())+"\n";
+        }
+        rs=(OracleResultSet)st.executeQuery("SELECT photo FROM PBDM_Acteur WHERE nom='"+nomP+"'");
+        if(rs.next())
+        {
+            imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
+            String fich="imtemp.jpg";
+            imgObj.getDataInFile(fich);
+            photo=this.pan_image.getToolkit().getImage(fich);
+            affiche();
             
         }
         else
         {
-            rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss FROM PBDM_Realisateur WHERE nom='"+nomP+"'");
-            nom=rs.getString(2);
-            ddn=rs.getString(2);
+            rs=(OracleResultSet)st.executeQuery("SELECT photo FROM PBDM_Realisateur WHERE nom='"+nomP+"'");
+            rs.next();
+            imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
+            String fich="imtemp.jpg";
+            imgObj.getDataInFile(fich);
+            photo=this.pan_image.getToolkit().getImage(fich);
+            affiche();
         }
-        this.edition.append(nom+"\n");
-        this.edition.append(ddn+"\n");
+                
+
+        this.edition.append("Nom :"+nom+"\n");
+        this.edition.append("Prenom :"+pnom+" \n");
+        this.edition.append("Date de naissance :"+ddn+"\n");
     }
 
     /**
@@ -177,16 +220,18 @@ public class frame_personne extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-     public void paint(Graphics g)
+    @Override
+    public void paint(Graphics g)
     {
         super.paint(g);
         if(this.photo!=null)
-            this.affichePhoto();
+            this.affiche();
     }
-    private void affichePhoto()
+    private void affiche()
     {
         Graphics g = this.pan_image.getGraphics();
         g.drawImage(this.photo, 0, 0, this.pan_imaffiche.getWidth(), this.pan_imaffiche.getHeight(), this);
+        
     }
     private void button_modif_photoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_modif_photoActionPerformed
     {//GEN-HEADEREND:event_button_modif_photoActionPerformed
@@ -202,14 +247,14 @@ public class frame_personne extends javax.swing.JFrame {
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
             //TODO update dans la BD
-            this.affichePhoto();
+            this.affiche();
         }
     }//GEN-LAST:event_button_modif_photoActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws SQLException, ClassNotFoundException {
+    public static void main(String args[]) throws SQLException, ClassNotFoundException, IOException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

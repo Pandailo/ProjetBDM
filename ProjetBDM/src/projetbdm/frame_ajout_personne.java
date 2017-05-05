@@ -18,6 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
+import oracle.jdbc.OracleStatement;
 import oracle.ord.im.OrdImage;
 
 /**
@@ -77,8 +78,6 @@ public class frame_ajout_personne extends javax.swing.JFrame {
         pan_button = new javax.swing.JPanel();
         annuler_button = new javax.swing.JButton();
         valider_button = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         label_frame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_frame.setText("Ajout d'une personne");
@@ -240,7 +239,6 @@ public class frame_ajout_personne extends javax.swing.JFrame {
             //Récupération de l'image
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
-            //TODO update dans la BD
             this.affiche();
         }
     }//GEN-LAST:event_image_buttonActionPerformed
@@ -251,27 +249,33 @@ public class frame_ajout_personne extends javax.swing.JFrame {
         {
             Connection con=connexionUtils.getInstance().getConnexion();
             con.setAutoCommit(false);
-            Statement s=null;
-            s = con.createStatement();
             OracleResultSet rs=null;
-            String nom=this.field_nom.getSelectedText();
-            String ddn=this.field_date.getSelectedText();
-            String[] split=this.field_prenoms.getSelectedText().split(" ");
+            String nom=this.field_nom.getText();
+            String ddn=this.field_date.getText();
+            String[] split=null;
             String[] prenoms=new String[3];
+            if(this.field_prenoms.getText().contains(" "))
+                split=this.field_prenoms.getText().split(" ");
+            else
+            {        
+                prenoms[0]=this.field_prenoms.getText();
+                prenoms[1]="";
+                prenoms[2]="";
+            }
             int taille=-1;
             int index=-1;
             if(this.jRadioButton1.isSelected())
             {
                 try
                 {
-                    taille=Integer.parseInt(this.jTextField1.getSelectedText());
+                    taille=Integer.parseInt(this.jTextField1.getText());
                 }
                 catch(NumberFormatException  e)
                 {
                     //message erreur
                 }
             }
-            if(split.length<=3)
+            if(split!=null&&split.length<=3)
             {
                 for(int i=0;i<3;i++)
                 {
@@ -289,10 +293,19 @@ public class frame_ajout_personne extends javax.swing.JFrame {
             {
                 if(this.jRadioButton1.isSelected()&&taille!=-1)
                 {
-                    rs=(OracleResultSet)s.executeQuery("INSERT INTO PBDM_Acteur VALUES(0,'"+ddn+"','"+nom+"',{'"+prenoms[1]+"','"+prenoms[2]+"','"+prenoms[2]+"',ORDSYS.ORDImage.init()");
-                    rs=(OracleResultSet)s.executeQuery("select id, photo from PBDM_Acteur where nom='"+nom+"' for update");
-                    while(rs.next())
-                    {
+                    OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("INSERT INTO PBDM_Acteur VALUES(0,?,?,PBDM_PrenomsV_Type(PBDM_prenom_type(?),PBDM_prenom_type(?),PBDM_prenom_type(?)),?,ORDImage.init())"); 
+                    s.setString(1, ddn);
+                    s.setString(2, nom);
+                    s.setString(3, prenoms[0]);
+                    s.setString(4, prenoms[1]);
+                    s.setString(5, prenoms[2]);
+                    s.setInt(6,taille);
+                    s.execute();
+                    
+                    OracleStatement st=(OracleStatement)con.createStatement();
+                    rs=(OracleResultSet)st.executeQuery("select id, photo from PBDM_Acteur where nom='"+nom+"' for update");
+                    rs.next();
+                    
                         index=rs.getInt(1);
                         OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
                         String fich=this.cheminPhoto;
@@ -307,14 +320,22 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                         stmt1.execute();
                         stmt1.close();
 
-                    }
+                    con.commit();
+                    s.close();
                 }
                 else
                 {
-                     rs=(OracleResultSet)s.executeQuery("INSERT INTO PBDM_Realisateur VALUES(0,'"+ddn+"','"+nom+"',{'"+prenoms[1]+"','"+prenoms[2]+"','"+prenoms[2]+"',ORDSYS.ORDImage.init()");
-                    rs=(OracleResultSet)s.executeQuery("select id, photo from PBDM_Acteur where nom='"+nom+"' for update");
-                    while(rs.next())
-                    {
+                    OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("INSERT INTO PBDM_Realisateur VALUES(0,?,?,PBDM_PrenomsV_Type(PBDM_prenom_type(?),PBDM_prenom_type(?),PBDM_prenom_type(?)),ORDImage.init(),PBDM_Films_Type())"); 
+                    s.setString(1, ddn);
+                    s.setString(2, nom);
+                    s.setString(3, prenoms[0]);
+                    s.setString(4, prenoms[1]);
+                    s.setString(5, prenoms[2]);
+                    s.execute();
+                    OracleStatement st=(OracleStatement)con.createStatement();
+                    rs=(OracleResultSet)st.executeQuery("select id, photo from PBDM_Realisateur where nom='"+nom+"' for update");
+                    rs.next();
+                    
                         index=rs.getInt(1);
                         OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
                         String fich=this.cheminPhoto;
@@ -328,7 +349,8 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                         stmt1.setORAData(1,imgObj);
                         stmt1.execute();
                         stmt1.close();
-                }
+                       con.commit();
+                        s.close();
             }
         }
         }
