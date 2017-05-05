@@ -8,6 +8,7 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -24,7 +25,7 @@ import oracle.sql.STRUCT;
  */
 public class frame_personne extends javax.swing.JFrame {
     boolean admin;
-    String cheminPhoto;
+    String cheminPhoto,fich;
     Image photo;
     /**
      * Creates new form frame_personne
@@ -75,7 +76,7 @@ public class frame_personne extends javax.swing.JFrame {
         if(rs.next())
         {
             imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
-            String fich="imtemp.jpg";
+            fich="im_temp.jpg";
             imgObj.getDataInFile(fich);
             photo=this.pan_image.getToolkit().getImage(fich);
             affiche();
@@ -86,7 +87,7 @@ public class frame_personne extends javax.swing.JFrame {
             rs=(OracleResultSet)st.executeQuery("SELECT photo FROM PBDM_Realisateur WHERE nom='"+nomP+"'");
             rs.next();
             imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
-            String fich="imtemp.jpg";
+            fich="im_temp.jpg";
             imgObj.getDataInFile(fich);
             photo=this.pan_image.getToolkit().getImage(fich);
             affiche();
@@ -107,8 +108,7 @@ public class frame_personne extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         label_nom = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -127,6 +127,11 @@ public class frame_personne extends javax.swing.JFrame {
         button_media = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         label_nom.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         label_nom.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -194,10 +199,8 @@ public class frame_personne extends javax.swing.JFrame {
         pan_ajout.add(button_chgt_infos);
 
         button_modif_photo.setText("Modifier la photo");
-        button_modif_photo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_modif_photo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_modif_photoActionPerformed(evt);
             }
         });
@@ -254,6 +257,12 @@ public class frame_personne extends javax.swing.JFrame {
             this.affiche();
         }
     }//GEN-LAST:event_button_modif_photoActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        File imagetemp = new File(fich);
+        if(imagetemp.exists())
+            imagetemp.delete();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 import oracle.ord.im.OrdAudio;
 import oracle.ord.im.OrdImage;
@@ -32,8 +33,9 @@ public class frame_film extends javax.swing.JFrame
     private Image photo;
     private String cheminPhoto;
     int id;
-    String fich,vid,aud;
+    String fich="",vid="",aud="",titre="";
     Connection con;
+
     /**
      * Creates new form frame_film
      */
@@ -54,7 +56,6 @@ public class frame_film extends javax.swing.JFrame
             }
             con=connexionUtils.getInstance().getConnexion();
             Statement st=con.createStatement();
-            String titre="";
             String synopsis="";
             String nomR="";
             String temp="";
@@ -319,6 +320,36 @@ public class frame_film extends javax.swing.JFrame
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
             //TODO update dans la BD
             this.affiche();
+            try
+            {
+                int index=0;
+                con=connexionUtils.getInstance().getConnexion();
+                con.setAutoCommit(false);
+                Statement s=null;
+                s = con.createStatement();
+                OracleResultSet rs=null;
+                rs=(OracleResultSet)s.executeQuery("select id, image from PBDM_Film where nom='"+this.label_titre.getText()+"' for update");
+                while(rs.next())
+                {
+                    index=rs.getInt(1);
+                    OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                    String img =this.cheminPhoto;
+                    imgObj.loadDataFromFile(img);
+                    imgObj.setProperties();
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=? where id="+index);
+                    stmt1.setORAData(1,imgObj);
+                    stmt1.execute();
+                    stmt1.close();   
+                }
+                rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexF REBUILD");
+                rs.close();
+                s.close();
+                con.commit();
+            }
+            catch (SQLException | IOException | ClassNotFoundException ex)
+            {
+                Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+            }   
         }
     }//GEN-LAST:event_button_modif_afficheActionPerformed
 
@@ -375,13 +406,17 @@ public class frame_film extends javax.swing.JFrame
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         File imagetemp = new File(fich);
-        File videotemp = new File(vid);
-        File audiotemp = new File(aud);
+        File videotemp=null;
+        if (vid!="")
+            videotemp = new File(vid);
+        File audiotemp=null;
+        if (aud!="")
+            audiotemp = new File(aud);
         if(imagetemp.exists())
             imagetemp.delete();
-        if(videotemp.exists())
+        if(videotemp!=null)
             videotemp.delete();
-        if(audiotemp.exists())
+        if(audiotemp!=null)
             audiotemp.delete();
     }//GEN-LAST:event_formWindowClosing
 
@@ -423,7 +458,7 @@ public class frame_film extends javax.swing.JFrame
             java.util.logging.Logger.getLogger(frame_film.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-            frame_film oui = new frame_film(true,1);
+            frame_film oui = new frame_film(true,0);
             oui.setVisible(true);
         /* Create and display the form */
     }
