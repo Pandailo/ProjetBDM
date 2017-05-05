@@ -247,24 +247,19 @@ public class frame_recherche extends javax.swing.JFrame
                             ft=new frame_transition(this.admin,this.type_media,list_id,null);
                             break;
                         case "personne" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT a.nom FROM PBDM_Acteur a");
-                            if(rs!=null)
-                            {
+                                rs=(OracleResultSet)st.executeQuery("SELECT a.nom FROM PBDM_Acteur a");
                                 while(rs.next())
                                 {
                                     nom=rs.getString(1);
                                     l_noms.add(nom);
                                 }
-                            }
-                            else
-                            {
-                                 rs=(OracleResultSet)st.executeQuery("SELECT r.nom FROM PBDM_Realisateur r");
+                                rs=(OracleResultSet)st.executeQuery("SELECT r.nom FROM PBDM_Realisateur r");
                                  while(rs.next())
                                 {
                                     nom=rs.getString(1);
+                                    System.out.println(nom);
                                     l_noms.add(nom);
                                 }
-                            }
                             ft=new frame_transition(this.admin,this.type_media,null,l_noms);
                             break;
                     }
