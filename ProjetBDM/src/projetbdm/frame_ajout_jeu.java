@@ -229,26 +229,19 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
             {
                 index=rs.getInt(1);
                 OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
-                //OrdVideo vidObj= (OrdVideo)rs.getORAData(3,OrdVideo.getORADataFactory());
+                OrdVideo vidObj= (OrdVideo)rs.getORAData(3,OrdVideo.getORADataFactory());
                 String fich=this.cheminPhoto;
                 String vid=this.cheminBA;
                 imgObj.loadDataFromFile(fich);
-                //vidObj.loadDataFromFile(vid);
+                vidObj.loadDataFromFile(vid);
+                byte[] ctx[] = new byte [4000][1];
                 imgObj.setProperties();
-                //vidObj.setProperties(null);
-                if(imgObj.checkProperties())
-                {
-                    System.out.println("affiche mise à jour");
-                }/*if(vidObj.checkProperties(null))
-                {
-                    System.out.println("BA mise à jour");
-                }*/
-                OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_JeuVideo set image=? where id="+index);
+                vidObj.setProperties(ctx);
+                OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=?,bandeA=? where id="+index);
                 stmt1.setORAData(1,imgObj);
-                //stmt1.setORAData(2,vidObj);
+                stmt1.setORAData(2,vidObj);
                 stmt1.execute();
                 stmt1.close();
-                
             }
             rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexJ REBUILD");
             rs.close();
@@ -265,7 +258,8 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
         catch (ClassNotFoundException ex)
         {
             Logger.getLogger(frame_ajout_jeu.class.getName()).log(Level.SEVERE, null, ex);
-        }            
+        }
+        this.dispose();
     }//GEN-LAST:event_button_validerActionPerformed
 
     private void button_imageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_imageActionPerformed
@@ -282,7 +276,6 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
             //Récupération de l'image
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
-            //TODO update dans la BD
             this.affiche();
         }
     }//GEN-LAST:event_button_imageActionPerformed
@@ -298,7 +291,6 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
         {
             //Récupération de la video
             this.cheminBA = fileChooser.getSelectedFile().getAbsolutePath();
-            //TODO update dans la BD
         }
     }//GEN-LAST:event_button_baActionPerformed
 

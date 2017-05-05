@@ -135,10 +135,13 @@
         <Property name="rows" type="int" value="2"/>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="button_ba">
           <Properties>
             <Property name="text" type="java.lang.String" value="Bande-annonce"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_baActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="button_image">
           <Properties>

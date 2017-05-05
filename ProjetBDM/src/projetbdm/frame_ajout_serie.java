@@ -17,6 +17,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class frame_ajout_serie extends javax.swing.JFrame {
     String cheminPhoto="";
+    String cheminBA="";
     Image photo;
     /**
      * Creates new form frame_ajout_serie
@@ -56,7 +57,7 @@ public class frame_ajout_serie extends javax.swing.JFrame {
         field_genre = new javax.swing.JTextField();
         pan_image = new javax.swing.JPanel();
         pan_buttons = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        button_ba = new javax.swing.JButton();
         button_image = new javax.swing.JButton();
         button_annuler = new javax.swing.JButton();
         button_valider = new javax.swing.JButton();
@@ -124,8 +125,13 @@ public class frame_ajout_serie extends javax.swing.JFrame {
 
         pan_buttons.setLayout(new java.awt.GridLayout(2, 2));
 
-        jButton1.setText("Bande-annonce");
-        pan_buttons.add(jButton1);
+        button_ba.setText("Bande-annonce");
+        button_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_baActionPerformed(evt);
+            }
+        });
+        pan_buttons.add(button_ba);
 
         button_image.setText("Image");
         button_image.addActionListener(new java.awt.event.ActionListener() {
@@ -158,10 +164,23 @@ public class frame_ajout_serie extends javax.swing.JFrame {
             //Récupération de l'image
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
-            //TODO update dans la BD
             this.affiche();
         }
     }//GEN-LAST:event_button_imageActionPerformed
+
+    private void button_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_baActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une vidéo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Videos", "avi", "mkv", "mp4");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de la video
+            this.cheminBA = fileChooser.getSelectedFile().getAbsolutePath();
+        }
+    }//GEN-LAST:event_button_baActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,11 +219,11 @@ public class frame_ajout_serie extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_annuler;
+    private javax.swing.JButton button_ba;
     private javax.swing.JButton button_image;
     private javax.swing.JButton button_valider;
     private javax.swing.JTextField field_genre;
     private javax.swing.JTextField field_nom;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel label_frame;
     private javax.swing.JLabel label_genre;
     private javax.swing.JLabel label_nom;
