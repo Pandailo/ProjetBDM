@@ -13,6 +13,8 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oracle.jdbc.*;
 
 import oracle.ord.im.OrdImage;
@@ -27,12 +29,14 @@ public class frame_personne extends javax.swing.JFrame {
     boolean admin;
     String cheminPhoto,fich;
     Image photo;
+    String nom;
     /**
      * Creates new form frame_personne
      */
     public frame_personne(boolean admin,String nomP) throws SQLException, ClassNotFoundException, IOException {
         initComponents();
         this.admin=admin;
+        this.nom=nomP;
         
         if(!admin){
             this.pan_admin.removeAll();
@@ -252,9 +256,52 @@ public class frame_personne extends javax.swing.JFrame {
         {
             //Récupération de l'image
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
+            System.out.println(this.cheminPhoto);
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
-            //TODO update dans la BD
             this.affiche();
+            /*Connection con;
+            try {
+                con = connexionUtils.getInstance().getConnexion();
+                Statement st=con.createStatement();
+                OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom,photo,id FROM PBDM_Acteur WHERE nom='"+nom+"'");
+                OrdImage imgObj=null;
+                if(rs.next())
+                {
+                    rs=(OracleResultSet)st.executeQuery("SELECT nom,photo,id FROM PBDM_Acteur WHERE nom='"+nom+"' for update");
+                    rs.next();
+                    imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                    imgObj.loadDataFromFile(this.cheminPhoto);
+                    imgObj.setProperties();
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Acteur set photo=? where nom='"+nom+"'");
+                    stmt1.setORAData(1,imgObj);
+                    stmt1.execute();
+                    stmt1.close();
+                    rs=(OracleResultSet)st.executeQuery("ALTER INDEX PBDM_indexA REBUILD");
+                    rs.close();
+                    st.close();
+                    con.commit();
+                }
+                else
+                {
+                    rs=(OracleResultSet)st.executeQuery("SELECT nom,photo,id FROM PBDM_Realisateur WHERE nom='"+nom+"' for update");
+                    rs.next();
+                    imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                    imgObj.loadDataFromFile(this.cheminPhoto);
+                    imgObj.setProperties();
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Realisateur set photo=? where nom='"+nom+"'");
+                    stmt1.setORAData(1,imgObj);
+                    stmt1.execute();
+                    stmt1.close();
+                    rs=(OracleResultSet)st.executeQuery("ALTER INDEX PBDM_indexR REBUILD");
+                    rs.close();
+                    st.close();
+                    con.commit();
+                }
+            } 
+            catch (SQLException | ClassNotFoundException | IOException ex) {
+                Logger.getLogger(frame_personne.class.getName()).log(Level.SEVERE, null, ex);
+            }
+*/
         }
     }//GEN-LAST:event_button_modif_photoActionPerformed
 
@@ -292,7 +339,7 @@ public class frame_personne extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        frame_personne oui = new frame_personne(true,"");
+        frame_personne oui = new frame_personne(true,"non");
             oui.setVisible(true);
     }
 
