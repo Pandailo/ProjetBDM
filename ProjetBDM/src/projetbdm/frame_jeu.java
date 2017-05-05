@@ -254,7 +254,6 @@ public class frame_jeu extends javax.swing.JFrame
             //Récupération de l'image
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
-            //TODO update dans la BD
             this.affiche();
             try
             {

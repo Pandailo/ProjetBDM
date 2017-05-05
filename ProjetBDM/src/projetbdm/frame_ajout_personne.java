@@ -45,7 +45,6 @@ public class frame_ajout_personne extends javax.swing.JFrame {
     private void affiche()
     {
         Graphics g = this.pan_image.getGraphics();
-        //this.pan_image.setSize(140,140*(photo.getWidth(null)/photo.getHeight(null)));
         g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
     }
     
@@ -319,10 +318,6 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                         String fich=this.cheminPhoto;
                         imgObj.loadDataFromFile(fich);
                         imgObj.setProperties();
-                        if(imgObj.checkProperties())
-                        {
-                            System.out.println("photo mise à jour");
-                        }
                         OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Acteur set photo=? where id="+index);
                         stmt1.setORAData(1,imgObj);
                         stmt1.execute();
@@ -349,10 +344,6 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                         String fich=this.cheminPhoto;
                         imgObj.loadDataFromFile(fich);
                         imgObj.setProperties();
-                        if(imgObj.checkProperties())
-                        {
-                            System.out.println("photo mise à jour");
-                        }
                         OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Realisateur set photo=? where id="+index);
                         stmt1.setORAData(1,imgObj);
                         stmt1.execute();
@@ -363,15 +354,7 @@ public class frame_ajout_personne extends javax.swing.JFrame {
             }
         }
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_ajout_personne.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex)
-        {
-            Logger.getLogger(frame_ajout_personne.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
+        catch (SQLException | IOException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_ajout_personne.class.getName()).log(Level.SEVERE, null, ex);
         }
