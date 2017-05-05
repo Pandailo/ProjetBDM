@@ -81,7 +81,7 @@ public class frame_serie extends javax.swing.JFrame
                 OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
                 String fich="DS.jpg";
                 imgObj.getDataInFile(fich);
-                photo=this.pan_affiche.getToolkit().getImage(fich);
+                photo=this.pan_imaffiche.getToolkit().getImage(fich);
                 affiche();
                 
             }

@@ -242,9 +242,15 @@ public class frame_ajout_serie extends javax.swing.JFrame {
             Statement s=null;
             s = con.createStatement();
             OracleResultSet rs=null;
-
-            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Serie VALUES("+index+",'"+this.field_nom.getText()+"','"+this.ta_synopsis.getText()+"',new ORDSYS.ORDImage.init(),new ORDSYS.ORDVideo.init(),0,'"+this.field_genre.getText()+"')");
-            index=-1;
+            OraclePreparedStatement ostmt=(OraclePreparedStatement)con.prepareStatement("INSERT INTO PBDM_Serie VALUES (null,?,?,ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),0,PBDM_Saisons_Type(),?)");
+            ostmt.setString(1, this.field_nom.getText());
+            ostmt.setString(2, this.ta_synopsis.getText());
+            ostmt.setString(3,this.field_genre.getText());
+           // s.executeQuery("INSERT INTO PBDM_Serie VALUES(8,'"+this.field_nom.getText()+"','"+this.ta_synopsis.getText()+"',new ORDSYS.ORDImage.init(),new ORDSYS.ORDVideo.init(),new PBDM_Saisons_Type,0,'"+this.field_genre.getText()+"')");
+            ostmt.execute();
+            con.commit();
+            ostmt.close();
+           index=-1;
             rs=(OracleResultSet)s.executeQuery("select id, image, bandeA from PBDM_Serie where nom='"+this.field_nom.getText()+"' for update");
             while(rs.next())
             {
@@ -254,17 +260,20 @@ public class frame_ajout_serie extends javax.swing.JFrame {
                 String fich=this.cheminPhoto;
                 String vid=this.cheminBA;
                 imgObj.loadDataFromFile(fich);
-                vidObj.loadDataFromFile(vid);
+                if(!(this.cheminBA.equals("")))
+                    vidObj.loadDataFromFile(vid);
                 byte[] ctx[] = new byte [4000][1];
                 imgObj.setProperties();
-                vidObj.setProperties(ctx);
+                if(!(this.cheminBA.equals("")))
+                    vidObj.setProperties(ctx);
                 OraclePreparedStatement stmt1;
-                if((!this.cheminBA.equals(""))||this.cheminBA!=null)
+                if((!this.cheminBA.equals(""))&&this.cheminBA!=null)
                     stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Serie set image=?,bandeA=? where id="+index);
                 else
                     stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Serie set image=? where id="+index);
                 stmt1.setORAData(1,imgObj);
-                stmt1.setORAData(2,vidObj);
+                if(!(this.cheminBA.equals("")))
+                    stmt1.setORAData(2,vidObj);
                 stmt1.execute();
                 stmt1.close();   
             }
