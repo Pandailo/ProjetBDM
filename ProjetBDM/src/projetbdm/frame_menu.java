@@ -51,8 +51,6 @@ public class frame_menu extends javax.swing.JFrame
         pan_buttons = new javax.swing.JPanel();
         menu_button = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         pan_principal.setLayout(new java.awt.GridLayout(1, 2));
 
         pan_recherche.setLayout(new java.awt.GridLayout(4, 1));

@@ -8,8 +8,19 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OraclePreparedStatement;
+import oracle.jdbc.OracleResultSet;
+import oracle.ord.im.OrdAudio;
+import oracle.ord.im.OrdImage;
+import oracle.ord.im.OrdVideo;
 
 /**
  *
@@ -57,6 +68,9 @@ public class frame_ajout_serie extends javax.swing.JFrame {
         label_genre = new javax.swing.JLabel();
         field_genre = new javax.swing.JTextField();
         pan_image = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ta_synopsis = new javax.swing.JTextArea();
+        jLabel1 = new javax.swing.JLabel();
         pan_buttons = new javax.swing.JPanel();
         button_ba = new javax.swing.JButton();
         button_image = new javax.swing.JButton();
@@ -85,6 +99,12 @@ public class frame_ajout_serie extends javax.swing.JFrame {
             .addGap(0, 125, Short.MAX_VALUE)
         );
 
+        ta_synopsis.setColumns(20);
+        ta_synopsis.setRows(5);
+        jScrollPane1.setViewportView(ta_synopsis);
+
+        jLabel1.setText("Synopsis");
+
         javax.swing.GroupLayout pan_principalLayout = new javax.swing.GroupLayout(pan_principal);
         pan_principal.setLayout(pan_principalLayout);
         pan_principalLayout.setHorizontalGroup(
@@ -93,12 +113,14 @@ public class frame_ajout_serie extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(label_nom)
-                    .addComponent(label_genre))
-                .addGap(107, 107, 107)
+                    .addComponent(label_genre)
+                    .addComponent(jLabel1))
+                .addGap(86, 86, 86)
                 .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(field_nom, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(field_genre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(field_genre, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(57, 57, 57))
         );
@@ -115,9 +137,15 @@ public class frame_ajout_serie extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(label_genre)
-                            .addComponent(field_genre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(field_genre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pan_principalLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)))
                     .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
@@ -155,6 +183,13 @@ public class frame_ajout_serie extends javax.swing.JFrame {
         pan_buttons.add(button_annuler);
 
         button_valider.setText("Valider");
+        button_valider.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_validerActionPerformed(evt);
+            }
+        });
         pan_buttons.add(button_valider);
 
         getContentPane().add(pan_buttons, java.awt.BorderLayout.SOUTH);
@@ -196,6 +231,62 @@ public class frame_ajout_serie extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_button_annulerActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_button_annulerActionPerformed
+
+    private void button_validerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_validerActionPerformed
+    {//GEN-HEADEREND:event_button_validerActionPerformed
+        try
+        {
+            int index=0;
+            Connection con=connexionUtils.getInstance().getConnexion();
+            con.setAutoCommit(false);
+            Statement s=null;
+            s = con.createStatement();
+            OracleResultSet rs=null;
+
+            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Serie VALUES("+index+",'"+this.field_nom.getText()+"','"+this.ta_synopsis.getText()+"',new ORDSYS.ORDImage,new ORDSYS.ORDVideo,0,'"+this.field_genre.getText()+"')");
+            index=-1;
+            rs=(OracleResultSet)s.executeQuery("select id, image, bandeA from PBDM_Serie where nom='"+this.field_nom.getText()+"' for update");
+            while(rs.next())
+            {
+                index=rs.getInt(1);
+                OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                OrdVideo vidObj= (OrdVideo)rs.getORAData(3,OrdVideo.getORADataFactory());
+                String fich=this.cheminPhoto;
+                String vid=this.cheminBA;
+                imgObj.loadDataFromFile(fich);
+                vidObj.loadDataFromFile(vid);
+                byte[] ctx[] = new byte [4000][1];
+                imgObj.setProperties();
+                vidObj.setProperties(ctx);
+                OraclePreparedStatement stmt1;
+                if((!this.cheminBA.equals(""))||this.cheminBA!=null)
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Serie set image=?,bandeA=? where id="+index);
+                else
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Serie set image=? where id="+index);
+                stmt1.setORAData(1,imgObj);
+                stmt1.setORAData(2,vidObj);
+                stmt1.execute();
+                stmt1.close();   
+            }
+            rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexS REBUILD");
+            rs.close();
+            s.close();
+            con.commit();
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex) {
+            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.dispose();
+                                  
+    }//GEN-LAST:event_button_validerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,11 +330,14 @@ public class frame_ajout_serie extends javax.swing.JFrame {
     private javax.swing.JButton button_valider;
     private javax.swing.JTextField field_genre;
     private javax.swing.JTextField field_nom;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label_frame;
     private javax.swing.JLabel label_genre;
     private javax.swing.JLabel label_nom;
     private javax.swing.JPanel pan_buttons;
     private javax.swing.JPanel pan_image;
     private javax.swing.JPanel pan_principal;
+    private javax.swing.JTextArea ta_synopsis;
     // End of variables declaration//GEN-END:variables
 }

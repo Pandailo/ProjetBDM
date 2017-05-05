@@ -106,7 +106,8 @@ public class frame_jeu extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_titre = new javax.swing.JLabel();
         pan_buttons = new javax.swing.JPanel();
@@ -124,7 +125,6 @@ public class frame_jeu extends javax.swing.JFrame
         button_chgt_infos = new javax.swing.JButton();
         button_modif_affiche = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(720, 600));
 
         label_titre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -202,8 +202,10 @@ public class frame_jeu extends javax.swing.JFrame
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'image de couverture");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_afficheActionPerformed(evt);
             }
         });

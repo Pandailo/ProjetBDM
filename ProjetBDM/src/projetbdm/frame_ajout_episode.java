@@ -25,7 +25,8 @@ public class frame_ajout_episode extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_frame = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -38,8 +39,6 @@ public class frame_ajout_episode extends javax.swing.JFrame {
         pan_buttons = new javax.swing.JPanel();
         button_annuler = new javax.swing.JButton();
         button_valider = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         label_frame.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label_frame.setText("Ajout d'un épisode");
@@ -88,9 +87,16 @@ public class frame_ajout_episode extends javax.swing.JFrame {
 
         getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
 
-        pan_buttons.setLayout(new java.awt.GridLayout());
+        pan_buttons.setLayout(new java.awt.GridLayout(1, 0));
 
         button_annuler.setText("Annuler");
+        button_annuler.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_annulerActionPerformed(evt);
+            }
+        });
         pan_buttons.add(button_annuler);
 
         button_valider.setText("Valider");
@@ -100,6 +106,11 @@ public class frame_ajout_episode extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void button_annulerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_annulerActionPerformed
+    {//GEN-HEADEREND:event_button_annulerActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_button_annulerActionPerformed
 
     /**
      * @param args the command line arguments

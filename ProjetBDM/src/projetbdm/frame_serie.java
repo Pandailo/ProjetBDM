@@ -8,8 +8,16 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OracleResultSet;
+import oracle.ord.im.OrdImage;
 
 /**
  *
@@ -20,21 +28,68 @@ public class frame_serie extends javax.swing.JFrame
     boolean admin;
     String cheminPhoto;
     Image photo;
+    int id;
+    Connection con;
     /**
      * Creates new form frame_serie
      */
-    public frame_serie(boolean admin,int idS)
+    public frame_serie(boolean admin,int idS) throws SQLException, IOException
     {
         initComponents();
         this.admin=admin;
-
-        
+        id=idS; 
         if(!admin){
             this.pan_saison.remove(button_ajout_saison);
             this.pan_ba.remove(button_ajout_ba);
             this.pan_admin.removeAll();
             this.pan_saison.setLayout(new java.awt.GridLayout(1, 2));
             this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
+        }
+                try
+        {
+           //CREATE Type PBDM_Serie_Type AS OBJECT (id NUMBER,nom VARCHAR(50),image ORDSYS.ORDImage, bandeA ORDSYS.ORDVideo,nombreS INTEGER,saisons PBDM_Saisons_Type,genre VARCHAR2(50),MEMBER FUNCTION compareImage(id IN INTEGER) RETURN DOUBLE PRECISION);
+            con=connexionUtils.getInstance().getConnexion();
+            //con=connexionUtils2.getInstance();
+            Statement st=con.createStatement();
+            String titre="";
+            String synopsis="";
+            String temp="";
+            String nomA="";
+            String genre="";
+            String nombreS="";
+            int note=0;
+            //REMPLISSAGE DU RESUME
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom,synopsis,genre,nombreS FROM PBDM_Serie WHERE id="+idS);
+            while(rs.next())
+            {
+                titre=rs.getString(1);
+                synopsis=rs.getString(2);
+                genre=rs.getString(3);
+                nombreS=rs.getString(4);
+            }
+            this.label_titre.setText(titre);
+            
+            this.edition.append("Titre de la série : "+titre+"\n");
+            this.edition.append("Genre :"+genre+"\n");
+            this.edition.append("Nombre de saison :"+nombreS+"\n");
+            this.edition.append("Synopsis : "+synopsis+"\n");
+            
+            //AFFICHAGE DE L'IMAGE
+            rs=(OracleResultSet)st.executeQuery("select image from PBDM_Serie where id="+idS);
+            while(rs.next())
+            {
+                OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
+                String fich="DS.jpg";
+                imgObj.getDataInFile(fich);
+                photo=this.pan_affiche.getToolkit().getImage(fich);
+                affiche();
+                
+            }
+            
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -197,8 +252,9 @@ public class frame_serie extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_saisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saisonActionPerformed
-        frame_saison saison = new frame_saison(admin,1);
-        saison.setVisible(true);
+        
+//frame_saison saison = new frame_saison(admin,1);
+        //saison.setVisible(true);
     }//GEN-LAST:event_button_saisonActionPerformed
     private void affiche()
     {
@@ -237,7 +293,7 @@ public class frame_serie extends javax.swing.JFrame
         if(this.photo!=null)
             this.affiche();
     }
-    public static void main(String args[])
+    public static void main(String args[]) throws SQLException, IOException
     {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

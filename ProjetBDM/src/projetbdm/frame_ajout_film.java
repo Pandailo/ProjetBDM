@@ -267,17 +267,37 @@ public class frame_ajout_film extends javax.swing.JFrame {
                 String fich=this.cheminPhoto;
                 String vid=this.cheminBA;
                 String son=this.cheminBO;
-                imgObj.loadDataFromFile(fich);
-                vidObj.loadDataFromFile(vid);
-                sonObj.loadDataFromFile(son);
+                if(!(this.cheminPhoto.equals("")))
+                        imgObj.loadDataFromFile(fich);
+                if(!(this.cheminBA.equals("")))
+                    vidObj.loadDataFromFile(vid);
+                if(!(this.cheminBO.equals("")))
+                    sonObj.loadDataFromFile(son);
                 byte[] ctx[] = new byte [4000][1];
                 imgObj.setProperties();
-                vidObj.setProperties(ctx);
-                sonObj.setProperties(ctx);
-                OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=?,bandeA=?,bandeO=? where id="+index);
-                stmt1.setORAData(1,imgObj);
-                stmt1.setORAData(2,vidObj);
-                stmt1.setORAData(3,sonObj);
+                if(!(this.cheminBA.equals("")))
+                   vidObj.setProperties(ctx);
+                if(!(this.cheminBO.equals("")))
+                    sonObj.setProperties(ctx);
+                OraclePreparedStatement stmt1;
+                if((!this.cheminBA.equals(""))&&(!this.cheminBO.equals("")))
+                {
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=?,bandeA=?,bandeO=? where id="+index);
+                    stmt1.setORAData(1,imgObj);
+                    stmt1.setORAData(2,vidObj);
+                    stmt1.setORAData(3,sonObj);
+                }
+                else if((!this.cheminBA.equals("")))
+                {
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=?,bandeA=? where id="+index);
+                    stmt1.setORAData(1,imgObj);
+                    stmt1.setORAData(2,vidObj);
+                }
+                else
+                {
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=? where id="+index);
+                    stmt1.setORAData(1,imgObj);
+                }
                 stmt1.execute();
                 stmt1.close();   
             }
