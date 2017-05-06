@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mapping.episode;
+import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 
 /**
@@ -21,7 +23,7 @@ public class ProjetBDM {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SQLException 
+    public static void main(String[] args) throws SQLException, ClassNotFoundException 
     {
       /* try
         {*/

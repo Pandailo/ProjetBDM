@@ -5,12 +5,14 @@
  */
 package projetbdm;
 
+import mapping.episode;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 import oracle.jdbc.OracleStatement;
+import mapping.episode;
 
 /**
  *
@@ -27,7 +29,7 @@ public class frame_episode extends javax.swing.JFrame {
             initComponents();
             Connection con=connexionUtils.getInstance().getConnexion();
             java.util.Map map = con.getTypeMap();
-            map.put("YV965015.PBDM_Episode_Type", Class.forName("projetbdm.episode"));
+            map.put("YV965015.PBDM_EPISODE_TYPE", Class.forName("mapping.episode"));
             con.setTypeMap(map);
             //System.out.println(map.toString());
             if(!admin){
@@ -36,14 +38,14 @@ public class frame_episode extends javax.swing.JFrame {
             OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement("SELECT value(e) FROM THE(SELECT episodes FROM PBDM_Saison WHERE id=?) e WHERE e.id=?");
             st.setInt(1, idS);
             st.setInt(2,idE);
-            episode ep = null;
+            episode ep = new episode();
             OracleResultSet rs=(OracleResultSet) st.executeQuery();
             while(rs.next())
             {
                ep =(episode) rs.getObject(1, map);
             }
-            this.label_titre.setText(ep.nom);
-            this.edition.append("Nom :"+ep.nom+"\n Date de sortie :"+ep.date+"\nGenre :"+ep.genre+"\nSynopsis :"+ep.synopsis);
+            this.label_titre.setText(ep.getNom());
+            this.edition.append("Nom :"+ep.getNom()+"\n Date de sortie :"+ep.getDate()+"\nGenre :"+ep.getGenre()+"\nSynopsis :"+ep.getSynopsis());
         }
         catch (ClassNotFoundException ex)
         {
