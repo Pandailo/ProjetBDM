@@ -29,6 +29,7 @@ public class frame_episode extends javax.swing.JFrame {
             java.util.Map map = con.getTypeMap();
             map.put("YV965015.PBDM_Episode_Type", Class.forName("projetbdm.episode"));
             con.setTypeMap(map);
+            //System.out.println(map.toString());
             if(!admin){
                 this.pan_admin.removeAll();
             }

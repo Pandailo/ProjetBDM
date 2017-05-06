@@ -26,7 +26,7 @@ public class episode implements SQLData
     @Override
     public String getSQLTypeName() throws SQLException
     {
-       return "yv965015.PBDM_Episode_Type";
+       return "YV965015.PBDM_Episode_Type";
     }
 
     @Override
