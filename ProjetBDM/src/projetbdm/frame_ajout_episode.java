@@ -5,17 +5,25 @@
  */
 package projetbdm;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import oracle.jdbc.OraclePreparedStatement;
+
 /**
  *
  * @author al128785
  */
 public class frame_ajout_episode extends javax.swing.JFrame {
 
+    int idS;
     /**
      * Creates new form frame_ajout_episode
      */
-    public frame_ajout_episode() {
+    public frame_ajout_episode(int idS) {
         initComponents();
+        this.idS=idS;
     }
 
     /**
@@ -31,11 +39,18 @@ public class frame_ajout_episode extends javax.swing.JFrame {
         label_frame = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tf_nom = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        tf_num = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        tf_dur = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        tf_date = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        tf_genre = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        ta_syno = new javax.swing.JTextArea();
         pan_buttons = new javax.swing.JPanel();
         button_annuler = new javax.swing.JButton();
         button_valider = new javax.swing.JButton();
@@ -44,46 +59,37 @@ public class frame_ajout_episode extends javax.swing.JFrame {
         label_frame.setText("Ajout d'un épisode");
         getContentPane().add(label_frame, java.awt.BorderLayout.NORTH);
 
+        pan_principal.setLayout(new java.awt.GridLayout(12, 1));
+
         jLabel1.setText("Nom");
+        pan_principal.add(jLabel1);
+        pan_principal.add(tf_nom);
 
         jLabel2.setText("Numéro");
+        pan_principal.add(jLabel2);
+        pan_principal.add(tf_num);
 
         jLabel3.setText("Durée");
+        pan_principal.add(jLabel3);
+        pan_principal.add(tf_dur);
 
-        javax.swing.GroupLayout pan_principalLayout = new javax.swing.GroupLayout(pan_principal);
-        pan_principal.setLayout(pan_principalLayout);
-        pan_principalLayout.setHorizontalGroup(
-            pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pan_principalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
-                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                    .addComponent(jTextField3))
-                .addGap(125, 125, 125))
-        );
-        pan_principalLayout.setVerticalGroup(
-            pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pan_principalLayout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(145, Short.MAX_VALUE))
-        );
+        jLabel4.setText("Date de sortie");
+        pan_principal.add(jLabel4);
+        pan_principal.add(tf_date);
+
+        jLabel5.setText("Genre");
+        pan_principal.add(jLabel5);
+        pan_principal.add(tf_genre);
+
+        jLabel6.setText("Synopsis");
+        pan_principal.add(jLabel6);
+
+        ta_syno.setColumns(20);
+        ta_syno.setRows(5);
+        ta_syno.setPreferredSize(new java.awt.Dimension(300, 94));
+        jScrollPane1.setViewportView(ta_syno);
+
+        pan_principal.add(jScrollPane1);
 
         getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
 
@@ -100,6 +106,13 @@ public class frame_ajout_episode extends javax.swing.JFrame {
         pan_buttons.add(button_annuler);
 
         button_valider.setText("Valider");
+        button_valider.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_validerActionPerformed(evt);
+            }
+        });
         pan_buttons.add(button_valider);
 
         getContentPane().add(pan_buttons, java.awt.BorderLayout.SOUTH);
@@ -111,6 +124,49 @@ public class frame_ajout_episode extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_button_annulerActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_button_annulerActionPerformed
+
+    private void button_validerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_validerActionPerformed
+    {//GEN-HEADEREND:event_button_validerActionPerformed
+        String nom="";
+        int num=0;
+        int duree=0;
+        nom=this.tf_nom.getText();
+        if(nom!=null&&!nom.equals(""))
+        {
+            if(this.tf_num.getText()!=null&&!this.tf_num.getText().equals(""))
+            {
+                if(this.tf_dur.getText()!=null&&!this.tf_dur.getText().equals(""))
+                {
+                    try {
+                        num=Integer.parseInt(this.tf_num.getText());
+                        duree=Integer.parseInt(this.tf_dur.getText());
+                        Connection con=connexionUtils.getInstance().getConnexion();
+                        OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement
+        ("INSERT INTO THE(SELECT episodes FROM PBDM_Saison s WHERE s.id=?) VALUES(0,?,?,?,?,?,?,?,SELECT REF(s) FROM PBDM_Saison s WHERE s.id=?)");
+                        //id,date,nom,syno,genre,duree,nomE,numero,saison
+                        st.setInt(1, this.idS);
+                        st.setString(2, this.tf_date.getText());
+                        st.setString(3,nom);
+                        st.setString(4,this.ta_syno.getText());
+                        st.setString(5,this.tf_genre.getText());
+                        st.setInt(6, duree);
+                        st.setString(7, nom);
+                        st.setInt(8,num);
+                        st.setInt(9,this.idS);
+                        st.executeQuery();
+                        con.commit();
+                        st.close();
+                    }
+                    catch (SQLException ex) {
+                        Logger.getLogger(frame_ajout_episode.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    catch (ClassNotFoundException ex) {
+                        Logger.getLogger(frame_ajout_episode.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_button_validerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,7 +198,7 @@ public class frame_ajout_episode extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frame_ajout_episode().setVisible(true);
+                new frame_ajout_episode(1).setVisible(true);
             }
         });
     }
@@ -153,11 +209,18 @@ public class frame_ajout_episode extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label_frame;
     private javax.swing.JPanel pan_buttons;
     private javax.swing.JPanel pan_principal;
+    private javax.swing.JTextArea ta_syno;
+    private javax.swing.JTextField tf_date;
+    private javax.swing.JTextField tf_dur;
+    private javax.swing.JTextField tf_genre;
+    private javax.swing.JTextField tf_nom;
+    private javax.swing.JTextField tf_num;
     // End of variables declaration//GEN-END:variables
 }
