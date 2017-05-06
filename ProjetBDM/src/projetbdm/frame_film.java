@@ -10,12 +10,16 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
@@ -35,6 +39,7 @@ public class frame_film extends javax.swing.JFrame
     int id;
     String fich="",vid="",aud="",titre="";
     Connection con;
+    ArrayList<Integer> l_id;
 
     /**
      * Creates new form frame_film
@@ -42,6 +47,7 @@ public class frame_film extends javax.swing.JFrame
     public frame_film(boolean admin,int idF) throws ClassNotFoundException, IOException
     {
         this.id=idF;
+        l_id=new ArrayList();
         try
         {
             initComponents();
@@ -128,7 +134,8 @@ public class frame_film extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         label_titre = new javax.swing.JLabel();
@@ -152,11 +159,14 @@ public class frame_film extends javax.swing.JFrame
         button_ajout_ba = new javax.swing.JButton();
         button_ba = new javax.swing.JButton();
 
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
-            public void windowClosed(java.awt.event.WindowEvent evt) {
+            public void windowClosed(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosed(evt);
             }
         });
@@ -196,6 +206,13 @@ public class frame_film extends javax.swing.JFrame
         );
 
         compareFilm_button.setText("Rechercher des films à ambiance similaire");
+        compareFilm_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                compareFilm_buttonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
         pan_image.setLayout(pan_imageLayout);
@@ -234,8 +251,10 @@ public class frame_film extends javax.swing.JFrame
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -257,8 +276,10 @@ public class frame_film extends javax.swing.JFrame
         pan_bo.add(button_ajout_bo);
 
         button_bo.setText("Bande originale");
-        button_bo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_bo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_boActionPerformed(evt);
             }
         });
@@ -269,16 +290,20 @@ public class frame_film extends javax.swing.JFrame
         pan_ba.setLayout(new java.awt.GridLayout(2, 1));
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
-        button_ajout_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ajout_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_ajout_baActionPerformed(evt);
             }
         });
         pan_ba.add(button_ajout_ba);
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_baActionPerformed(evt);
             }
         });
@@ -419,6 +444,50 @@ public class frame_film extends javax.swing.JFrame
         if(audiotemp!=null)
             audiotemp.delete();
     }//GEN-LAST:event_formWindowClosing
+
+    private void compareFilm_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_compareFilm_buttonActionPerformed
+    {//GEN-HEADEREND:event_compareFilm_buttonActionPerformed
+        Double seuil=0.0;
+       JOptionPane jop = new JOptionPane(), jop2 = new JOptionPane();
+        seuil = Double.parseDouble(jop.showInputDialog(null, "Seuil mini ?", "", JOptionPane.QUESTION_MESSAGE));
+        try
+        {
+            int idF=0;
+            String nomJ="";
+            double score;
+            
+            OraclePreparedStatement stmt2 = (OraclePreparedStatement)connexionUtils.getInstance().getConnexion().prepareStatement("SELECT id,nom FROM PBDM_Film WHERE id<>?");
+            stmt2.setInt(1, this.id);
+            OracleResultSet rs2 = (OracleResultSet)stmt2.executeQuery();
+            CallableStatement cstmt = connexionUtils.getInstance().getConnexion().prepareCall("{?=call compareF(?,?)}");
+            cstmt.registerOutParameter(1, Types.DOUBLE);
+            while(rs2.next())
+            {
+                idF=rs2.getInt(1);
+                nomJ=rs2.getString(2);
+                cstmt.setInt(2, id);
+                cstmt.setInt(3, idF);
+                cstmt.execute();
+                score = cstmt.getDouble(1);
+                if(score<seuil)
+                    this.l_id.add(idF);
+            }
+            //this.trierResultat();
+            cstmt.close();
+            rs2.close();
+            stmt2.close();
+            frame_transition ft=new frame_transition(this.admin,"film",l_id,null,"");
+            ft.setVisible(true);
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_compareFilm_buttonActionPerformed
 
     /**
      * @param args the command line arguments

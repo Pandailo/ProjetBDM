@@ -143,6 +143,9 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Rechercher des films &#xe0; ambiance similaire"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="compareFilm_buttonActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
