@@ -118,3 +118,13 @@ CREATE OR REPLACE TYPE BODY PBDM_Serie_Type AS
 	END compareImage;
 END;
 /
+CREATE OR REPLACE FUNCTION compare(idJ IN INTEGER,idJ2 IN INTEGER,pond_AvgColor IN DOUBLE PRECISION,pond_colorhisto IN DOUBLE PRECISION,pond_poscol IN DOUBLE PRECISION,pond_text IN DOUBLE PRECISION) RETURN DOUBLE PRECISION AS
+	DECLARE
+		jv PBDM_JeuVideo_Type;
+		score DOUBLE PRECISION;
+	BEGIN
+		SELECT VALUE(j) INTO jv FROM PBDM_JeuVideo j WHERE j.id=idJ;
+		score:=jv.compareImage(idJ2,pond_AvgColor,pond_colorhisto,pond_poscol,pond_text);
+		RETURN score;
+	END compare;
+/
