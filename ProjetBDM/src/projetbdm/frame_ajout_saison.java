@@ -228,21 +228,24 @@ public class frame_ajout_saison extends javax.swing.JFrame {
                 imgObj.loadDataFromFile(fich);
                 if(!(this.cheminBA.equals("")))
                     vidObj.loadDataFromFile(vid);
-                byte[] ctx[] = new byte [4000][1];
+                byte[] ctx[] = new byte [1][64];
                 imgObj.setProperties();
                 if(!(this.cheminBA.equals("")))
                     vidObj.setProperties(ctx);
                 OraclePreparedStatement stmt1;
                 if((!this.cheminBA.equals(""))&&this.cheminBA!=null)
-                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Serie set image=?,bandeA=? where id="+index);
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Saison set image=?,bandeA=? where numS="+this.field_num.getText()+" AND DEREF(serie).id='"+this.idSe+"'");
                 else
-                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Serie set image=? where id="+index);
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Saison set image=? where where numS="+this.field_num.getText()+" AND DEREF(serie).id='"+this.idSe+"'");
                 stmt1.setORAData(1,imgObj);
                 if(!(this.cheminBA.equals("")))
                     stmt1.setORAData(2,vidObj);
                 stmt1.execute();
                 stmt1.close();   
             }
+            rs.close();
+            s.close();
+            con.commit();
         }
         catch (SQLException | ClassNotFoundException | IOException ex)
         {
