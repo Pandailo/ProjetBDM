@@ -39,7 +39,7 @@ CREATE OR REPLACE TYPE BODY PBDM_Acteur_Type AS
 END;
 /
 CREATE OR REPLACE TYPE BODY PBDM_JeuVideo_Type AS
-	MEMBER FUNCTION compareImage(id IN INTEGER,pond_AvgColor IN DOUBLE PRECISION, pond_colorhisto IN DOUBLE PRECISION, pond_poscol IN DOUBLE PRECISION,pond_text IN DOUBLE PRECISION) RETURN DOUBLE PRECISION IS
+	MEMBER FUNCTION compareImage(idJ IN INTEGER,pond_AvgColor IN DOUBLE PRECISION, pond_colorhisto IN DOUBLE PRECISION, pond_poscol IN DOUBLE PRECISION,pond_text IN DOUBLE PRECISION) RETURN DOUBLE PRECISION IS
 		Simg1 SI_StillImage;
 		Simg2 SI_StillImage;
 		img1 ORDImage;
@@ -47,7 +47,7 @@ CREATE OR REPLACE TYPE BODY PBDM_JeuVideo_Type AS
 		sig SI_FeatureList;
 		score DOUBLE PRECISION;
 	BEGIN
-		SELECT image INTO img1 FROM PBDM_JeuVideo WHERE id=id;
+		SELECT image INTO img1 FROM PBDM_JeuVideo WHERE id=idJ;
 		bl:=img1.source.localData;
 		Simg1:=new SI_StillImage(bl);
 		bl:=self.image.source.localData;
