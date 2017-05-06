@@ -8,8 +8,19 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OraclePreparedStatement;
+import oracle.jdbc.OracleResultSet;
+import oracle.ord.im.OrdImage;
+import oracle.ord.im.OrdVideo;
 
 /**
  *
@@ -17,24 +28,86 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class frame_saison extends javax.swing.JFrame {
     boolean admin;
-            String cheminPhoto;
-        Image photo;
+    String cheminPhoto;
+    Image photo;
+    int id;
+    String fich="",vid="",titre="";
+    Connection con;
     /**
      * Creates new form frame_saison
      */
-    public frame_saison(boolean admin, int idSa) {
-        initComponents();
-        this.admin=admin;
-        this.label_titre.setText("Saison :"+idSa);
-        if(!admin){
-            this.pan_episode.remove(button_ajout_ep);
-            this.pan_ba.remove(button_ajout_ba);
-            this.pan_admin.removeAll();
-            this.pan_episode.setLayout(new java.awt.GridLayout(1, 2));
-            this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
+    public frame_saison(boolean admin, int idSa) throws IOException, ClassNotFoundException {
+        Connection con;
+        this.id=idSa;
+        try
+        {
+            initComponents();
+            this.admin=admin;
+            if(!admin){
+                this.pan_episode.remove(button_ajout_ep);
+                this.pan_ba.remove(button_ajout_ba);
+                this.pan_admin.removeAll();
+                this.pan_episode.setLayout(new java.awt.GridLayout(1, 2));
+                this.pan_ba.setLayout(new java.awt.GridLayout(1, 1));
+            }
+        
+            con=connexionUtils.getInstance().getConnexion();
+            Statement st=con.createStatement();
+            String numS="";
+            String Se="";
+            String temp="";
+
+            //REMPLISSAGE DU RESUME
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT id,numS FROM PBDM_Saison WHERE id="+idSa);
+            while(rs.next())
+            {
+                numS=rs.getString(2);
+            }
+            this.label_titre.setText("Saison "+numS);
+            rs=(OracleResultSet)st.executeQuery("SELECT DEREF(serie).nom FROM PBDM_Saison sa WHERE sa.id="+idSa);
+            while(rs.next())
+            {
+                Se=rs.getString(1);
+                if(Se==null)
+                {
+                    Se="";
+                }
+            }
+            /*rs=(OracleResultSet)st.executeQuery("SELECT DEREF(acteurMA).nom FROM PBDM_MedVidActeur WHERE DEREF(MedVidMa).id="+idF);
+            while(rs.next())
+            {
+                temp=rs.getString(1);
+                if(temp==null)
+                {
+                    temp="";
+                }
+                nomA+=temp+"\n";
+            }*/
+            this.edition.append("Nom de la série : "+Se+"\n");
+            this.edition.append("Numéro de saison : "+numS+"\n");
+            //this.edition.append("Episodes :"+nomE+"\n");
+
+            
+            //AFFICHAGE DE L'IMAGE
+            rs=(OracleResultSet)st.executeQuery("select image from PBDM_Saison where id="+idSa);
+            while(rs.next())
+            {
+                OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
+                fich="im_temp.jpg";
+                imgObj.getDataInFile(fich);
+                photo=this.pan_affiche.getToolkit().getImage(fich);
+                affiche();  
+                File fichiertemp = new File(fich);
+                if(fichiertemp.exists())
+                    fichiertemp.delete();
+            }
+            rs.close();
+            st.close();
         }
-
-
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -44,8 +117,7 @@ public class frame_saison extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         label_titre = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -69,6 +141,11 @@ public class frame_saison extends javax.swing.JFrame {
         button_ajout_ba = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         label_titre.setFont(label_titre.getFont().deriveFont(label_titre.getFont().getStyle() | java.awt.Font.BOLD, 11));
         label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -137,10 +214,8 @@ public class frame_saison extends javax.swing.JFrame {
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -163,20 +238,16 @@ public class frame_saison extends javax.swing.JFrame {
         pan_episode.add(cb_episode);
 
         button_episode.setText("Aller à l'épisode");
-        button_episode.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_episode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_episodeActionPerformed(evt);
             }
         });
         pan_episode.add(button_episode);
 
         button_ajout_ep.setText("Ajouter un épisode");
-        button_ajout_ep.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_ajout_ep.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_ajout_epActionPerformed(evt);
             }
         });
@@ -187,10 +258,8 @@ public class frame_saison extends javax.swing.JFrame {
         pan_ba.setLayout(new java.awt.GridLayout(1, 2));
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_baActionPerformed(evt);
             }
         });
@@ -218,7 +287,25 @@ public class frame_saison extends javax.swing.JFrame {
 
     private void button_baActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_baActionPerformed
     {//GEN-HEADEREND:event_button_baActionPerformed
-        // TODO add your handling code here:
+        try {
+            vid="";
+            con=connexionUtils.getInstance().getConnexion();
+            Statement st=con.createStatement();
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("select bandeA from PBDM_Saison where id="+this.id);
+            while(rs.next())
+            {
+            OrdVideo vidObj= (OrdVideo)rs.getORAData(1,OrdVideo.getORADataFactory());
+            vid="vid_temp.avi";
+            vidObj.getDataInFile(vid);
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec("vlc "+vid);
+            }
+            rs.close();
+            st.close();
+            
+        } catch (SQLException | ClassNotFoundException | IOException ex) {
+            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_button_baActionPerformed
     private void affiche()
     {
@@ -238,8 +325,34 @@ public class frame_saison extends javax.swing.JFrame {
             //Récupération de l'image
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
-            //TODO update dans la BD
             this.affiche();
+            try
+            {
+                con=connexionUtils.getInstance().getConnexion();
+                con.setAutoCommit(false);
+                Statement s=null;
+                s = con.createStatement();
+                OracleResultSet rs=null;
+                rs=(OracleResultSet)s.executeQuery("select image from PBDM_Saison where id='"+this.id+"' for update");
+                while(rs.next())
+                {
+                    OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                    String img =this.cheminPhoto;
+                    imgObj.loadDataFromFile(img);
+                    imgObj.setProperties();
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Saison set image=? where id="+id);
+                    stmt1.setORAData(1,imgObj);
+                    stmt1.execute();
+                    stmt1.close();   
+                }
+                rs.close();
+                s.close();
+                con.commit();
+            }
+            catch (SQLException | IOException | ClassNotFoundException ex)
+            {
+                Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_button_modif_afficheActionPerformed
 
@@ -248,10 +361,21 @@ public class frame_saison extends javax.swing.JFrame {
         fae.setVisible(true);
     }//GEN-LAST:event_button_ajout_epActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        File imagetemp = new File(fich);
+        File videotemp=null;
+        if (vid!="")
+            videotemp = new File(vid);
+        if(imagetemp.exists())
+            imagetemp.delete();
+        if(videotemp!=null)
+            videotemp.delete();
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException, ClassNotFoundException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
