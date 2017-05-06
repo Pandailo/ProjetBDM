@@ -82,7 +82,7 @@ public class frame_serie extends javax.swing.JFrame
             while(rs.next())
             {
                 OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
-                String fich="DS.jpg";
+                String fich="im_temp.jpg";
                 imgObj.getDataInFile(fich);
                 photo=this.pan_imaffiche.getToolkit().getImage(fich);
                 affiche();
@@ -103,8 +103,7 @@ public class frame_serie extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         label_titre = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -191,10 +190,8 @@ public class frame_serie extends javax.swing.JFrame
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -213,20 +210,16 @@ public class frame_serie extends javax.swing.JFrame
         pan_saison.setLayout(new java.awt.GridLayout(1, 3));
 
         button_saison.setText("Aller à la saison");
-        button_saison.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_saison.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_saisonActionPerformed(evt);
             }
         });
         pan_saison.add(button_saison);
 
         button_ajout_saison.setText("Ajouter une saison");
-        button_ajout_saison.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_ajout_saison.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_ajout_saisonActionPerformed(evt);
             }
         });

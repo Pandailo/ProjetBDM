@@ -374,7 +374,7 @@ public class frame_saison extends javax.swing.JFrame {
                 Statement s=null;
                 s = con.createStatement();
                 OracleResultSet rs=null;
-                rs=(OracleResultSet)s.executeQuery("select image from PBDM_Saison where id='"+this.id+"' for update");
+                rs=(OracleResultSet)s.executeQuery("select id, image from PBDM_Saison where id="+this.id+" for update");
                 while(rs.next())
                 {
                     OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
