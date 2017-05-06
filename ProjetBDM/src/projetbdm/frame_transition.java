@@ -41,6 +41,7 @@ public class frame_transition extends javax.swing.JFrame
         this.type_media=typeM;
         OracleResultSet rs=null;
         String nom="";
+        String serieS="";
         if(l_id!=null)
         {
                 for(int i=0;i<l_id.size();i++)
@@ -111,8 +112,7 @@ public class frame_transition extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         lab_typeM = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -140,20 +140,16 @@ public class frame_transition extends javax.swing.JFrame
         jPanel2.setLayout(new java.awt.GridLayout(1, 2));
 
         annuler_button.setText("Annuler");
-        annuler_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        annuler_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 annuler_buttonActionPerformed(evt);
             }
         });
         jPanel2.add(annuler_button);
 
         aller_button.setText("Aller au média");
-        aller_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        aller_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aller_buttonActionPerformed(evt);
             }
         });
@@ -207,7 +203,7 @@ public class frame_transition extends javax.swing.JFrame
                         }
                         break;
                     case "saison" :
-                        rs=(OracleResultSet)st.executeQuery("SELECT id FROM PBDM_Saison WHERE id ="+Integer.parseInt(this.cb_listM.getSelectedItem().toString()));
+                        rs=(OracleResultSet)st.executeQuery("SELECT id FROM PBDM_Saison WHERE numS ="+Integer.parseInt(this.cb_listM.getSelectedItem().toString())+" AND DEREF(serie).nom='"+nomS+"'");
                         while(rs.next())
                         {
                             index=rs.getInt(1);

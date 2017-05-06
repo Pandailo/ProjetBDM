@@ -9,12 +9,16 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import oracle.jdbc.OraclePreparedStatement;
+import oracle.jdbc.OracleResultSet;
+import oracle.ord.im.OrdImage;
+import oracle.ord.im.OrdVideo;
 
 /**
  *
@@ -203,6 +207,8 @@ public class frame_ajout_saison extends javax.swing.JFrame {
         try
         {
             Connection con=connexionUtils.getInstance().getConnexion();
+            Statement s=null;
+            s = con.createStatement();
             OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement("INSERT INTO PBDM_Saison VALUES(0,?,?,ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),(SELECT REF(s) FROM PBDM_Serie s WHERE s.id=?),PBDM_episodes_type())");
             st.setInt(1,Integer.parseInt(this.field_num.getText()));
             st.setInt(2, 0);
@@ -210,12 +216,35 @@ public class frame_ajout_saison extends javax.swing.JFrame {
             st.executeQuery();
             con.commit();
             st.close();
+            int index=-1;
+            OracleResultSet rs=(OracleResultSet)s.executeQuery("select id, image, bandeA from PBDM_Saison where numS="+this.field_num.getText()+" AND DEREF(serie).id='"+this.idSe+"'' for update");
+            while(rs.next())
+            {
+                index=rs.getInt(1);
+                OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                OrdVideo vidObj= (OrdVideo)rs.getORAData(3,OrdVideo.getORADataFactory());
+                String fich=this.cheminPhoto;
+                String vid=this.cheminBA;
+                imgObj.loadDataFromFile(fich);
+                if(!(this.cheminBA.equals("")))
+                    vidObj.loadDataFromFile(vid);
+                byte[] ctx[] = new byte [4000][1];
+                imgObj.setProperties();
+                if(!(this.cheminBA.equals("")))
+                    vidObj.setProperties(ctx);
+                OraclePreparedStatement stmt1;
+                if((!this.cheminBA.equals(""))&&this.cheminBA!=null)
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Serie set image=?,bandeA=? where id="+index);
+                else
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Serie set image=? where id="+index);
+                stmt1.setORAData(1,imgObj);
+                if(!(this.cheminBA.equals("")))
+                    stmt1.setORAData(2,vidObj);
+                stmt1.execute();
+                stmt1.close();   
+            }
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_ajout_saison.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
+        catch (SQLException | ClassNotFoundException | IOException ex)
         {
             Logger.getLogger(frame_ajout_saison.class.getName()).log(Level.SEVERE, null, ex);
         }
