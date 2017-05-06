@@ -306,7 +306,7 @@ public class frame_serie extends javax.swing.JFrame
     }//GEN-LAST:event_button_modif_afficheActionPerformed
 
     private void button_ajout_saisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ajout_saisonActionPerformed
-        frame_ajout_saison fas = new frame_ajout_saison();
+        frame_ajout_saison fas = new frame_ajout_saison(this.admin,this.id);
         fas.setVisible(true);
     }//GEN-LAST:event_button_ajout_saisonActionPerformed
 

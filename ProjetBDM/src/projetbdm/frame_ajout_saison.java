@@ -9,8 +9,12 @@ package projetbdm;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OraclePreparedStatement;
 
 /**
  *
@@ -20,9 +24,13 @@ public class frame_ajout_saison extends javax.swing.JFrame {
     String cheminPhoto="";
     String cheminBA="";
     Image photo;
+    boolean admin;
+    int idSe;
     /** Creates new form frame_ajout_saison */
-    public frame_ajout_saison() {
+    public frame_ajout_saison(boolean admin,int idSe) {
         initComponents();
+        this.admin=admin;
+        this.idSe=idSe;
     }
 
     
@@ -141,6 +149,13 @@ public class frame_ajout_saison extends javax.swing.JFrame {
         pan_buttons.add(button_annuler);
 
         button_valider.setText("Valider");
+        button_valider.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_validerActionPerformed(evt);
+            }
+        });
         pan_buttons.add(button_valider);
 
         getContentPane().add(pan_buttons, java.awt.BorderLayout.SOUTH);
@@ -183,6 +198,30 @@ public class frame_ajout_saison extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_button_annulerActionPerformed
 
+    private void button_validerActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_validerActionPerformed
+    {//GEN-HEADEREND:event_button_validerActionPerformed
+        try
+        {
+            Connection con=connexionUtils.getInstance().getConnexion();
+            OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement("INSERT INTO PBDM_Saison VALUES(0,?,?,ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),(SELECT REF(s) FROM PBDM_Serie s WHERE s.id=?),PBDM_episodes_type())");
+            st.setInt(1,Integer.parseInt(this.field_num.getText()));
+            st.setInt(2, 0);
+            st.setInt(3, this.idSe);
+            st.executeQuery();
+            con.commit();
+            st.close();
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_ajout_saison.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_ajout_saison.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_button_validerActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -213,7 +252,7 @@ public class frame_ajout_saison extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frame_ajout_saison().setVisible(true);
+                new frame_ajout_saison(true,1).setVisible(true);
             }
         });
     }
