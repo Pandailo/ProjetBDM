@@ -48,7 +48,6 @@ public class frame_ajout_saison extends javax.swing.JFrame {
     private void affiche()
     {
         Graphics g = this.pan_image.getGraphics();
-        //this.pan_image.setSize(140,140*(photo.getWidth(null)/photo.getHeight(null)));
         g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
     }
     
@@ -207,6 +206,7 @@ public class frame_ajout_saison extends javax.swing.JFrame {
         try
         {
             Connection con=connexionUtils.getInstance().getConnexion();
+            con.setAutoCommit(false);
             Statement s=null;
             s = con.createStatement();
             OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement("INSERT INTO PBDM_Saison VALUES(0,?,?,ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),(SELECT REF(s) FROM PBDM_Serie s WHERE s.id=?),PBDM_episodes_type())");
@@ -217,7 +217,7 @@ public class frame_ajout_saison extends javax.swing.JFrame {
             con.commit();
             st.close();
             int index=-1;
-            OracleResultSet rs=(OracleResultSet)s.executeQuery("select id, image, bandeA from PBDM_Saison where numS="+this.field_num.getText()+" AND DEREF(serie).id='"+this.idSe+"'' for update");
+            OracleResultSet rs=(OracleResultSet)s.executeQuery("select id, image, bandeA from PBDM_Saison where numS="+this.field_num.getText()+" AND DEREF(serie).id='"+this.idSe+"' for update");
             while(rs.next())
             {
                 index=rs.getInt(1);
