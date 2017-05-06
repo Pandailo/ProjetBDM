@@ -5,7 +5,12 @@
  */
 package projetbdm;
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import oracle.jdbc.OracleResultSet;
 
 /**
  *
@@ -18,35 +23,27 @@ public class ProjetBDM {
      */
     public static void main(String[] args) throws SQLException 
     {
-        frame_con test= new frame_con();
-        test.setVisible(true);
-        //Connection con=null;
-          //  con=connexionUtils.getInstance().getConnexion();
-           // Statement st=con.createStatement();
-       //     st.executeQuery("INSERT INTO PBDM_table_connexion VALUES('admin','"+pw+"','admin')");
-        
-       /* MD5Password md5=new MD5Password();
-        String pw=md5.getEncodedPassword("admin");
-        try {
-            if(md5.testPassword("admin", pw))
-            {
-                System.out.println("cé bo");
-            }
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(ProjetBDM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try
-        {
-            Connection con=null;
-            con=connexionUtils2.getInstance();
+      /* try
+        {*/
+            frame_con test= new frame_con();
+            test.setVisible(true);
+          /* Connection con=connexionUtils.getInstance().getConnexion();
             Statement st=con.createStatement();
-            st.executeQuery("INSERT INTO PBDM_table_connexion VALUES('admin','"+pw+"','admin')");
-        }
-        catch (SQLException ex)
+            OracleResultSet rs=(OracleResultSet) st.executeQuery("SELECT id FROM PBDM_Saison WHERE DEREF(serie).nom='Test'");
+            while(rs.next())
+            {
+                System.out.println(rs.getInt(1));
+                
+            }
+            rs.close();
+            st.close();
+            
+            
+        }*/
+      /*  catch (ClassNotFoundException ex)
         {
             Logger.getLogger(ProjetBDM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        */
+        }*/
     }
     
 }

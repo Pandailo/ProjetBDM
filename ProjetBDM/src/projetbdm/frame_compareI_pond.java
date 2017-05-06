@@ -204,7 +204,7 @@ public class frame_compareI_pond extends javax.swing.JFrame
             cstmt.close();
             rs2.close();
             stmt2.close();
-            frame_transition ft=new frame_transition(this.admin,"jeu",this.resultat,null);
+            frame_transition ft=new frame_transition(this.admin,"jeu",this.resultat,null,"");
             ft.setVisible(true);
         } 
         catch (SQLException ex) 

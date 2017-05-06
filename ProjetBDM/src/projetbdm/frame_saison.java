@@ -25,7 +25,7 @@ public class frame_saison extends javax.swing.JFrame {
     public frame_saison(boolean admin, int idSa) {
         initComponents();
         this.admin=admin;
-        
+        this.label_titre.setText("Saison :"+idSa);
         if(!admin){
             this.pan_episode.remove(button_ajout_ep);
             this.pan_ba.remove(button_ajout_ba);

@@ -32,6 +32,7 @@ public class frame_serie extends javax.swing.JFrame
     Image photo;
     int id;
     Connection con;
+    String nom;
     /**
      * Creates new form frame_serie
      */
@@ -61,13 +62,13 @@ public class frame_serie extends javax.swing.JFrame
             String nombreS="";
             int note=0;
             //REMPLISSAGE DU RESUME
-            OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom,synopsis,genre,nombreS FROM PBDM_Serie WHERE id="+idS);
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom,synopsis,genre FROM PBDM_Serie WHERE id="+idS);
             while(rs.next())
             {
                 titre=rs.getString(1);
+                this.nom=titre;
                 synopsis=rs.getString(2);
                 genre=rs.getString(3);
-                nombreS=rs.getString(4);
             }
             this.label_titre.setText(titre);
             
@@ -258,16 +259,17 @@ public class frame_serie extends javax.swing.JFrame
         try
         {
             Connection con=connexionUtils.getInstance().getConnexion();
-            OraclePreparedStatement st=(OraclePreparedStatement)con.prepareStatement("SELECT id FROM PBDM_Saison WHERE DEREF(serie).id =? ");
-            st.setInt(1, this.id);
-            OracleResultSet rs=(OracleResultSet) st.executeQuery();
+            Statement st=con.createStatement();
+            OracleResultSet rs=(OracleResultSet) st.executeQuery("SELECT id FROM PBDM_Saison WHERE DEREF(serie).nom ='"+this.nom+"'");
             while(rs.next())
             {
+                System.out.println(rs.getInt(1));
                 l_id.add(rs.getInt(1));
+                
             }
             rs.close();
             st.close();
-            frame_transition ft=new frame_transition(this.admin,"saison",l_id,null);
+            frame_transition ft=new frame_transition(this.admin,"saison",l_id,null,this.nom);
             ft.setVisible(true);
                     
 //frame_saison saison = new frame_saison(admin,1);

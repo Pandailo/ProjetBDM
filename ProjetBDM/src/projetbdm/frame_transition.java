@@ -23,18 +23,20 @@ public class frame_transition extends javax.swing.JFrame
     String type_media;
     Connection con;
     boolean admin;
+    String nomS;
     /**
      * Creates new form frame_transition
      * @param typeM
      * @param l_id
      */
-    public frame_transition(boolean admin,String typeM,List<Integer> l_id,List<String> l_noms) throws ClassNotFoundException, SQLException
+    public frame_transition(boolean admin,String typeM,List<Integer> l_id,List<String> l_noms,String nomS) throws ClassNotFoundException, SQLException
     {
         this.admin=admin;
         initComponents();
         this.cb_listM.removeAllItems();
         this.lab_typeM.setText("Choisissez un(e) "+typeM); 
         con=connexionUtils.getInstance().getConnexion();
+        this.nomS=nomS;
         Statement st=con.createStatement();
         this.type_media=typeM;
         OracleResultSet rs=null;
@@ -69,11 +71,11 @@ public class frame_transition extends javax.swing.JFrame
                             }
                             break;
                         case "saison" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Saison WHERE id="+l_id.get(i));
+                            rs=(OracleResultSet)st.executeQuery("SELECT numS FROM PBDM_Saison WHERE id="+l_id.get(i)+"AND DEREF(serie).nom='"+this.nomS+"'");
                             while(rs.next())
                             {
-                                nom=rs.getString(1);
-                                this.cb_listM.addItem(nom);
+                                int num=rs.getInt(1);
+                                this.cb_listM.addItem(""+num);
                             }
                             break;
                         case "personne" : 
@@ -205,7 +207,7 @@ public class frame_transition extends javax.swing.JFrame
                         }
                         break;
                     case "saison" :
-                        rs=(OracleResultSet)st.executeQuery("SELECT id FROM PBDM_Saison WHERE nom ='"+this.cb_listM.getSelectedItem()+"'");
+                        rs=(OracleResultSet)st.executeQuery("SELECT id FROM PBDM_Saison WHERE id ="+Integer.parseInt(this.cb_listM.getSelectedItem().toString()));
                         while(rs.next())
                         {
                             index=rs.getInt(1);
