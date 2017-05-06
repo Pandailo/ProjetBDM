@@ -120,7 +120,6 @@ public class frame_serie extends javax.swing.JFrame
         button_modif_affiche = new javax.swing.JButton();
         pan_button = new javax.swing.JPanel();
         pan_saison = new javax.swing.JPanel();
-        cb_saison = new javax.swing.JComboBox<>();
         button_saison = new javax.swing.JButton();
         button_ajout_saison = new javax.swing.JButton();
         pan_ba = new javax.swing.JPanel();
@@ -212,10 +211,6 @@ public class frame_serie extends javax.swing.JFrame
         pan_button.setLayout(new java.awt.GridLayout(2, 0));
 
         pan_saison.setLayout(new java.awt.GridLayout(1, 3));
-
-        cb_saison.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cb_saison.setSelectedIndex(-1);
-        pan_saison.add(cb_saison);
 
         button_saison.setText("Aller à la saison");
         button_saison.addActionListener(new java.awt.event.ActionListener()
@@ -369,7 +364,6 @@ public class frame_serie extends javax.swing.JFrame
     private javax.swing.JButton button_chgt_infos;
     private javax.swing.JButton button_modif_affiche;
     private javax.swing.JButton button_saison;
-    private javax.swing.JComboBox<String> cb_saison;
     private javax.swing.JTextArea edition;
     private javax.swing.JLabel lab_ajout_affiche;
     private javax.swing.JLabel label_titre;
