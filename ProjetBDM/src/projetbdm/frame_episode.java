@@ -5,6 +5,13 @@
  */
 package projetbdm;
 
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import oracle.jdbc.OraclePreparedStatement;
+import oracle.jdbc.OracleResultSet;
+import oracle.jdbc.OracleStatement;
+
 /**
  *
  * @author Monsieur Blu
@@ -14,11 +21,33 @@ public class frame_episode extends javax.swing.JFrame {
     /**
      * Creates new form frame_episode
      */
-    public frame_episode(boolean admin,int idE) {
-        initComponents();
-        
-        if(!admin){
-            this.pan_admin.removeAll();
+    public frame_episode(boolean admin,int idE,int idS) throws SQLException {
+        try
+        {
+            initComponents();
+            Connection con=connexionUtils.getInstance().getConnexion();
+            java.util.Map map = con.getTypeMap();
+            map.put("YV965015.PBDM_Episode_Type", Class.forName("projetbdm.episode"));
+            con.setTypeMap(map);
+            //System.out.println(map.toString());
+            if(!admin){
+                this.pan_admin.removeAll();
+            }
+            OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement("SELECT value(e) FROM THE(SELECT episodes FROM PBDM_Saison WHERE id=?) e WHERE e.id=?");
+            st.setInt(1, idS);
+            st.setInt(2,idE);
+            episode ep = null;
+            OracleResultSet rs=(OracleResultSet) st.executeQuery();
+            while(rs.next())
+            {
+               ep =(episode) rs.getObject(1, map);
+            }
+            this.label_titre.setText(ep.nom);
+            this.edition.append("Nom :"+ep.nom+"\n Date de sortie :"+ep.date+"\nGenre :"+ep.genre+"\nSynopsis :"+ep.synopsis);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_episode.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -68,7 +97,7 @@ public class frame_episode extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]) throws SQLException {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -93,7 +122,7 @@ public class frame_episode extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        frame_episode episode = new frame_episode(false,1);
+        frame_episode episode = new frame_episode(false,1,1);
         episode.setVisible(true);
     }
 
