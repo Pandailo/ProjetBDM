@@ -134,5 +134,6 @@ CREATE OR REPLACE FUNCTION compareF(idF IN INTEGER,idF2 IN INTEGER)
 		SELECT VALUE(f) INTO f FROM PBDM_Film f WHERE f.id=idF;
 		score:=f.compareImage(idF2);
 		RETURN score;
-	END compareF;
+	END;
+END compareF;
 /
