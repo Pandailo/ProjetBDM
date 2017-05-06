@@ -59,7 +59,7 @@ CREATE OR REPLACE TYPE BODY PBDM_JeuVideo_Type AS
 END;
 /
 CREATE OR REPLACE TYPE BODY PBDM_Film_Type AS 
-	MEMBER FUNCTION compareImage(id IN INTEGER) RETURN DOUBLE PRECISION IS
+	MEMBER FUNCTION compareImage(idF IN INTEGER) RETURN DOUBLE PRECISION IS
 		Simg1 SI_StillImage;
 		Simg2 SI_StillImage;
 		img1 ORDImage;
@@ -67,7 +67,7 @@ CREATE OR REPLACE TYPE BODY PBDM_Film_Type AS
 		sig SI_FeatureList;
 		score DOUBLE PRECISION;
 	BEGIN
-		SELECT image INTO img1 FROM PBDM_Film WHERE id=id;
+		SELECT image INTO img1 FROM PBDM_Film WHERE id=idF;
 		bl:=img1.source.localData;
 		Simg1:=new SI_StillImage(bl);
 		bl:=self.image.source.localData;
@@ -79,7 +79,7 @@ CREATE OR REPLACE TYPE BODY PBDM_Film_Type AS
 END;
 /
 CREATE OR REPLACE TYPE BODY PBDM_Saison_Type AS 
-	MEMBER FUNCTION compareImage(id IN INTEGER) RETURN DOUBLE PRECISION IS
+	MEMBER FUNCTION compareImage(idS IN INTEGER) RETURN DOUBLE PRECISION IS
 		Simg1 SI_StillImage;
 		Simg2 SI_StillImage;
 		img1 ORDImage;
@@ -87,7 +87,7 @@ CREATE OR REPLACE TYPE BODY PBDM_Saison_Type AS
 		sig SI_FeatureList;
 		score DOUBLE PRECISION;
 	BEGIN
-		SELECT image INTO img1 FROM PBDM_Saison WHERE id=id;
+		SELECT image INTO img1 FROM PBDM_Saison WHERE id=idS;
 		bl:=img1.source.localData;
 		Simg1:=new SI_StillImage(bl);
 		bl:=self.image.source.localData;
@@ -99,7 +99,7 @@ CREATE OR REPLACE TYPE BODY PBDM_Saison_Type AS
 END;
 /	
 CREATE OR REPLACE TYPE BODY PBDM_Serie_Type AS 
-	MEMBER FUNCTION compareImage(id IN INTEGER) RETURN DOUBLE PRECISION IS
+	MEMBER FUNCTION compareImage(idSIN INTEGER) RETURN DOUBLE PRECISION IS
 		Simg1 SI_StillImage;
 		Simg2 SI_StillImage;
 		img1 ORDImage;
@@ -107,7 +107,7 @@ CREATE OR REPLACE TYPE BODY PBDM_Serie_Type AS
 		sig SI_FeatureList;
 		score DOUBLE PRECISION;
 	BEGIN
-		SELECT image INTO img1 FROM PBDM_Serie WHERE id=id;
+		SELECT image INTO img1 FROM PBDM_Serie WHERE id=idS;
 		bl:=img1.source.localData;
 		Simg1:=new SI_StillImage(bl);
 		bl:=self.image.source.localData;
@@ -126,4 +126,31 @@ CREATE OR REPLACE FUNCTION compare(idJ IN INTEGER,idJ2 IN INTEGER,pond_AvgColor 
 		score:=jv.compareImage(idJ2,pond_AvgColor,pond_colorhisto,pond_poscol,pond_text);
 		RETURN score;
 	END compare;
+/
+CREATE OR REPLACE FUNCTION compareF(idF IN INTEGER,idF2 IN INTEGER)
+	f PBDM_Film_Type;
+	score DOUBLE PRECISION;
+	BEGIN
+		SELECT VALUE(f) INTO f FROM PBDM_Film f WHERE f.id=idF;
+		score:=f.compareImage(idF2);
+		RETURN score;
+	END compareF;
+/
+CREATE OR REPLACE FUNCTION compareSa(idS IN INTEGER,idS2 IN INTEGER)
+	f PBDM_Saison_Type;
+	score DOUBLE PRECISION;
+	BEGIN
+		SELECT VALUE(f) INTO f FROM PBDM_Saison f WHERE f.id=idF;
+		score:=f.compareImage(idF2);
+		RETURN score;
+	END compareF;
+/
+CREATE OR REPLACE FUNCTION compareSe(idS IN INTEGER,idS2 IN INTEGER)
+	f PBDM_Serie_Type;
+	score DOUBLE PRECISION;
+	BEGIN
+		SELECT VALUE(f) INTO f FROM PBDM_Serie f WHERE f.id=idF;
+		score:=f.compareImage(idF2);
+		RETURN score;
+	END compareF;
 /

@@ -194,10 +194,10 @@ public class frame_compareI_pond extends javax.swing.JFrame
                     nomJ=rs2.getString(2);
                     cstmt.setInt(2, idJ);
                     cstmt.setInt(3, idj2);
-                    cstmt.setDouble(4, 1.0);
-                    cstmt.setDouble(5, 1.0);
-                    cstmt.setDouble(6, 1.0);
-                    cstmt.setDouble(7, 1.0);
+                    cstmt.setDouble(4, avgC);
+                    cstmt.setDouble(5, histC);
+                    cstmt.setDouble(6, posCol);
+                    cstmt.setDouble(7, text);
                     cstmt.execute();
                     score = cstmt.getDouble(1);
                     if(score<this.score)
