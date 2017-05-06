@@ -109,13 +109,14 @@ public class frame_film extends javax.swing.JFrame
             while(rs.next())
             {
                 OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
-                fich="im_temp.jpg";
+                fich=""+titre+".jpg";
                 imgObj.getDataInFile(fich);
                 photo=this.pan_affiche.getToolkit().getImage(fich);
                 affiche();  
-                /*File fichiertemp = new File(fich);
+                File fichiertemp = new File(fich);
                 if(fichiertemp.exists())
-                    fichiertemp.delete();*/
+                fichiertemp.delete();
+                fich="";
             }
             rs.close();
             st.close();
