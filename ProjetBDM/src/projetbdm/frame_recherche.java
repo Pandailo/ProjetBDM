@@ -101,7 +101,7 @@ public class frame_recherche extends javax.swing.JFrame
 
         jPanel3.setLayout(new java.awt.GridLayout(2, 1));
 
-        jLabel1.setText("Rechercher dans le nom");
+        jLabel1.setText("Rechercher dans le synopsis");
         jPanel3.add(jLabel1);
         jPanel3.add(tf_rech_nom);
 

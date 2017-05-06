@@ -268,6 +268,7 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
                 stmt1.close();
             }
             rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexJ REBUILD");
+            rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexSJ REBUILD");
             rs.close();
             s.close();
             con.commit();

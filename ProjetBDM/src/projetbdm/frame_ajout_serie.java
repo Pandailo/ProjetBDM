@@ -278,6 +278,7 @@ public class frame_ajout_serie extends javax.swing.JFrame {
                 stmt1.close();   
             }
             rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexS REBUILD");
+            rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexSS REBUILD");
             rs.close();
             s.close();
             con.commit();
