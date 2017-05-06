@@ -313,7 +313,7 @@ public class frame_saison extends javax.swing.JFrame {
             {
                 idE=rs.getInt(1);
             }
-            frame_episode fe=new frame_episode(this.admin,idE);
+            frame_episode fe=new frame_episode(this.admin,idE,this.id);
             fe.setVisible(true);
         }
         catch (SQLException ex)
@@ -420,6 +420,7 @@ public class frame_saison extends javax.swing.JFrame {
         {
             con=connexionUtils.getInstance().getConnexion();
             OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("SELECT nom FROM THE(SELECT episodes FROM PBDM_Saison WHERE id=?)");
+            s.setInt(1, this.id);
             OracleResultSet rs=(OracleResultSet) s.executeQuery();
             while(rs.next())
             {
