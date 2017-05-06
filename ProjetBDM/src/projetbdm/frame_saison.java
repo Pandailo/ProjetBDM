@@ -417,11 +417,8 @@ public class frame_saison extends javax.swing.JFrame {
     }//GEN-LAST:event_button_modif_afficheActionPerformed
 
     private void button_ajout_epActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ajout_epActionPerformed
-<<<<<<< HEAD
-        frame_ajout_episode fae = new frame_ajout_episode(id);
-=======
+
         frame_ajout_episode fae = new frame_ajout_episode(this.id);
->>>>>>> origin/master
         fae.setVisible(true);
     }//GEN-LAST:event_button_ajout_epActionPerformed
 
