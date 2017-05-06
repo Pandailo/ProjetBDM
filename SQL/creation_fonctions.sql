@@ -125,9 +125,5 @@ CREATE OR REPLACE FUNCTION compare(idJ IN INTEGER,idJ2 IN INTEGER,pond_AvgColor 
 		SELECT VALUE(j) INTO jv FROM PBDM_JeuVideo j WHERE j.id=idJ;
 		score:=jv.compareImage(idJ2,pond_AvgColor,pond_colorhisto,pond_poscol,pond_text);
 		RETURN score;
-		EXCEPTION
-		WHEN TOO_MANY_ROWS
-		THEN
-		DBMS_OUTPUT.PUT_LINE('Toomany caca');
 	END compare;
 /
