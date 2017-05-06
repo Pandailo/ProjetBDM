@@ -68,6 +68,14 @@ public class frame_transition extends javax.swing.JFrame
                                 this.cb_listM.addItem(nom);
                             }
                             break;
+                        case "saison" :
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Saison WHERE id="+l_id.get(i));
+                            while(rs.next())
+                            {
+                                nom=rs.getString(1);
+                                this.cb_listM.addItem(nom);
+                            }
+                            break;
                         case "personne" : 
                             rs=(OracleResultSet)st.executeQuery("SELECT a.nom,r.nom FROM PBDM_Acteur a,PBDM_Realisateur r WHERE id ="+l_id.get(i));
                             while(rs.next())
@@ -193,6 +201,15 @@ public class frame_transition extends javax.swing.JFrame
                         {
                             index=rs.getInt(1);
                             frame_serie fs=new frame_serie(this.admin,index);
+                            fs.setVisible(true);
+                        }
+                        break;
+                    case "saison" :
+                        rs=(OracleResultSet)st.executeQuery("SELECT id FROM PBDM_Saison WHERE nom ='"+this.cb_listM.getSelectedItem()+"'");
+                        while(rs.next())
+                        {
+                            index=rs.getInt(1);
+                            frame_saison fs=new frame_saison(this.admin,index);
                             fs.setVisible(true);
                         }
                         break;

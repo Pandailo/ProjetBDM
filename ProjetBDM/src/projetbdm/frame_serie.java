@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -253,16 +254,21 @@ public class frame_serie extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_saisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saisonActionPerformed
+        ArrayList<Integer> l_id=new ArrayList();
         try
         {
             Connection con=connexionUtils.getInstance().getConnexion();
-            OraclePreparedStatement st=(OraclePreparedStatement)con.prepareStatement("SELECT DEREF(s.saisonRef).id,se.id FROM TABLE(SELECT saisons FROM PBDM_Serie)s,PBDM_Serie se WHERE se.id=?");
+            OraclePreparedStatement st=(OraclePreparedStatement)con.prepareStatement("SELECT id FROM PBDM_Saison WHERE DEREF(serie).id =? ");
             st.setInt(1, this.id);
             OracleResultSet rs=(OracleResultSet) st.executeQuery();
             while(rs.next())
             {
-                
+                l_id.add(rs.getInt(1));
             }
+            rs.close();
+            st.close();
+            frame_transition ft=new frame_transition(this.admin,"saison",l_id,null);
+            ft.setVisible(true);
                     
 //frame_saison saison = new frame_saison(admin,1);
                     //saison.setVisible(true);
