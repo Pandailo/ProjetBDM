@@ -25,13 +25,15 @@ public class frame_compareI_pond extends javax.swing.JFrame
     List<Integer> resultat=new ArrayList();
     boolean admin;
     int idJ;
+    double score;
     /**
      * Creates new form frame_compareI_pond
      */
-    public frame_compareI_pond(boolean admin,int idJ)
+    public frame_compareI_pond(boolean admin,int idJ,double score)
     {
         initComponents();
         this.admin=admin;
+        this.score=score;
         this.idJ=idJ;
     }
 
@@ -177,28 +179,29 @@ public class frame_compareI_pond extends javax.swing.JFrame
        double  text= this.pond_Text.getValue()/100;
         try 
         {
-            int idj2;
+            int idj2=0;
             String nomJ="";
             double score;
-            CallableStatement cstmt = connexionUtils.getInstance().getConnexion().prepareCall("{?=call compareImage(?,?,?,?,?)}");
 
-                cstmt.registerOutParameter(1, Types.DOUBLE);
                 OraclePreparedStatement stmt2 = (OraclePreparedStatement)connexionUtils.getInstance().getConnexion().prepareStatement("SELECT id,nom FROM PBDM_JeuVideo WHERE id<>?");
                 stmt2.setInt(1, this.idJ);
-       
                 OracleResultSet rs2 = (OracleResultSet)stmt2.executeQuery();
+                CallableStatement cstmt = connexionUtils.getInstance().getConnexion().prepareCall("{?=call compare(?,?,?,?,?,?)}");
+                cstmt.registerOutParameter(1, Types.DOUBLE);
                 while(rs2.next())
                 {
                     idj2=rs2.getInt(1);
                     nomJ=rs2.getString(2);
-                    cstmt.setInt(2, idj2);
-                    cstmt.setDouble(3, avgC);
-                    cstmt.setDouble(4, histC);
-                    cstmt.setDouble(5, posCol);
-                    cstmt.setDouble(6, text);
+                    cstmt.setInt(2, idJ);
+                    cstmt.setInt(3, idj2);
+                    cstmt.setDouble(4, avgC);
+                    cstmt.setDouble(5, histC);
+                    cstmt.setDouble(6, posCol);
+                    cstmt.setDouble(7, text);
                     cstmt.execute();
                     score = cstmt.getDouble(1);
-                    this.resultat.add(idJ);
+                    if(score<this.score)
+                        this.resultat.add(idj2);
                 }
             //this.trierResultat();
             cstmt.close();
@@ -286,7 +289,7 @@ public class frame_compareI_pond extends javax.swing.JFrame
         {
             public void run()
             {
-                new frame_compareI_pond(true,1).setVisible(true);
+                new frame_compareI_pond(true,1,10).setVisible(true);
             }
         });
     }

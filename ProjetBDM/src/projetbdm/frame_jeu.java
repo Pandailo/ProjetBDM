@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
@@ -338,7 +339,10 @@ public class frame_jeu extends javax.swing.JFrame
 
     private void button_rechercheActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_rechercheActionPerformed
     {//GEN-HEADEREND:event_button_rechercheActionPerformed
-        frame_compareI_pond fmcp=new frame_compareI_pond(this.admin,this.id);
+        Double seuil=0.0;
+       JOptionPane jop = new JOptionPane(), jop2 = new JOptionPane();
+        seuil = Double.parseDouble(jop.showInputDialog(null, "Seuil mini ?", "", JOptionPane.QUESTION_MESSAGE));
+        frame_compareI_pond fmcp=new frame_compareI_pond(this.admin,this.id,seuil);
         fmcp.setVisible(true);
     }//GEN-LAST:event_button_rechercheActionPerformed
      public void paint(Graphics g)
