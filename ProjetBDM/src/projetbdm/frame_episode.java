@@ -27,7 +27,7 @@ public class frame_episode extends javax.swing.JFrame {
             initComponents();
             Connection con=connexionUtils.getInstance().getConnexion();
             java.util.Map map = con.getTypeMap();
-            map.put("YV965015.PBDM_Episode_Type", Class.forName("episode"));
+            map.put("YV965015.PBDM_Episode_Type", Class.forName("projetbdm.episode"));
             con.setTypeMap(map);
             if(!admin){
                 this.pan_admin.removeAll();

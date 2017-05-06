@@ -21,6 +21,7 @@ public class episode implements SQLData
      String genre;
      int duree;
      int numero;
+     Ref saison;
     public episode(){}
     @Override
     public String getSQLTypeName() throws SQLException
@@ -38,8 +39,9 @@ public class episode implements SQLData
         this.synopsis=stream.readString();
         this.genre=stream.readString();
         this.duree=stream.readInt();
+        this.nom=stream.readString();
         this.numero=stream.readInt();
-        
+        saison=stream.readRef();
     }
 
     @Override
