@@ -136,4 +136,22 @@ CREATE OR REPLACE FUNCTION compareF(idF IN INTEGER,idF2 IN INTEGER) RETURN DOUBL
 		RETURN score;
 END compareF;
 /
+CREATE OR REPLACE FUNCTION compareSa(idS IN INTEGER,idS2 IN INTEGER) RETURN DOUBLE PRECISION IS;
+	f PBDM_Saison_Type;
+	score DOUBLE PRECISION;
+	BEGIN
+		SELECT VALUE(f) INTO f FROM PBDM_Saison f WHERE f.id=idF;
+		score:=f.compareImage(idF2);
+		RETURN score;
+	END compareF;
+/
+CREATE OR REPLACE FUNCTION compareSe(idS IN INTEGER,idS2 IN INTEGER) RETURN DOUBLE PRECISION IS
+	f PBDM_Serie_Type;
+	score DOUBLE PRECISION;
+	BEGIN
+		SELECT VALUE(f) INTO f FROM PBDM_Serie f WHERE f.id=idF;
+		score:=f.compareImage(idF2);
+		RETURN score;
+	END compareF;
+/
 
