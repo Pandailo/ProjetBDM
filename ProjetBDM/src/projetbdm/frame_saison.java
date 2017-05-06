@@ -108,6 +108,24 @@ public class frame_saison extends javax.swing.JFrame {
         {
             Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
         }
+        try
+        {
+            con=connexionUtils.getInstance().getConnexion();
+            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("SELECT nom FROM THE(SELECT episodes FROM PBDM_Saison WHERE id=?)");
+            OracleResultSet rs=(OracleResultSet) s.executeQuery();
+            while(rs.next())
+            {
+                this.cb_episode.addItem(rs.getString(1));
+            }
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -117,7 +135,8 @@ public class frame_saison extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_titre = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -141,8 +160,20 @@ public class frame_saison extends javax.swing.JFrame {
         button_ajout_ba = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowFocusListener(new java.awt.event.WindowFocusListener()
+        {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt)
+            {
+                formWindowGainedFocus(evt);
+            }
+            public void windowLostFocus(java.awt.event.WindowEvent evt)
+            {
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -214,8 +245,10 @@ public class frame_saison extends javax.swing.JFrame {
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -233,21 +266,24 @@ public class frame_saison extends javax.swing.JFrame {
 
         pan_episode.setLayout(new java.awt.GridLayout(1, 3));
 
-        cb_episode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cb_episode.setSelectedIndex(-1);
         pan_episode.add(cb_episode);
 
         button_episode.setText("Aller à l'épisode");
-        button_episode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_episode.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_episodeActionPerformed(evt);
             }
         });
         pan_episode.add(button_episode);
 
         button_ajout_ep.setText("Ajouter un épisode");
-        button_ajout_ep.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ajout_ep.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_ajout_epActionPerformed(evt);
             }
         });
@@ -258,8 +294,10 @@ public class frame_saison extends javax.swing.JFrame {
         pan_ba.setLayout(new java.awt.GridLayout(1, 2));
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_baActionPerformed(evt);
             }
         });
@@ -281,8 +319,30 @@ public class frame_saison extends javax.swing.JFrame {
             this.affiche();
     }
     private void button_episodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_episodeActionPerformed
-        frame_episode episode = new frame_episode(true,1);
-        episode.setVisible(true);
+        String nomE=this.cb_episode.getSelectedItem().toString();
+        int idE=0;
+        try
+        {
+            con=connexionUtils.getInstance().getConnexion();
+            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("SELECT id FROM THE(SELECT episodes FROM PBDM_Saison WHERE id=?) WHERE nom=?");
+            s.setInt(1,this.id);
+            s.setString(2,nomE);
+            OracleResultSet rs=(OracleResultSet) s.executeQuery();
+            while(rs.next())
+            {
+                idE=rs.getInt(1);
+            }
+            frame_episode fe=new frame_episode(this.admin,idE);
+            fe.setVisible(true);
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_button_episodeActionPerformed
 
     private void button_baActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_baActionPerformed
@@ -357,7 +417,7 @@ public class frame_saison extends javax.swing.JFrame {
     }//GEN-LAST:event_button_modif_afficheActionPerformed
 
     private void button_ajout_epActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ajout_epActionPerformed
-        frame_ajout_episode fae = new frame_ajout_episode();
+        frame_ajout_episode fae = new frame_ajout_episode(this.id);
         fae.setVisible(true);
     }//GEN-LAST:event_button_ajout_epActionPerformed
 
@@ -371,6 +431,28 @@ public class frame_saison extends javax.swing.JFrame {
         if(videotemp!=null)
             videotemp.delete();
     }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowGainedFocus(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowGainedFocus
+    {//GEN-HEADEREND:event_formWindowGainedFocus
+        try
+        {
+            con=connexionUtils.getInstance().getConnexion();
+            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("SELECT nom FROM THE(SELECT episodes FROM PBDM_Saison WHERE id=?)");
+            OracleResultSet rs=(OracleResultSet) s.executeQuery();
+            while(rs.next())
+            {
+                this.cb_episode.addItem(rs.getString(1));
+            }
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowGainedFocus
 
     /**
      * @param args the command line arguments
