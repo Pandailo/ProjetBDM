@@ -118,6 +118,7 @@ public class frame_jeu extends javax.swing.JFrame
         pan_buttons = new javax.swing.JPanel();
         button_ba = new javax.swing.JButton();
         button_ajout_ba = new javax.swing.JButton();
+        button_recherche = new javax.swing.JButton();
         pan_principal = new javax.swing.JPanel();
         pan_text = new javax.swing.JScrollPane();
         edition = new javax.swing.JTextArea();
@@ -131,8 +132,10 @@ public class frame_jeu extends javax.swing.JFrame
         button_modif_affiche = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -145,8 +148,10 @@ public class frame_jeu extends javax.swing.JFrame
         pan_buttons.setLayout(new java.awt.GridLayout(1, 2));
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_baActionPerformed(evt);
             }
         });
@@ -154,6 +159,16 @@ public class frame_jeu extends javax.swing.JFrame
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
         pan_buttons.add(button_ajout_ba);
+
+        button_recherche.setText("Chercher des jeu similaires");
+        button_recherche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_rechercheActionPerformed(evt);
+            }
+        });
+        pan_buttons.add(button_recherche);
 
         getContentPane().add(pan_buttons, java.awt.BorderLayout.SOUTH);
 
@@ -320,6 +335,12 @@ public class frame_jeu extends javax.swing.JFrame
         if(videotemp!=null)
             videotemp.delete();
     }//GEN-LAST:event_formWindowClosing
+
+    private void button_rechercheActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_rechercheActionPerformed
+    {//GEN-HEADEREND:event_button_rechercheActionPerformed
+        frame_compareI_pond fmcp=new frame_compareI_pond(this.admin,this.id);
+        fmcp.setVisible(true);
+    }//GEN-LAST:event_button_rechercheActionPerformed
      public void paint(Graphics g)
     {
         super.paint(g);
@@ -375,6 +396,7 @@ public class frame_jeu extends javax.swing.JFrame
     private javax.swing.JButton button_ba;
     private javax.swing.JButton button_chgt_infos;
     private javax.swing.JButton button_modif_affiche;
+    private javax.swing.JButton button_recherche;
     private javax.swing.JTextArea edition;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel label_titre;

@@ -245,13 +245,25 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
                 String fich=this.cheminPhoto;
                 String vid=this.cheminBA;
                 imgObj.loadDataFromFile(fich);
-                vidObj.loadDataFromFile(vid);
+                if(!this.cheminBA.equals(""))
+                    vidObj.loadDataFromFile(vid);
                 byte[] ctx[] = new byte [4000][1];
                 imgObj.setProperties();
-                vidObj.setProperties(ctx);
-                OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=?,bandeA=? where id="+index);
-                stmt1.setORAData(1,imgObj);
-                stmt1.setORAData(2,vidObj);
+                if(!this.cheminBA.equals(""))
+                    vidObj.setProperties(ctx);
+                OraclePreparedStatement stmt1;
+                if(!this.cheminBA.equals(""))
+                {
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=?,bandeA=? where id="+index);
+                    stmt1.setORAData(1,imgObj);
+                    stmt1.setORAData(2,vidObj);
+                }
+                else
+                {
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=? where id="+index);
+                    stmt1.setORAData(1,imgObj);
+                }
+                
                 stmt1.execute();
                 stmt1.close();
             }

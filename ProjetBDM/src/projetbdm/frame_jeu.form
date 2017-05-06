@@ -67,6 +67,14 @@
             <Property name="text" type="java.lang.String" value="Ajouter une bande-annonce"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JButton" name="button_recherche">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Chercher des jeu similaires"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_rechercheActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="pan_principal">

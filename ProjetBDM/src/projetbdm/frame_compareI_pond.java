@@ -24,17 +24,15 @@ public class frame_compareI_pond extends javax.swing.JFrame
 {
     List<Integer> resultat=new ArrayList();
     boolean admin;
+    int idJ;
     /**
      * Creates new form frame_compareI_pond
      */
-    public frame_compareI_pond(boolean admin)
+    public frame_compareI_pond(boolean admin,int idJ)
     {
         initComponents();
-        this.spin_Chist.setEnabled(false);
-        this.spin_avgC.setEnabled(false);
-        this.spin_poscol.setEnabled(false);
-        this.spin_text.setEnabled(false);
         this.admin=admin;
+        this.idJ=idJ;
     }
 
     /**
@@ -55,13 +53,13 @@ public class frame_compareI_pond extends javax.swing.JFrame
         jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         pond_AvgColor = new javax.swing.JSlider();
-        spin_avgC = new javax.swing.JSpinner();
+        txt_avgc = new javax.swing.JTextField();
         pond_ColorHist = new javax.swing.JSlider();
-        spin_Chist = new javax.swing.JSpinner();
+        txt_colH = new javax.swing.JTextField();
         pond_Text = new javax.swing.JSlider();
-        spin_text = new javax.swing.JSpinner();
+        txt_text = new javax.swing.JTextField();
         pond_poscolor = new javax.swing.JSlider();
-        spin_poscol = new javax.swing.JSpinner();
+        txt_posC = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         annuler_button = new javax.swing.JButton();
         reinit_button = new javax.swing.JButton();
@@ -102,7 +100,9 @@ public class frame_compareI_pond extends javax.swing.JFrame
             }
         });
         jPanel1.add(pond_AvgColor);
-        jPanel1.add(spin_avgC);
+
+        txt_avgc.setEditable(false);
+        jPanel1.add(txt_avgc);
 
         pond_ColorHist.addKeyListener(new java.awt.event.KeyAdapter()
         {
@@ -112,7 +112,9 @@ public class frame_compareI_pond extends javax.swing.JFrame
             }
         });
         jPanel1.add(pond_ColorHist);
-        jPanel1.add(spin_Chist);
+
+        txt_colH.setEditable(false);
+        jPanel1.add(txt_colH);
 
         pond_Text.addKeyListener(new java.awt.event.KeyAdapter()
         {
@@ -122,7 +124,9 @@ public class frame_compareI_pond extends javax.swing.JFrame
             }
         });
         jPanel1.add(pond_Text);
-        jPanel1.add(spin_text);
+
+        txt_text.setEditable(false);
+        jPanel1.add(txt_text);
 
         pond_poscolor.addKeyListener(new java.awt.event.KeyAdapter()
         {
@@ -132,7 +136,9 @@ public class frame_compareI_pond extends javax.swing.JFrame
             }
         });
         jPanel1.add(pond_poscolor);
-        jPanel1.add(spin_poscol);
+
+        txt_posC.setEditable(false);
+        jPanel1.add(txt_posC);
 
         getContentPane().add(jPanel1);
 
@@ -171,21 +177,16 @@ public class frame_compareI_pond extends javax.swing.JFrame
        double  text= this.pond_Text.getValue()/100;
         try 
         {
-            OraclePreparedStatement stmt = (OraclePreparedStatement)connexionUtils.getInstance().getConnexion().prepareStatement("SELECT id FROM PBDM_JeuVideo");
-            OracleResultSet rs = (OracleResultSet)stmt.executeQuery();
-            int idJ;
             int idj2;
             String nomJ="";
             double score;
-            CallableStatement cstmt = connexionUtils.getInstance().getConnexion().prepareCall("{?=call compare(?,?,?,?,?)}");
-            while(rs.next())
-            {
-                idJ = rs.getInt(1);
+            CallableStatement cstmt = connexionUtils.getInstance().getConnexion().prepareCall("{?=call compareImage(?,?,?,?,?)}");
+
                 cstmt.registerOutParameter(1, Types.DOUBLE);
-                OraclePreparedStatement stmt2 = (OraclePreparedStatement)connexionUtils.getInstance().getConnexion().prepareStatement("SELECT id,nom FROM PBDM_JeuVideo AND id<>?");
-                stmt.setInt(1, idJ);
+                OraclePreparedStatement stmt2 = (OraclePreparedStatement)connexionUtils.getInstance().getConnexion().prepareStatement("SELECT id,nom FROM PBDM_JeuVideo WHERE id<>?");
+                stmt2.setInt(1, this.idJ);
        
-                OracleResultSet rs2 = (OracleResultSet)stmt.executeQuery();
+                OracleResultSet rs2 = (OracleResultSet)stmt2.executeQuery();
                 while(rs2.next())
                 {
                     idj2=rs2.getInt(1);
@@ -199,11 +200,10 @@ public class frame_compareI_pond extends javax.swing.JFrame
                     score = cstmt.getDouble(1);
                     this.resultat.add(idJ);
                 }
-            }
             //this.trierResultat();
             cstmt.close();
-            rs.close();
-            stmt.close();
+            rs2.close();
+            stmt2.close();
             frame_transition ft=new frame_transition(this.admin,"jeu",this.resultat,null);
             ft.setVisible(true);
         } 
@@ -219,27 +219,27 @@ public class frame_compareI_pond extends javax.swing.JFrame
 
     private void pond_AvgColorKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_pond_AvgColorKeyReleased
     {//GEN-HEADEREND:event_pond_AvgColorKeyReleased
-        // TODO add your hprivate void pond_AvgColorStateChanged(javax.swing.event.ChangeEvent evt)      
+  
         double val=this.pond_AvgColor.getValue()/100;
-        this.spin_avgC.setValue(val);
+        this.txt_avgc.setText("valeur :"+val);
     }//GEN-LAST:event_pond_AvgColorKeyReleased
 
     private void pond_ColorHistKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_pond_ColorHistKeyReleased
     {//GEN-HEADEREND:event_pond_ColorHistKeyReleased
        double val=this.pond_ColorHist.getValue()/100;
-        this.spin_Chist.setValue(val);
+        this.txt_colH.setText(""+val);
     }//GEN-LAST:event_pond_ColorHistKeyReleased
 
     private void pond_TextKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_pond_TextKeyReleased
     {//GEN-HEADEREND:event_pond_TextKeyReleased
         double val=this.pond_ColorHist.getValue()/100;
-        this.spin_Chist.setValue(val);
+        this.txt_text.setText(""+val);
     }//GEN-LAST:event_pond_TextKeyReleased
 
     private void pond_poscolorKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_pond_poscolorKeyReleased
     {//GEN-HEADEREND:event_pond_poscolorKeyReleased
-double val=this.pond_ColorHist.getValue()/100;
-        this.spin_Chist.setValue(val);        // TODO add your handling code here:
+        double val=this.pond_ColorHist.getValue()/100;
+        this.txt_posC.setText(""+val);        
     }//GEN-LAST:event_pond_poscolorKeyReleased
 
     /**
@@ -286,7 +286,7 @@ double val=this.pond_ColorHist.getValue()/100;
         {
             public void run()
             {
-                new frame_compareI_pond(true).setVisible(true);
+                new frame_compareI_pond(true,1).setVisible(true);
             }
         });
     }
@@ -306,10 +306,10 @@ double val=this.pond_ColorHist.getValue()/100;
     private javax.swing.JSlider pond_Text;
     private javax.swing.JSlider pond_poscolor;
     private javax.swing.JButton reinit_button;
-    private javax.swing.JSpinner spin_Chist;
-    private javax.swing.JSpinner spin_avgC;
-    private javax.swing.JSpinner spin_poscol;
-    private javax.swing.JSpinner spin_text;
+    private javax.swing.JTextField txt_avgc;
+    private javax.swing.JTextField txt_colH;
+    private javax.swing.JTextField txt_posC;
+    private javax.swing.JTextField txt_text;
     private javax.swing.JButton valider_button;
     // End of variables declaration//GEN-END:variables
 }

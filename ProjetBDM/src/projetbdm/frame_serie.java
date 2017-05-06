@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 import oracle.ord.im.OrdImage;
 
@@ -100,7 +101,8 @@ public class frame_serie extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_titre = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -188,8 +190,10 @@ public class frame_serie extends javax.swing.JFrame
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -212,16 +216,20 @@ public class frame_serie extends javax.swing.JFrame
         pan_saison.add(cb_saison);
 
         button_saison.setText("Aller à la saison");
-        button_saison.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_saison.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_saisonActionPerformed(evt);
             }
         });
         pan_saison.add(button_saison);
 
         button_ajout_saison.setText("Ajouter une saison");
-        button_ajout_saison.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ajout_saison.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_ajout_saisonActionPerformed(evt);
             }
         });
@@ -245,9 +253,28 @@ public class frame_serie extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_saisonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_saisonActionPerformed
-        
+        try
+        {
+            Connection con=connexionUtils.getInstance().getConnexion();
+            OraclePreparedStatement st=(OraclePreparedStatement)con.prepareStatement("SELECT DEREF(s.saisonRef).id,se.id FROM TABLE(SELECT saisons FROM PBDM_Serie)s,PBDM_Serie se WHERE se.id=?");
+            st.setInt(1, this.id);
+            OracleResultSet rs=(OracleResultSet) st.executeQuery();
+            while(rs.next())
+            {
+                
+            }
+                    
 //frame_saison saison = new frame_saison(admin,1);
-        //saison.setVisible(true);
+                    //saison.setVisible(true);
+                    }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_serie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_serie.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_button_saisonActionPerformed
     private void affiche()
     {
