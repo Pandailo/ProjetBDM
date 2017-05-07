@@ -5,12 +5,9 @@
  */
 package projetbdm;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.TexturePaint;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import oracle.jdbc.*;
-
 import oracle.ord.im.OrdImage;
 import oracle.sql.ARRAY;
 import oracle.sql.STRUCT;
@@ -40,6 +36,11 @@ public class frame_personne extends javax.swing.JFrame {
     int idp;
     /**
      * Creates new form frame_personne
+     * @param admin
+     * @param nomP
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.io.IOException
      */
     public frame_personne(boolean admin,String nomP) throws SQLException, ClassNotFoundException, IOException {
         initComponents();
@@ -48,10 +49,10 @@ public class frame_personne extends javax.swing.JFrame {
         
         if(nomP.equals("Cage"))
         {
-        TextureCage texturePaint = new TextureCage();
-        TextureCage texturePaint2 = new TextureCage();
-        pan_affiche.add("Center", texturePaint);
-        pan_image.add("Center", texturePaint2);
+            TextureCage texturePaint = new TextureCage();
+            TextureCage texturePaint2 = new TextureCage();
+            pan_affiche.add("Center", texturePaint);
+            pan_image.add("Center", texturePaint2);
         }
         
         if(!admin){
@@ -160,8 +161,7 @@ public class frame_personne extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         label_nom = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -180,10 +180,8 @@ public class frame_personne extends javax.swing.JFrame {
         button_media = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
@@ -237,10 +235,8 @@ public class frame_personne extends javax.swing.JFrame {
         pan_ajout.add(button_chgt_infos);
 
         button_modif_photo.setText("Modifier la photo");
-        button_modif_photo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_modif_photo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_modif_photoActionPerformed(evt);
             }
         });
@@ -256,20 +252,16 @@ public class frame_personne extends javax.swing.JFrame {
 
         pan_button.setLayout(new java.awt.GridLayout(1, 2));
 
-        vb_media.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        vb_media.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vb_mediaActionPerformed(evt);
             }
         });
         pan_button.add(vb_media);
 
         button_media.setText("Aller au média");
-        button_media.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_media.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_mediaActionPerformed(evt);
             }
         });
@@ -357,7 +349,6 @@ public class frame_personne extends javax.swing.JFrame {
             catch (SQLException | ClassNotFoundException | IOException ex) {
                 Logger.getLogger(frame_personne.class.getName()).log(Level.SEVERE, null, ex);
             }
-
         }
     }//GEN-LAST:event_button_modif_photoActionPerformed
 
@@ -408,15 +399,7 @@ public class frame_personne extends javax.swing.JFrame {
                 fj.setVisible(true);
             }
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_personne.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
-        {
-            Logger.getLogger(frame_personne.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex)
+        catch (SQLException | ClassNotFoundException | IOException ex)
         {
             Logger.getLogger(frame_personne.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -425,7 +408,7 @@ public class frame_personne extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws SQLException, ClassNotFoundException, IOException {
+    public static void main(String args[]){
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -450,8 +433,6 @@ public class frame_personne extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        frame_personne oui = new frame_personne(true,"non");
-            oui.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -43,6 +43,10 @@ public class frame_film extends javax.swing.JFrame
 
     /**
      * Creates new form frame_film
+     * @param admin
+     * @param idF
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.io.IOException
      */
     public frame_film(boolean admin,int idF) throws ClassNotFoundException, IOException
     {
@@ -52,7 +56,6 @@ public class frame_film extends javax.swing.JFrame
         {
             initComponents();
             this.admin=admin;
-            
             if(!admin){
                 this.pan_bo.remove(button_ajout_bo);
                 this.pan_ba.remove(button_ajout_ba);
@@ -115,7 +118,7 @@ public class frame_film extends javax.swing.JFrame
                 affiche();  
                 File fichiertemp = new File(fich);
                 if(fichiertemp.exists())
-                fichiertemp.delete();
+                    fichiertemp.delete();
                 fich="";
             }
             rs.close();
@@ -135,8 +138,7 @@ public class frame_film extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         label_titre = new javax.swing.JLabel();
@@ -160,14 +162,11 @@ public class frame_film extends javax.swing.JFrame
         button_ajout_ba = new javax.swing.JButton();
         button_ba = new javax.swing.JButton();
 
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosed(java.awt.event.WindowEvent evt)
-            {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
@@ -207,10 +206,8 @@ public class frame_film extends javax.swing.JFrame
         );
 
         compareFilm_button.setText("Rechercher des films à ambiance similaire");
-        compareFilm_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        compareFilm_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 compareFilm_buttonActionPerformed(evt);
             }
         });
@@ -249,20 +246,16 @@ public class frame_film extends javax.swing.JFrame
         pan_ajout.setLayout(new java.awt.GridLayout(1, 0));
 
         button_chgt_infos.setText("Changer les informations");
-        button_chgt_infos.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_chgt_infos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_chgt_infosActionPerformed(evt);
             }
         });
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -281,13 +274,16 @@ public class frame_film extends javax.swing.JFrame
         pan_bo.setLayout(new java.awt.GridLayout(2, 1));
 
         button_ajout_bo.setText("Ajouter une bande originale");
+        button_ajout_bo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_ajout_boActionPerformed(evt);
+            }
+        });
         pan_bo.add(button_ajout_bo);
 
         button_bo.setText("Bande originale");
-        button_bo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_bo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_boActionPerformed(evt);
             }
         });
@@ -298,20 +294,16 @@ public class frame_film extends javax.swing.JFrame
         pan_ba.setLayout(new java.awt.GridLayout(2, 1));
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
-        button_ajout_ba.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_ajout_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_ajout_baActionPerformed(evt);
             }
         });
         pan_ba.add(button_ajout_ba);
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_baActionPerformed(evt);
             }
         });
@@ -380,13 +372,54 @@ public class frame_film extends javax.swing.JFrame
             }
             catch (SQLException | IOException | ClassNotFoundException ex)
             {
-                Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
             }   
         }
     }//GEN-LAST:event_button_modif_afficheActionPerformed
 
     private void button_ajout_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ajout_baActionPerformed
-
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une vidéo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Videos", "avi", "mkv", "mp4");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de la video
+            String cheminBA = fileChooser.getSelectedFile().getAbsolutePath();
+            try
+            {
+                int index=0;
+                con=connexionUtils.getInstance().getConnexion();
+                con.setAutoCommit(false);
+                Statement s=null;
+                s = con.createStatement();
+                OracleResultSet rs=null;
+                rs=(OracleResultSet)s.executeQuery("select id, bandeA from PBDM_Film where nom='"+this.label_titre.getText()+"' for update");
+                while(rs.next())
+                {
+                    index=rs.getInt(1);
+                    OrdVideo vidObj= (OrdVideo)rs.getORAData(2,OrdVideo.getORADataFactory());
+                    String vid =cheminBA;
+                    vidObj.loadDataFromFile(vid);
+                    byte[] ctx[] = new byte [4000][1];
+                    vidObj.setProperties(ctx);
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set bandeA=? where id="+index);
+                    stmt1.setORAData(1,vidObj);
+                    stmt1.execute();
+                    stmt1.close();   
+                }
+                rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexF REBUILD");
+                rs.close();
+                s.close();
+                con.commit();
+            }
+            catch (SQLException | IOException | ClassNotFoundException ex)
+            {
+                Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+        }
     }//GEN-LAST:event_button_ajout_baActionPerformed
 
     private void button_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_baActionPerformed
@@ -397,11 +430,11 @@ public class frame_film extends javax.swing.JFrame
             OracleResultSet rs=(OracleResultSet)st.executeQuery("select bandeA from PBDM_Film where id="+id);
             while(rs.next())
             {
-            OrdVideo vidObj= (OrdVideo)rs.getORAData(1,OrdVideo.getORADataFactory());
-            vid="vid_temp.avi";
-            vidObj.getDataInFile(vid);
-            Runtime runtime = Runtime.getRuntime();
-            runtime.exec("vlc "+vid);
+                OrdVideo vidObj= (OrdVideo)rs.getORAData(1,OrdVideo.getORADataFactory());
+                vid="vid_temp.avi";
+                vidObj.getDataInFile(vid);
+                Runtime runtime = Runtime.getRuntime();
+                runtime.exec("vlc "+vid);
             }
             rs.close();
             st.close();
@@ -419,11 +452,11 @@ public class frame_film extends javax.swing.JFrame
             OracleResultSet rs=(OracleResultSet)st.executeQuery("select bandeO from PBDM_Film where id="+id);
             while(rs.next())
             {
-            OrdAudio audObj= (OrdAudio)rs.getORAData(1,OrdAudio.getORADataFactory());
-            aud="son_temp.mp3";
-            audObj.getDataInFile(aud);
-            Runtime runtime = Runtime.getRuntime();
-            runtime.exec("vlc "+aud);
+                OrdAudio audObj= (OrdAudio)rs.getORAData(1,OrdAudio.getORADataFactory());
+                aud="son_temp.mp3";
+                audObj.getDataInFile(aud);
+                Runtime runtime = Runtime.getRuntime();
+                runtime.exec("vlc "+aud);
             }
             rs.close();
             st.close();
@@ -455,7 +488,7 @@ public class frame_film extends javax.swing.JFrame
     private void compareFilm_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_compareFilm_buttonActionPerformed
     {//GEN-HEADEREND:event_compareFilm_buttonActionPerformed
         Double seuil=0.0;
-       JOptionPane jop = new JOptionPane(), jop2 = new JOptionPane();
+        JOptionPane jop = new JOptionPane(), jop2 = new JOptionPane();
         seuil = Double.parseDouble(jop.showInputDialog(null, "Seuil mini ?", "", JOptionPane.QUESTION_MESSAGE));
         try
         {
@@ -479,18 +512,13 @@ public class frame_film extends javax.swing.JFrame
                 if(score<seuil)
                     this.l_id.add(idF);
             }
-            //this.trierResultat();
             cstmt.close();
             rs2.close();
             stmt2.close();
             frame_transition ft=new frame_transition(this.admin,"film",l_id,null,"");
             ft.setVisible(true);
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
+        catch (SQLException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -501,10 +529,55 @@ public class frame_film extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_button_chgt_infosActionPerformed
 
+    private void button_ajout_boActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ajout_boActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une musique");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Musiques", "mp3", "wav","midi","flac");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération du fichier son
+            String cheminBO = fileChooser.getSelectedFile().getAbsolutePath();
+            try
+            {
+                int index=0;
+                con=connexionUtils.getInstance().getConnexion();
+                con.setAutoCommit(false);
+                Statement s=null;
+                s = con.createStatement();
+                OracleResultSet rs=null;
+                rs=(OracleResultSet)s.executeQuery("select id, bandeO from PBDM_Film where nom='"+this.label_titre.getText()+"' for update");
+                while(rs.next())
+                {
+                    index=rs.getInt(1);
+                    OrdAudio audObj= (OrdAudio)rs.getORAData(2,OrdAudio.getORADataFactory());
+                    String aud =cheminBO;
+                    audObj.loadDataFromFile(aud);
+                    byte[] ctx[] = new byte [4000][1];
+                    audObj.setProperties(ctx);
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set bandeO=? where id="+index);
+                    stmt1.setORAData(1,audObj);
+                    stmt1.execute();
+                    stmt1.close();   
+                }
+                rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexF REBUILD");
+                rs.close();
+                s.close();
+                con.commit();
+            }
+            catch (SQLException | IOException | ClassNotFoundException ex)
+            {
+                Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+        }
+    }//GEN-LAST:event_button_ajout_boActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws ClassNotFoundException, IOException
+    public static void main(String args[]) 
     {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -539,8 +612,7 @@ public class frame_film extends javax.swing.JFrame
             java.util.logging.Logger.getLogger(frame_film.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-            frame_film oui = new frame_film(true,0);
-            oui.setVisible(true);
+
         /* Create and display the form */
     }
 

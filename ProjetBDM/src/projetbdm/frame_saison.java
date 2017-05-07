@@ -35,6 +35,10 @@ public class frame_saison extends javax.swing.JFrame {
     Connection con;
     /**
      * Creates new form frame_saison
+     * @param admin
+     * @param idSa
+     * @throws java.io.IOException
+     * @throws java.lang.ClassNotFoundException
      */
     public frame_saison(boolean admin, int idSa) throws IOException, ClassNotFoundException {
         Connection con;
@@ -73,21 +77,11 @@ public class frame_saison extends javax.swing.JFrame {
                     Se="";
                 }
             }
-            /*rs=(OracleResultSet)st.executeQuery("SELECT DEREF(acteurMA).nom FROM PBDM_MedVidActeur WHERE DEREF(MedVidMa).id="+idF);
-            while(rs.next())
-            {
-                temp=rs.getString(1);
-                if(temp==null)
-                {
-                    temp="";
-                }
-                nomA+=temp+"\n";
-            }*/
+
             this.edition.append("Nom de la série : "+Se+"\n");
             this.edition.append("Numéro de saison : "+numS+"\n");
-            //this.edition.append("Episodes :"+nomE+"\n");
+            this.edition.append("Episodes :\n");
 
-            
             //AFFICHAGE DE L'IMAGE
             rs=(OracleResultSet)st.executeQuery("select image from PBDM_Saison where id="+idSa);
             while(rs.next())
@@ -106,7 +100,7 @@ public class frame_saison extends javax.swing.JFrame {
         }
         catch (SQLException ex)
         {
-            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
         }
         try
         {
@@ -115,6 +109,7 @@ public class frame_saison extends javax.swing.JFrame {
             OracleResultSet rs=(OracleResultSet)s.executeQuery();
             while(rs.next())
             {
+                this.edition.append(rs.getString(1)+"\n");
                 this.cb_episode.addItem(rs.getString(1));
             }
         }
@@ -285,6 +280,11 @@ public class frame_saison extends javax.swing.JFrame {
         pan_ba.add(button_ba);
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
+        button_ajout_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_ajout_baActionPerformed(evt);
+            }
+        });
         pan_ba.add(button_ajout_ba);
 
         pan_button.add(pan_ba);
@@ -293,6 +293,7 @@ public class frame_saison extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    @Override
      public void paint(Graphics g)
     {
         super.paint(g);
@@ -316,11 +317,7 @@ public class frame_saison extends javax.swing.JFrame {
             frame_episode fe=new frame_episode(this.admin,idE,this.id);
             fe.setVisible(true);
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
+        catch (SQLException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -335,17 +332,16 @@ public class frame_saison extends javax.swing.JFrame {
             OracleResultSet rs=(OracleResultSet)st.executeQuery("select bandeA from PBDM_Saison where id="+this.id);
             while(rs.next())
             {
-            OrdVideo vidObj= (OrdVideo)rs.getORAData(1,OrdVideo.getORADataFactory());
-            vid="vid_temp.avi";
-            vidObj.getDataInFile(vid);
-            Runtime runtime = Runtime.getRuntime();
-            runtime.exec("vlc "+vid);
+                OrdVideo vidObj= (OrdVideo)rs.getORAData(1,OrdVideo.getORADataFactory());
+                vid="vid_temp.avi";
+                vidObj.getDataInFile(vid);
+                Runtime runtime = Runtime.getRuntime();
+                runtime.exec("vlc "+vid);
             }
             rs.close();
-            st.close();
-            
+            st.close(); 
         } catch (SQLException | ClassNotFoundException | IOException ex) {
-            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_baActionPerformed
     private void affiche()
@@ -392,13 +388,12 @@ public class frame_saison extends javax.swing.JFrame {
             }
             catch (SQLException | IOException | ClassNotFoundException ex)
             {
-                Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_button_modif_afficheActionPerformed
 
     private void button_ajout_epActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ajout_epActionPerformed
-
         frame_ajout_episode fae = new frame_ajout_episode(this.id);
         fae.setVisible(true);
     }//GEN-LAST:event_button_ajout_epActionPerformed
@@ -427,20 +422,60 @@ public class frame_saison extends javax.swing.JFrame {
                 this.cb_episode.addItem(rs.getString(1));
             }
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
+        catch (SQLException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_formWindowGainedFocus
 
+    private void button_ajout_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ajout_baActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une vidéo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Videos", "avi", "mkv", "mp4");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de la video
+            String cheminBA = fileChooser.getSelectedFile().getAbsolutePath();
+            try
+            {
+                int index=0;
+                con=connexionUtils.getInstance().getConnexion();
+                con.setAutoCommit(false);
+                Statement s=null;
+                s = con.createStatement();
+                OracleResultSet rs=null;
+                rs=(OracleResultSet)s.executeQuery("select id, bandeA from PBDM_Saison where id="+id+" for update");
+                while(rs.next())
+                {
+                    index=rs.getInt(1);
+                    OrdVideo vidObj= (OrdVideo)rs.getORAData(2,OrdVideo.getORADataFactory());
+                    String vid =cheminBA;
+                    vidObj.loadDataFromFile(vid);
+                    byte[] ctx[] = new byte [4000][1];
+                    vidObj.setProperties(ctx);
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Saison set bandeA=? where id="+index);
+                    stmt1.setORAData(1,vidObj);
+                    stmt1.execute();
+                    stmt1.close();   
+                }
+                rs.close();
+                s.close();
+                con.commit();
+            }
+            catch (SQLException | IOException | ClassNotFoundException ex)
+            {
+                Logger.getLogger(frame_saison.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+        }
+    }//GEN-LAST:event_button_ajout_baActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws IOException, ClassNotFoundException {
+    public static void main(String args[]){
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -465,8 +500,7 @@ public class frame_saison extends javax.swing.JFrame {
         //</editor-fold>
             
         /* Create and display the form */
-       frame_saison oui = new frame_saison(true,1);
-            oui.setVisible(true);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

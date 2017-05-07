@@ -154,6 +154,11 @@ public class frame_jeu extends javax.swing.JFrame
         pan_buttons.add(button_ba);
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
+        button_ajout_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_ajout_baActionPerformed(evt);
+            }
+        });
         pan_buttons.add(button_ajout_ba);
 
         button_recherche.setText("Chercher des jeu similaires");
@@ -290,7 +295,7 @@ public class frame_jeu extends javax.swing.JFrame
             }
             catch (SQLException | IOException | ClassNotFoundException ex)
             {
-                Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(frame_jeu.class.getName()).log(Level.SEVERE, null, ex);
             }  
         }
     }//GEN-LAST:event_button_modif_afficheActionPerformed
@@ -313,7 +318,7 @@ public class frame_jeu extends javax.swing.JFrame
             st.close();
             
         } catch (SQLException | ClassNotFoundException | IOException ex) {
-            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(frame_jeu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_baActionPerformed
 
@@ -331,11 +336,57 @@ public class frame_jeu extends javax.swing.JFrame
     private void button_rechercheActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_rechercheActionPerformed
     {//GEN-HEADEREND:event_button_rechercheActionPerformed
         Double seuil=0.0;
-       JOptionPane jop = new JOptionPane(), jop2 = new JOptionPane();
+        JOptionPane jop = new JOptionPane();
         seuil = Double.parseDouble(jop.showInputDialog(null, "Seuil mini ?", "", JOptionPane.QUESTION_MESSAGE));
         frame_compareI_pond fmcp=new frame_compareI_pond(this.admin,this.id,seuil);
         fmcp.setVisible(true);
     }//GEN-LAST:event_button_rechercheActionPerformed
+
+    private void button_ajout_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ajout_baActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une vidéo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Videos", "avi", "mkv", "mp4");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de la video
+            String cheminBA = fileChooser.getSelectedFile().getAbsolutePath();
+            try
+            {
+                int index=0;
+                con=connexionUtils.getInstance().getConnexion();
+                con.setAutoCommit(false);
+                Statement s=null;
+                s = con.createStatement();
+                OracleResultSet rs=null;
+                rs=(OracleResultSet)s.executeQuery("select id, bandeA from PBDM_JeuVideo where nom='"+this.label_titre.getText()+"' for update");
+                while(rs.next())
+                {
+                    index=rs.getInt(1);
+                    OrdVideo vidObj= (OrdVideo)rs.getORAData(2,OrdVideo.getORADataFactory());
+                    String vid =cheminBA;
+                    vidObj.loadDataFromFile(vid);
+                    byte[] ctx[] = new byte [4000][1];
+                    vidObj.setProperties(ctx);
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_JeuVideo set bandeA=? where id="+index);
+                    stmt1.setORAData(1,vidObj);
+                    stmt1.execute();
+                    stmt1.close();   
+                }
+                rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexJ REBUILD");
+                rs.close();
+                s.close();
+                con.commit();
+            }
+            catch (SQLException | IOException | ClassNotFoundException ex)
+            {
+                Logger.getLogger(frame_jeu.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+        }
+    }//GEN-LAST:event_button_ajout_baActionPerformed
+    @Override
      public void paint(Graphics g)
     {
         super.paint(g);
@@ -345,7 +396,7 @@ public class frame_jeu extends javax.swing.JFrame
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws SQLException, IOException
+    public static void main(String args[])
     {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -382,8 +433,7 @@ public class frame_jeu extends javax.swing.JFrame
         //</editor-fold>
 
         /* Create and display the form */
-        frame_jeu oui = new frame_jeu(true,1);
-            oui.setVisible(true);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
