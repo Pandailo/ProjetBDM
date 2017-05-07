@@ -44,7 +44,7 @@ public class frame_personne extends javax.swing.JFrame {
         this.admin=admin;
         this.nom=nomP;
         
-        if(nomP.equals("Nicolas"))
+        if(nomP.equals("Cage"))
         {
         TextureCage texturePaint = new TextureCage();
         TextureCage texturePaint2 = new TextureCage();
@@ -123,7 +123,7 @@ public class frame_personne extends javax.swing.JFrame {
             affiche();
         }
                 
-
+        this.label_nom.setText(pnom+" "+nom);
         this.edition.append("Nom :"+nom+"\n");
         this.edition.append("Prenom :"+pnom+" \n");
         this.edition.append("Date de naissance :"+ddn+"\n");
