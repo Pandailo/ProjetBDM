@@ -355,17 +355,12 @@ public class frame_ajout_film extends javax.swing.JFrame {
                     st.setInt(1,this.l_acteurs.get(i));
                     st.setInt(2,index);
                     st.execute();
+                    st.close();
                 }
-            }
-            else
-            {
-                st=(OraclePreparedStatement) con.prepareStatement("INSERT INTO PBDM_MedVidActeur VALUES(null,(SELECT REF(f) FROM PBDM_Film f WHERE id=?))");
-                st.setInt(1,index);
-                st.execute();
             }
             rs.close();
             s.close();
-            st.close();
+            
             con.commit();
         }
         catch (SQLException | IOException | ClassNotFoundException ex)
