@@ -188,6 +188,9 @@
                           <Properties>
                             <Property name="text" type="java.lang.String" value="Changer les informations"/>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_chgt_infosActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="button_modif_affiche">
                           <Properties>
