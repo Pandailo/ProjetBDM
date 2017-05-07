@@ -289,6 +289,7 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                     if(split.length>=i+1)
                     {
                         prenoms[i]=split[i];
+                        System.out.println("split :"+split[i]);
                     }
                     else
                     {
@@ -358,7 +359,7 @@ public class frame_ajout_personne extends javax.swing.JFrame {
         {
             Logger.getLogger(frame_ajout_personne.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        this.setVisible(false);
     }//GEN-LAST:event_valider_buttonActionPerformed
 
 

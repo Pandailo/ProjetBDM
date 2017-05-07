@@ -12,12 +12,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
+import oracle.jdbc.OracleStatement;
 import oracle.ord.im.OrdAudio;
 import oracle.ord.im.OrdImage;
 import oracle.ord.im.OrdVideo;
@@ -30,12 +32,32 @@ public class frame_ajout_film extends javax.swing.JFrame {
     String cheminPhoto="";
     String cheminBA="";
     String cheminBO="";
+    List<Integer> l_acteurs;
     Image photo;
     /**
      * Creates new form frame_ajout_film
      */
     public frame_ajout_film() {
-        initComponents();
+        try
+        {
+            initComponents();
+            l_acteurs=new ArrayList();            
+            Connection con=connexionUtils.getInstance().getConnexion();
+            OracleStatement st=(OracleStatement) con.createStatement();
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Acteur");
+            while(rs.next())
+            {
+                this.cb_acteurs.addItem(rs.getString(1));
+            }
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void paint(Graphics g)
@@ -75,6 +97,8 @@ public class frame_ajout_film extends javax.swing.JFrame {
         button_image = new javax.swing.JButton();
         label_genre = new javax.swing.JLabel();
         field_genre = new javax.swing.JTextField();
+        button_ajoutA = new javax.swing.JButton();
+        cb_acteurs = new javax.swing.JComboBox<>();
         pan_buttons = new javax.swing.JPanel();
         button_ba = new javax.swing.JButton();
         button_bo = new javax.swing.JButton();
@@ -124,6 +148,15 @@ public class frame_ajout_film extends javax.swing.JFrame {
 
         label_genre.setText("Genre");
 
+        button_ajoutA.setText("Ajouter un acteur");
+        button_ajoutA.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_ajoutAActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pan_principalLayout = new javax.swing.GroupLayout(pan_principal);
         pan_principal.setLayout(pan_principalLayout);
         pan_principalLayout.setHorizontalGroup(
@@ -143,11 +176,18 @@ public class frame_ajout_film extends javax.swing.JFrame {
                             .addComponent(field_titre, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
                             .addComponent(field_date)
                             .addComponent(field_genre))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_image, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(56, 56, 56))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pan_principalLayout.createSequentialGroup()
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_image, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(56, 56, 56))
+                    .addGroup(pan_principalLayout.createSequentialGroup()
+                        .addComponent(cb_acteurs, 0, 73, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(button_ajoutA)
+                        .addContainerGap())))
         );
         pan_principalLayout.setVerticalGroup(
             pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,13 +209,16 @@ public class frame_ajout_film extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_synopsis)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pan_text)
-                        .addContainerGap())
+                        .addComponent(pan_text, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
                     .addGroup(pan_principalLayout.createSequentialGroup()
                         .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                         .addComponent(button_image)
-                        .addGap(50, 50, 50))))
+                        .addGap(16, 16, 16)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(button_ajoutA)
+                            .addComponent(cb_acteurs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
 
         getContentPane().add(pan_principal, java.awt.BorderLayout.CENTER);
@@ -302,14 +345,24 @@ public class frame_ajout_film extends javax.swing.JFrame {
             }
             rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexF REBUILD");
             rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexSF REBUILD");
+            OraclePreparedStatement st=null;
+            for(int i=0;i<this.l_acteurs.size();i++)
+            {
+                st=(OraclePreparedStatement) con.prepareStatement("INSERT INTO PBDM_MedVidActeur VALUES((SELECT REF(a) FROM PBDM_Acteur a WHERE id=?),(SELECT REF(f) FROM PBDM_Film f WHERE id=?))");
+                st.setInt(1,this.l_acteurs.get(i));
+                st.setInt(2,index);
+                st.execute();
+            }
             rs.close();
             s.close();
+            st.close();
             con.commit();
         }
         catch (SQLException | IOException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         this.dispose();
     }//GEN-LAST:event_button_validerActionPerformed
 
@@ -345,6 +398,28 @@ public class frame_ajout_film extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_button_annulerActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_button_annulerActionPerformed
+
+    private void button_ajoutAActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_ajoutAActionPerformed
+    {//GEN-HEADEREND:event_button_ajoutAActionPerformed
+        try
+        {
+            Connection con=connexionUtils.getInstance().getConnexion();
+            OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement("SELECT id FROM PBDM_Acteur WHERE nom=?");
+            st.setString(1, this.cb_acteurs.getSelectedItem().toString());
+            OracleResultSet rs=(OracleResultSet) st.executeQuery();
+            rs.next();
+            this.l_acteurs.add(rs.getInt(1));
+            this.cb_acteurs.removeItem(this.cb_acteurs.getSelectedItem());
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_ajoutAActionPerformed
 
     /**
      * @param args the command line arguments
@@ -382,11 +457,13 @@ public class frame_ajout_film extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button_ajoutA;
     private javax.swing.JButton button_annuler;
     private javax.swing.JButton button_ba;
     private javax.swing.JButton button_bo;
     private javax.swing.JButton button_image;
     private javax.swing.JButton button_valider;
+    private javax.swing.JComboBox<String> cb_acteurs;
     private javax.swing.JTextArea edition_synopsis;
     private javax.swing.JTextField field_date;
     private javax.swing.JTextField field_genre;
