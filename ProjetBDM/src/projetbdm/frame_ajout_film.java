@@ -38,10 +38,11 @@ public class frame_ajout_film extends javax.swing.JFrame {
      * Creates new form frame_ajout_film
      */
     public frame_ajout_film() {
+        
         try
         {
             initComponents();
-            l_acteurs=new ArrayList();            
+            l_acteurs=new ArrayList(); 
             Connection con=connexionUtils.getInstance().getConnexion();
             OracleStatement st=(OracleStatement) con.createStatement();
             OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Acteur");
@@ -346,11 +347,20 @@ public class frame_ajout_film extends javax.swing.JFrame {
             rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexF REBUILD");
             rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexSF REBUILD");
             OraclePreparedStatement st=null;
-            for(int i=0;i<this.l_acteurs.size();i++)
+            if(this.l_acteurs.size()!=0)
             {
-                st=(OraclePreparedStatement) con.prepareStatement("INSERT INTO PBDM_MedVidActeur VALUES((SELECT REF(a) FROM PBDM_Acteur a WHERE id=?),(SELECT REF(f) FROM PBDM_Film f WHERE id=?))");
-                st.setInt(1,this.l_acteurs.get(i));
-                st.setInt(2,index);
+                for(int i=0;i<this.l_acteurs.size();i++)
+                {
+                    st=(OraclePreparedStatement) con.prepareStatement("INSERT INTO PBDM_MedVidActeur VALUES((SELECT REF(a) FROM PBDM_Acteur a WHERE id=?),(SELECT REF(f) FROM PBDM_Film f WHERE id=?))");
+                    st.setInt(1,this.l_acteurs.get(i));
+                    st.setInt(2,index);
+                    st.execute();
+                }
+            }
+            else
+            {
+                st=(OraclePreparedStatement) con.prepareStatement("INSERT INTO PBDM_MedVidActeur VALUES(null,(SELECT REF(f) FROM PBDM_Film f WHERE id=?))");
+                st.setInt(1,index);
                 st.execute();
             }
             rs.close();
