@@ -11,7 +11,6 @@ import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -35,6 +34,7 @@ public class frame_ajout_personne extends javax.swing.JFrame {
         initComponents();
     }
 
+    @Override
     public void paint(Graphics g)
     {
         super.paint(g);
@@ -47,7 +47,6 @@ public class frame_ajout_personne extends javax.swing.JFrame {
         Graphics g = this.pan_image.getGraphics();
         g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
     }
-    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -309,20 +308,18 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                     s.setString(5, prenoms[2]);
                     s.setInt(6,taille);
                     s.execute();
-                    
                     OracleStatement st=(OracleStatement)con.createStatement();
                     rs=(OracleResultSet)st.executeQuery("select id, photo from PBDM_Acteur where nom='"+nom+"' for update");
                     rs.next();
-                    
-                        index=rs.getInt(1);
-                        OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
-                        String fich=this.cheminPhoto;
-                        imgObj.loadDataFromFile(fich);
-                        imgObj.setProperties();
-                        OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Acteur set photo=? where id="+index);
-                        stmt1.setORAData(1,imgObj);
-                        stmt1.execute();
-                        stmt1.close();
+                    index=rs.getInt(1);
+                    OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                    String fich=this.cheminPhoto;
+                    imgObj.loadDataFromFile(fich);
+                    imgObj.setProperties();
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Acteur set photo=? where id="+index);
+                    stmt1.setORAData(1,imgObj);
+                    stmt1.execute();
+                    stmt1.close();
                     con.createStatement().execute("ALTER INDEX PBDM_indexA REBUILD");
                     con.commit();
                     s.close();
@@ -339,20 +336,19 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                     OracleStatement st=(OracleStatement)con.createStatement();
                     rs=(OracleResultSet)st.executeQuery("select id, photo from PBDM_Realisateur where nom='"+nom+"' for update");
                     rs.next();
-                    
-                        index=rs.getInt(1);
-                        OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
-                        String fich=this.cheminPhoto;
-                        imgObj.loadDataFromFile(fich);
-                        imgObj.setProperties();
-                        OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Realisateur set photo=? where id="+index);
-                        stmt1.setORAData(1,imgObj);
-                        stmt1.execute();
-                        stmt1.close();
-                        con.createStatement().execute("ALTER INDEX PBDM_indexR REBUILD");
-                       con.commit();
-                        s.close();
-            }
+                    index=rs.getInt(1);
+                    OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                    String fich=this.cheminPhoto;
+                    imgObj.loadDataFromFile(fich);
+                    imgObj.setProperties();
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Realisateur set photo=? where id="+index);
+                    stmt1.setORAData(1,imgObj);
+                    stmt1.execute();
+                    stmt1.close();
+                    con.createStatement().execute("ALTER INDEX PBDM_indexR REBUILD");
+                    con.commit();
+                    s.close();
+                }
         }
         }
         catch (SQLException | IOException | ClassNotFoundException ex)

@@ -20,6 +20,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 import oracle.ord.im.OrdImage;
+import oracle.ord.im.OrdVideo;
 
 /**
  *
@@ -233,6 +234,11 @@ public class frame_serie extends javax.swing.JFrame
         pan_ba.add(button_ba);
 
         button_ajout_ba.setText("Ajouter une bande annonce");
+        button_ajout_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                button_ajout_baActionPerformed(evt);
+            }
+        });
         pan_ba.add(button_ajout_ba);
 
         pan_button.add(pan_ba);
@@ -299,6 +305,51 @@ public class frame_serie extends javax.swing.JFrame
         frame_ajout_saison fas = new frame_ajout_saison(this.admin,this.id);
         fas.setVisible(true);
     }//GEN-LAST:event_button_ajout_saisonActionPerformed
+
+    private void button_ajout_baActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ajout_baActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choisir une vidéo");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Videos", "avi", "mkv", "mp4");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.setFileFilter(filter);
+        if(fileChooser.showOpenDialog(this)==JFileChooser.APPROVE_OPTION)
+        {
+            //Récupération de la video
+            String cheminBA = fileChooser.getSelectedFile().getAbsolutePath();
+            try
+            {
+                int index=0;
+                con=connexionUtils.getInstance().getConnexion();
+                con.setAutoCommit(false);
+                Statement s=null;
+                s = con.createStatement();
+                OracleResultSet rs=null;
+                rs=(OracleResultSet)s.executeQuery("select id, bandeA from PBDM_Serie where nom='"+this.label_titre.getText()+"' for update");
+                while(rs.next())
+                {
+                    index=rs.getInt(1);
+                    OrdVideo vidObj= (OrdVideo)rs.getORAData(2,OrdVideo.getORADataFactory());
+                    String vid =cheminBA;
+                    vidObj.loadDataFromFile(vid);
+                    byte[] ctx[] = new byte [4000][1];
+                    vidObj.setProperties(ctx);
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Serie set bandeA=? where id="+index);
+                    stmt1.setORAData(1,vidObj);
+                    stmt1.execute();
+                    stmt1.close();   
+                }
+                rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexS REBUILD");
+                rs.close();
+                s.close();
+                con.commit();
+            }
+            catch (SQLException | IOException | ClassNotFoundException ex)
+            {
+                Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+        }
+    }//GEN-LAST:event_button_ajout_baActionPerformed
 
     /**
      * @param args the command line arguments

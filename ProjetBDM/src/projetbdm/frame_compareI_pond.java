@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.util.Pair;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
 
@@ -28,6 +27,9 @@ public class frame_compareI_pond extends javax.swing.JFrame
     double score;
     /**
      * Creates new form frame_compareI_pond
+     * @param admin
+     * @param idJ
+     * @param score
      */
     public frame_compareI_pond(boolean admin,int idJ,double score)
     {
@@ -169,14 +171,11 @@ public class frame_compareI_pond extends javax.swing.JFrame
 
     private void valider_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_valider_buttonActionPerformed
     {//GEN-HEADEREND:event_valider_buttonActionPerformed
-        //TODO constructeur avec score mini -> renvoi que ceux concernés.
-        
         resultat.clear();
         double avgC = this.pond_AvgColor.getValue()/100;
-        //this.pond_AvgColor
         double histC = this.pond_ColorHist.getValue()/100;
         double posCol = this.pond_poscolor.getValue()/100;
-       double  text= this.pond_Text.getValue()/100;
+        double  text= this.pond_Text.getValue()/100;
         try 
         {
             int idj2=0;
@@ -203,18 +202,13 @@ public class frame_compareI_pond extends javax.swing.JFrame
                     if(score<this.score)
                         this.resultat.add(idj2);
                 }
-            //this.trierResultat();
             cstmt.close();
             rs2.close();
             stmt2.close();
             frame_transition ft=new frame_transition(this.admin,"jeu",this.resultat,null,"");
             ft.setVisible(true);
         } 
-        catch (SQLException ex) 
-        {
-            Logger.getLogger(frame_compareI_pond.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
+        catch (SQLException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_compareI_pond.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -222,14 +216,13 @@ public class frame_compareI_pond extends javax.swing.JFrame
 
     private void pond_AvgColorKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_pond_AvgColorKeyReleased
     {//GEN-HEADEREND:event_pond_AvgColorKeyReleased
-  
         double val=this.pond_AvgColor.getValue()/100;
         this.txt_avgc.setText("valeur :"+val);
     }//GEN-LAST:event_pond_AvgColorKeyReleased
 
     private void pond_ColorHistKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_pond_ColorHistKeyReleased
     {//GEN-HEADEREND:event_pond_ColorHistKeyReleased
-       double val=this.pond_ColorHist.getValue()/100;
+        double val=this.pond_ColorHist.getValue()/100;
         this.txt_colH.setText(""+val);
     }//GEN-LAST:event_pond_ColorHistKeyReleased
 

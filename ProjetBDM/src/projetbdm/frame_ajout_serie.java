@@ -18,7 +18,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
-import oracle.ord.im.OrdAudio;
 import oracle.ord.im.OrdImage;
 import oracle.ord.im.OrdVideo;
 
@@ -37,6 +36,7 @@ public class frame_ajout_serie extends javax.swing.JFrame {
         initComponents();
     }
     
+    @Override
     public void paint(Graphics g)
     {
         super.paint(g);
@@ -47,7 +47,6 @@ public class frame_ajout_serie extends javax.swing.JFrame {
     private void affiche()
     {
         Graphics g = this.pan_image.getGraphics();
-        //this.pan_image.setSize(140,140*(photo.getWidth(null)/photo.getHeight(null)));
         g.drawImage(this.photo, 0, 0, this.pan_image.getWidth(), this.pan_image.getHeight(), this);
     }
 
@@ -246,11 +245,10 @@ public class frame_ajout_serie extends javax.swing.JFrame {
             ostmt.setString(1, this.field_nom.getText());
             ostmt.setString(2, this.ta_synopsis.getText());
             ostmt.setString(3,this.field_genre.getText());
-           // s.executeQuery("INSERT INTO PBDM_Serie VALUES(8,'"+this.field_nom.getText()+"','"+this.ta_synopsis.getText()+"',new ORDSYS.ORDImage.init(),new ORDSYS.ORDVideo.init(),new PBDM_Saisons_Type,0,'"+this.field_genre.getText()+"')");
             ostmt.execute();
             con.commit();
             ostmt.close();
-           index=-1;
+            index=-1;
             rs=(OracleResultSet)s.executeQuery("select id, image, bandeA from PBDM_Serie where nom='"+this.field_nom.getText()+"' for update");
             while(rs.next())
             {
@@ -283,16 +281,9 @@ public class frame_ajout_serie extends javax.swing.JFrame {
             s.close();
             con.commit();
         }
-        catch (SQLException ex)
+        catch (SQLException | IOException | ClassNotFoundException ex)
         {
-            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex) {
-            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
-        {
-            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(frame_ajout_serie.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.dispose();
                                   

@@ -51,16 +51,13 @@ public class frame_ajout_film extends javax.swing.JFrame {
                 this.cb_acteurs.addItem(rs.getString(1));
             }
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
+        catch (SQLException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
+    @Override
     public void paint(Graphics g)
     {
         super.paint(g);
@@ -347,7 +344,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
             rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexF REBUILD");
             rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexSF REBUILD");
             OraclePreparedStatement st=null;
-            if(this.l_acteurs.size()!=0)
+            if(!this.l_acteurs.isEmpty())
             {
                 for(int i=0;i<this.l_acteurs.size();i++)
                 {
@@ -360,14 +357,12 @@ public class frame_ajout_film extends javax.swing.JFrame {
             }
             rs.close();
             s.close();
-            
             con.commit();
         }
         catch (SQLException | IOException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         this.dispose();
     }//GEN-LAST:event_button_validerActionPerformed
 
@@ -416,11 +411,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
             this.l_acteurs.add(rs.getInt(1));
             this.cb_acteurs.removeItem(this.cb_acteurs.getSelectedItem());
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
+        catch (SQLException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -37,6 +37,7 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
         initComponents();
     }
 
+    @Override
     public void paint(Graphics g)
     {
         super.paint(g);   
@@ -263,7 +264,6 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
                     stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=? where id="+index);
                     stmt1.setORAData(1,imgObj);
                 }
-                
                 stmt1.execute();
                 stmt1.close();
             }
@@ -273,14 +273,7 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
             s.close();
             con.commit();
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex) {
-            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
+        catch (SQLException | IOException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_ajout_jeu.class.getName()).log(Level.SEVERE, null, ex);
         }

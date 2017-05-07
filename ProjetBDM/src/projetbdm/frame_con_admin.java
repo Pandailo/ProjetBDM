@@ -137,7 +137,6 @@ public class frame_con_admin extends javax.swing.JFrame {
             try 
             {
                 //encodage du pw en MD5 pour vérif avec la valeur hexa stockée dans la base
-
                 String pw_temp;
                 this.uname=user_text.getText();
                 pw_temp=user_pw.getText();
@@ -146,7 +145,6 @@ public class frame_con_admin extends javax.swing.JFrame {
                 String pwt="";
                 ArrayList<String> unames=new ArrayList();
                 //vérif de la bonne entrée des infos de connexion
-
                 Connection con=connexionUtils.getInstance().getConnexion();
                 Statement st=con.createStatement();
                 ResultSet rset = st.executeQuery("SELECT uname FROM PBDM_table_connexion");
@@ -181,11 +179,7 @@ public class frame_con_admin extends javax.swing.JFrame {
                 }
 
             } 
-            catch (SQLException ex) 
-            {
-                Logger.getLogger(frame_con_admin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            catch (ClassNotFoundException ex)
+            catch (SQLException | ClassNotFoundException ex)
             {
                 Logger.getLogger(frame_con_admin.class.getName()).log(Level.SEVERE, null, ex);
             }

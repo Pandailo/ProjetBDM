@@ -25,6 +25,8 @@ public class frame_recherche extends javax.swing.JFrame
     Connection con;
     /**
      * Creates new form frame_recherche
+     * @param admin
+     * @param typeM
      */
     public frame_recherche(boolean admin,String typeM)
     {
@@ -38,7 +40,6 @@ public class frame_recherche extends javax.swing.JFrame
                 case "personne" : this.acteur_chb.setSelected(true);
                                   this.realisateur_chb.setSelected(true);this.acteur_chb.setSelected(true);
                                   this.acteur_chb.setEnabled(false);this.realisateur_chb.setEnabled(false);break;
-                                    
         }
     }
 
@@ -198,15 +199,9 @@ public class frame_recherche extends javax.swing.JFrame
                     }
                     
                 }
-                catch (SQLException ex) {
+                catch (SQLException | ClassNotFoundException ex) {
                     Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                catch (ClassNotFoundException ex)
-                {
-                    Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-                
+                }     
             }
             else
             {
@@ -269,11 +264,7 @@ public class frame_recherche extends javax.swing.JFrame
             }
             ft.setVisible(true);
         }
-        catch (ClassNotFoundException ex)
-        {
-            Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (SQLException ex)
+        catch (ClassNotFoundException | SQLException ex)
         {
             Logger.getLogger(frame_recherche.class.getName()).log(Level.SEVERE, null, ex);
         }

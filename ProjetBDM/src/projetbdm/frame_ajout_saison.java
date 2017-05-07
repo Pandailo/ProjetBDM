@@ -30,7 +30,9 @@ public class frame_ajout_saison extends javax.swing.JFrame {
     Image photo;
     boolean admin;
     int idSe;
-    /** Creates new form frame_ajout_saison */
+    /** Creates new form frame_ajout_saison
+     * @param admin
+     * @param idSe */
     public frame_ajout_saison(boolean admin,int idSe) {
         initComponents();
         this.admin=admin;
@@ -38,6 +40,7 @@ public class frame_ajout_saison extends javax.swing.JFrame {
     }
 
     
+    @Override
     public void paint(Graphics g)
     {
         super.paint(g);

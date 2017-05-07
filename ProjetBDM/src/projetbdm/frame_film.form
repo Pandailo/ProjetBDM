@@ -231,6 +231,9 @@
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Ajouter une bande originale"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button_ajout_boActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="button_bo">
                   <Properties>

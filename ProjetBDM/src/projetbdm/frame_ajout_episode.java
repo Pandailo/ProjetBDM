@@ -20,6 +20,7 @@ public class frame_ajout_episode extends javax.swing.JFrame {
     int idS;
     /**
      * Creates new form frame_ajout_episode
+     * @param idS
      */
     public frame_ajout_episode(int idS) {
         initComponents();
@@ -157,10 +158,7 @@ public class frame_ajout_episode extends javax.swing.JFrame {
                         con.commit();
                         st.close();
                     }
-                    catch (SQLException ex) {
-                        Logger.getLogger(frame_ajout_episode.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    catch (ClassNotFoundException ex) {
+                    catch (SQLException | ClassNotFoundException ex) {
                         Logger.getLogger(frame_ajout_episode.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }

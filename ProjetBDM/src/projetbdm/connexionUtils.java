@@ -51,31 +51,7 @@ public class connexionUtils {
 
             return con;
 	}
-	/*private static Connection getConnexion(String url) throws SQLException
-	{
-		Connection con=null;
-		try 
-                {
-                    Class.forName("oracle.jdbc.driver.OracleDriver");
-                    con = DriverManager.getConnection(url, LOGIN, PASS);
-                } 
-        catch (SQLException ex) 
-        {
-            try 
-            {
-                con = DriverManager.getConnection(url, LOGIN, PASS);
-            } 
-            catch (SQLException ex1) 
-            {
-                Logger.getLogger(connexionUtils.class.getSimpleName()).log(Level.SEVERE, null, ex1);
-            }
-        } 
-		catch (ClassNotFoundException ex) 
-        {
-            Logger.getLogger(connexionUtils.class.getSimpleName()).log(Level.SEVERE, null, ex);
-        }
-		return con;
-	}*/
+
         private static Connection getConnexion(String url) throws SQLException, ClassNotFoundException
 	{
 		Connection con=null;

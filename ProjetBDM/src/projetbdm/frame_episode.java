@@ -5,13 +5,11 @@
  */
 package projetbdm;
 
-import mapping.episode;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import oracle.jdbc.OraclePreparedStatement;
 import oracle.jdbc.OracleResultSet;
-import oracle.jdbc.OracleStatement;
 import mapping.episode;
 
 /**
@@ -22,6 +20,10 @@ public class frame_episode extends javax.swing.JFrame {
 
     /**
      * Creates new form frame_episode
+     * @param admin
+     * @param idE
+     * @param idS
+     * @throws java.sql.SQLException
      */
     public frame_episode(boolean admin,int idE,int idS) throws SQLException {
         try
@@ -31,7 +33,6 @@ public class frame_episode extends javax.swing.JFrame {
             java.util.Map map = con.getTypeMap();
             map.put("YV965015.PBDM_EPISODE_TYPE", Class.forName("mapping.episode"));
             con.setTypeMap(map);
-            //System.out.println(map.toString());
             if(!admin){
                 this.pan_admin.removeAll();
             }
@@ -99,7 +100,7 @@ public class frame_episode extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws SQLException {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -124,8 +125,7 @@ public class frame_episode extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        frame_episode episode = new frame_episode(false,1,1);
-        episode.setVisible(true);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

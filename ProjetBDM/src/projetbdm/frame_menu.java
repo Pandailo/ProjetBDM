@@ -15,12 +15,12 @@ public class frame_menu extends javax.swing.JFrame
 
     /**
      * Creates new form frame_menu
+     * @param admin
      */
     public frame_menu(boolean admin)
     {
         initComponents();
         this.admin=admin;
-        
         if(!admin){
             this.pan_principal.remove(pan_ajout);
             this.pan_principal.setLayout(new java.awt.GridLayout(1, 1));
@@ -167,30 +167,18 @@ public class frame_menu extends javax.swing.JFrame
 
     private void film_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_film_buttonActionPerformed
     {//GEN-HEADEREND:event_film_buttonActionPerformed
-        /*
-        frame_film ff=new frame_film(admin);
-        ff.setVisible(true);
-        */
         frame_recherche fr=new frame_recherche(this.admin,"film");
         fr.setVisible(true);
     }//GEN-LAST:event_film_buttonActionPerformed
 
     private void serie_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_serie_buttonActionPerformed
     {//GEN-HEADEREND:event_serie_buttonActionPerformed
-        /*
-        frame_serie fs=new frame_serie(admin);
-        fs.setVisible(true);
-        */
         frame_recherche fr=new frame_recherche(this.admin,"serie");
         fr.setVisible(true);
     }//GEN-LAST:event_serie_buttonActionPerformed
 
     private void jeu_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jeu_buttonActionPerformed
     {//GEN-HEADEREND:event_jeu_buttonActionPerformed
-       /* 
-        frame_jeu fj=new frame_jeu(admin);
-        fj.setVisible(true);
-        */
         frame_recherche fr=new frame_recherche(this.admin,"jeu");
         fr.setVisible(true);
     }//GEN-LAST:event_jeu_buttonActionPerformed
