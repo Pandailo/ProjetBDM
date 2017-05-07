@@ -36,6 +36,8 @@ public class frame_personne extends javax.swing.JFrame {
     String cheminPhoto,fich;
     Image photo;
     String nom;
+    String typeP;
+    int idp;
     /**
      * Creates new form frame_personne
      */
@@ -67,7 +69,7 @@ public class frame_personne extends javax.swing.JFrame {
         OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss,prenoms,taille FROM PBDM_Acteur WHERE nom='"+nomP+"'");
         if(rs.next())
         {
-            id=rs.getInt(1);
+            id=this.idp=rs.getInt(1);
             System.out.println("ID : "+id);
             nom=rs.getString(2);
             ddn=rs.getString(3);
@@ -87,11 +89,14 @@ public class frame_personne extends javax.swing.JFrame {
                 nomFilms+=rs2.getString(1)+"\n";
                 this.vb_media.addItem(rs2.getString(1));
             }
+            this.typeP="acteur";
         }
         else
         {
             rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss,prenoms FROM PBDM_Realisateur WHERE nom='"+nomP+"'");
             rs.next();
+            id=this.idp=rs.getInt(1);
+            System.out.println("ID :"+id);
             nom=rs.getString(2);
             ddn=rs.getString(3);
             ARRAY prenoms = rs.getARRAY(4);
@@ -101,6 +106,7 @@ public class frame_personne extends javax.swing.JFrame {
                 pnom=(((STRUCT)pnoms[1]).getAttributes()[0].toString())+"\n";
             if(((STRUCT)pnoms[2]).getAttributes()[0]!=null)
                 pnom=(((STRUCT)pnoms[2]).getAttributes()[0].toString())+"\n";
+            this.typeP="real";
         }
         rs=(OracleResultSet)st.executeQuery("SELECT photo FROM PBDM_Acteur WHERE nom='"+nomP+"'");
         if(rs.next())
@@ -154,7 +160,8 @@ public class frame_personne extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_nom = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -173,8 +180,10 @@ public class frame_personne extends javax.swing.JFrame {
         button_media = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -228,8 +237,10 @@ public class frame_personne extends javax.swing.JFrame {
         pan_ajout.add(button_chgt_infos);
 
         button_modif_photo.setText("Modifier la photo");
-        button_modif_photo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_photo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_photoActionPerformed(evt);
             }
         });
@@ -245,16 +256,20 @@ public class frame_personne extends javax.swing.JFrame {
 
         pan_button.setLayout(new java.awt.GridLayout(1, 2));
 
-        vb_media.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        vb_media.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 vb_mediaActionPerformed(evt);
             }
         });
         pan_button.add(vb_media);
 
         button_media.setText("Aller au média");
-        button_media.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_media.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_mediaActionPerformed(evt);
             }
         });
@@ -281,6 +296,7 @@ public class frame_personne extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_button_modif_photoActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choisir une photo");
+        
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "bmp", "jpg", "jpeg", "png");
         fileChooser.addChoosableFileFilter(filter);
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -292,49 +308,56 @@ public class frame_personne extends javax.swing.JFrame {
             System.out.println(this.cheminPhoto);
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
             this.affiche();
-            /*Connection con;
+            Connection con;
             try {
                 con = connexionUtils.getInstance().getConnexion();
+                con.setAutoCommit(false);
                 Statement st=con.createStatement();
-                OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom,photo,id FROM PBDM_Acteur WHERE nom='"+nom+"'");
+                
                 OrdImage imgObj=null;
-                if(rs.next())
+                if(this.typeP.equals("acteur"))
                 {
-                    rs=(OracleResultSet)st.executeQuery("SELECT nom,photo,id FROM PBDM_Acteur WHERE nom='"+nom+"' for update");
-                    rs.next();
-                    imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
-                    imgObj.loadDataFromFile(this.cheminPhoto);
-                    imgObj.setProperties();
-                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Acteur set photo=? where nom='"+nom+"'");
-                    stmt1.setORAData(1,imgObj);
-                    stmt1.execute();
-                    stmt1.close();
-                    rs=(OracleResultSet)st.executeQuery("ALTER INDEX PBDM_indexA REBUILD");
+                    OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom,photo,id FROM PBDM_Acteur WHERE id="+this.idp+" for update");
+                    while(rs.next())
+                    {
+                        imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                        imgObj.loadDataFromFile(this.cheminPhoto);
+                        imgObj.setProperties();
+                        OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Acteur set photo=? where nom='"+nom+"'");
+                        stmt1.setORAData(1,imgObj);
+                        stmt1.execute();
+                        stmt1.close();
+                        st.executeQuery("ALTER INDEX PBDM_indexA REBUILD");
+                        
+                    }
                     rs.close();
-                    st.close();
-                    con.commit();
                 }
                 else
                 {
-                    rs=(OracleResultSet)st.executeQuery("SELECT nom,photo,id FROM PBDM_Realisateur WHERE nom='"+nom+"' for update");
-                    rs.next();
-                    imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
-                    imgObj.loadDataFromFile(this.cheminPhoto);
-                    imgObj.setProperties();
-                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Realisateur set photo=? where nom='"+nom+"'");
-                    stmt1.setORAData(1,imgObj);
-                    stmt1.execute();
-                    stmt1.close();
-                    rs=(OracleResultSet)st.executeQuery("ALTER INDEX PBDM_indexR REBUILD");
+                    System.out.println("ID :"+this.idp);
+                    OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT r.nom,r.PHOTO,r.id FROM PBDM_Realisateur r WHERE r.id="+this.idp+" for update");
+                    while(rs.next())
+                    {
+                        imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                        imgObj.loadDataFromFile(this.cheminPhoto);
+                        imgObj.setProperties();
+                        OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Realisateur set photo=? where nom='"+nom+"'");
+                        stmt1.setORAData(1,imgObj);
+                        stmt1.execute();
+                        stmt1.close();
+                        st.executeQuery("ALTER INDEX PBDM_indexR REBUILD");
+                        
+                    }
                     rs.close();
+                }
+                
                     st.close();
                     con.commit();
-                }
             } 
             catch (SQLException | ClassNotFoundException | IOException ex) {
                 Logger.getLogger(frame_personne.class.getName()).log(Level.SEVERE, null, ex);
             }
-*/
+
         }
     }//GEN-LAST:event_button_modif_photoActionPerformed
 
