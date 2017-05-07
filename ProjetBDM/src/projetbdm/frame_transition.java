@@ -26,8 +26,13 @@ public class frame_transition extends javax.swing.JFrame
     String nomS;
     /**
      * Creates new form frame_transition
+     * @param admin
      * @param typeM
      * @param l_id
+     * @param l_noms
+     * @param nomS
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
     public frame_transition(boolean admin,String typeM,List<Integer> l_id,List<String> l_noms,String nomS) throws ClassNotFoundException, SQLException
     {
@@ -44,55 +49,54 @@ public class frame_transition extends javax.swing.JFrame
         String serieS="";
         if(l_id!=null)
         {
-                for(int i=0;i<l_id.size();i++)
-                {
-                    switch (this.type_media) {
-                        case "film" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Film WHERE id ="+l_id.get(i));
-                            while(rs.next())
-                            {
-                                nom=rs.getString(1);
-                                this.cb_listM.addItem(nom);
-                            }
-                            break;
-                        case "jeu" : 
-                            rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_JeuVideo WHERE id ="+l_id.get(i));
-                            while(rs.next())
-                            {
-                                nom=rs.getString(1);
-                                this.cb_listM.addItem(nom);
-                            }
-                            break;
-                        case "serie" : 
-                            rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Serie WHERE id ="+l_id.get(i));
-                            while(rs.next())
-                            {
-                                nom=rs.getString(1);
-                                this.cb_listM.addItem(nom);
-                            }
-                            break;
-                        case "saison" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT numS FROM PBDM_Saison WHERE id="+l_id.get(i)+"AND DEREF(serie).nom='"+this.nomS+"'");
-                            while(rs.next())
-                            {
-                                int num=rs.getInt(1);
-                                this.cb_listM.addItem(""+num);
-                            }
-                            break;
-                        case "personne" : 
-                            rs=(OracleResultSet)st.executeQuery("SELECT a.nom,r.nom FROM PBDM_Acteur a,PBDM_Realisateur r WHERE id ="+l_id.get(i));
-                            while(rs.next())
-                            {
-                                nom=rs.getString(1);
-                                this.cb_listM.addItem(nom);
-                            }
-                            break;
-                    }
+            for(int i=0;i<l_id.size();i++)
+            {
+                switch (this.type_media) {
+                    case "film" :
+                        rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Film WHERE id ="+l_id.get(i)+" ORDER BY nom ASC");
+                        while(rs.next())
+                        {
+                            nom=rs.getString(1);
+                            this.cb_listM.addItem(nom);
+                        }
+                        break;
+                    case "jeu" : 
+                        rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_JeuVideo WHERE id ="+l_id.get(i)+" ORDER BY nom ASC");
+                        while(rs.next())
+                        {
+                            nom=rs.getString(1);
+                            this.cb_listM.addItem(nom);
+                        }
+                        break;
+                    case "serie" : 
+                        rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Serie WHERE id ="+l_id.get(i)+" ORDER BY nom ASC");
+                        while(rs.next())
+                        {
+                            nom=rs.getString(1);
+                            this.cb_listM.addItem(nom);
+                        }
+                        break;
+                    case "saison" :
+                        rs=(OracleResultSet)st.executeQuery("SELECT numS FROM PBDM_Saison WHERE id="+l_id.get(i)+"AND DEREF(serie).nom='"+this.nomS+"' ORDER BY numS ASC");
+                        while(rs.next())
+                        {
+                            int num=rs.getInt(1);
+                            this.cb_listM.addItem(""+num);
+                        }
+                        break;
+                    case "personne" : 
+                        rs=(OracleResultSet)st.executeQuery("SELECT a.nom,r.nom FROM PBDM_Acteur a,PBDM_Realisateur r WHERE id ="+l_id.get(i)+" ORDER BY a.nom,r.nom ASC");
+                        while(rs.next())
+                        {
+                            nom=rs.getString(1);
+                            this.cb_listM.addItem(nom);
+                        }
+                        break;
                 }
+            }
         }
         else
         {
-            
             if(this.type_media.equals("personne"))
             {
                 for(int i=0;i<l_noms.size();i++)
@@ -101,7 +105,6 @@ public class frame_transition extends javax.swing.JFrame
                 }
             }
         }
-        
     }
     
 
@@ -112,8 +115,7 @@ public class frame_transition extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         lab_typeM = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
@@ -141,20 +143,16 @@ public class frame_transition extends javax.swing.JFrame
         jPanel2.setLayout(new java.awt.GridLayout(1, 2));
 
         annuler_button.setText("Annuler");
-        annuler_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        annuler_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 annuler_buttonActionPerformed(evt);
             }
         });
         jPanel2.add(annuler_button);
 
         aller_button.setText("Aller au média");
-        aller_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        aller_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 aller_buttonActionPerformed(evt);
             }
         });
@@ -220,10 +218,9 @@ public class frame_transition extends javax.swing.JFrame
                         rs=(OracleResultSet)st.executeQuery("SELECT a.id FROM PBDM_Acteur a WHERE a.nom ='"+this.cb_listM.getSelectedItem()+"'");
                         if(rs.next())
                         {
-
-                                index=rs.getInt(1);    
-                                frame_personne fp=new frame_personne(this.admin, (String) this.cb_listM.getSelectedItem());
-                                fp.setVisible(true);
+                            index=rs.getInt(1);    
+                            frame_personne fp=new frame_personne(this.admin, (String) this.cb_listM.getSelectedItem());
+                            fp.setVisible(true);
                         }
                         else
                         {
@@ -239,15 +236,7 @@ public class frame_transition extends javax.swing.JFrame
                 }
             }
         }
-        catch (SQLException ex)
-        {
-            Logger.getLogger(frame_transition.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (ClassNotFoundException ex)
-        {
-            Logger.getLogger(frame_transition.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex)
+        catch (SQLException | ClassNotFoundException | IOException ex)
         {
             Logger.getLogger(frame_transition.class.getName()).log(Level.SEVERE, null, ex);
         }

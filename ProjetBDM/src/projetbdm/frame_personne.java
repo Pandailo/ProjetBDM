@@ -82,7 +82,7 @@ public class frame_personne extends javax.swing.JFrame {
                 pnom=(((STRUCT)pnoms[1]).getAttributes()[0].toString())+" ";
             if(((STRUCT)pnoms[2]).getAttributes()[0]!=null)
                 pnom=(((STRUCT)pnoms[2]).getAttributes()[0].toString())+" ";
-            OraclePreparedStatement pst=(OraclePreparedStatement) con.prepareStatement("SELECT DEREF(MedVidMA).nom FROM PBDM_MedVidActeur WHERE DEREF(ActeurMA).id=?");
+            OraclePreparedStatement pst=(OraclePreparedStatement) con.prepareStatement("SELECT DEREF(MedVidMA).nom FROM PBDM_MedVidActeur WHERE DEREF(ActeurMA).id=? ORDER BY DEREF(MedVidMA).nom");
             pst.setInt(1,id);
             OracleResultSet rs2=(OracleResultSet)pst.executeQuery();
             while(rs2.next())
@@ -113,11 +113,13 @@ public class frame_personne extends javax.swing.JFrame {
         if(rs.next())
         {
             imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
-            fich="im_temp.jpg";
+            fich=""+nom+".jpg";
             imgObj.getDataInFile(fich);
             photo=this.pan_image.getToolkit().getImage(fich);
             affiche();
-            
+            File fichiertemp = new File(fich);
+            if(fichiertemp.exists())
+                fichiertemp.delete();
         }
         else
         {

@@ -161,7 +161,7 @@ public class frame_recherche extends javax.swing.JFrame
                     OracleResultSet rs=null;
                     switch (this.type_media) {
                         case "film" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film WHERE CONTAINS(synopsis,'"+this.tf_rech_nom.getText()+"')>0");
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film WHERE CONTAINS(synopsis,'"+this.tf_rech_nom.getText()+"')>0 order by nom asc");
                             while(rs.next())
                             {
                                 index=rs.getInt(2);
@@ -170,7 +170,7 @@ public class frame_recherche extends javax.swing.JFrame
                             ft=new frame_transition(this.admin,this.type_media,list_id,null,"");
                             break;
                         case "jeu" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_JeuVideo WHERE CONTAINS(synopsis,'"+this.tf_rech_nom.getText()+"')>0");
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_JeuVideo WHERE CONTAINS(synopsis,'"+this.tf_rech_nom.getText()+"')>0 order by nom asc");
                             while(rs.next())
                             {
                                 index=rs.getInt(2);
@@ -179,7 +179,7 @@ public class frame_recherche extends javax.swing.JFrame
                             ft=new frame_transition(this.admin,this.type_media,list_id,null,"");
                             break;
                         case "serie" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Serie WHERE CONTAINS(synopsis,'"+this.tf_rech_nom.getText()+"')>0");
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Serie WHERE CONTAINS(synopsis,'"+this.tf_rech_nom.getText()+"')>0 order by nom asc");
                             while(rs.next())
                             {
                                 index=rs.getInt(2);
@@ -188,7 +188,7 @@ public class frame_recherche extends javax.swing.JFrame
                             ft=new frame_transition(this.admin,this.type_media,list_id,null,"");
                             break;
                         case "personne" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT a.nom,a.id,r.nom,r.id FROM PBDM_Acteur a,PBDM_Realisateur r WHERE CONTAINS(a.nom,'"+this.tf_rech_nom.getText()+"')>0 OR CONTAINS(r.nom,'"+this.tf_rech_nom.getText()+"')>0");
+                            rs=(OracleResultSet)st.executeQuery("SELECT a.nom,a.id,r.nom,r.id FROM PBDM_Acteur a,PBDM_Realisateur r WHERE CONTAINS(a.nom,'"+this.tf_rech_nom.getText()+"')>0 OR CONTAINS(r.nom,'"+this.tf_rech_nom.getText()+"')>0 order by a.nom,r.nom");
                             while(rs.next())
                             {   
                                 index=rs.getInt(2);
@@ -213,7 +213,7 @@ public class frame_recherche extends javax.swing.JFrame
                     String nom="";
                     switch (this.type_media) {
                         case "film" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film");
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film order by nom");
                             while(rs.next())
                             {
                                 index=rs.getInt(2);
@@ -222,7 +222,7 @@ public class frame_recherche extends javax.swing.JFrame
                             ft=new frame_transition(this.admin,this.type_media,list_id,null,"");
                             break;
                         case "jeu" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_JeuVideo");
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_JeuVideo order by nom asc");
                             while(rs.next())
                             {
                                 index=rs.getInt(2);
@@ -231,7 +231,7 @@ public class frame_recherche extends javax.swing.JFrame
                             ft=new frame_transition(this.admin,this.type_media,list_id,null,"");
                             break;
                         case "serie" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Serie");
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Serie order by nom asc");
                             while(rs.next())
                             {
                                 index=rs.getInt(2);
@@ -240,13 +240,13 @@ public class frame_recherche extends javax.swing.JFrame
                             ft=new frame_transition(this.admin,this.type_media,list_id,null,"");
                             break;
                         case "personne" :
-                                rs=(OracleResultSet)st.executeQuery("SELECT a.nom FROM PBDM_Acteur a");
+                                rs=(OracleResultSet)st.executeQuery("SELECT a.nom FROM PBDM_Acteur a order by a.nom asc");
                                 while(rs.next())
                                 {
                                     nom=rs.getString(1);
                                     l_noms.add(nom);
                                 }
-                                rs=(OracleResultSet)st.executeQuery("SELECT r.nom FROM PBDM_Realisateur r");
+                                rs=(OracleResultSet)st.executeQuery("SELECT r.nom FROM PBDM_Realisateur r order by r.nom asc");
                                  while(rs.next())
                                 {
                                     nom=rs.getString(1);

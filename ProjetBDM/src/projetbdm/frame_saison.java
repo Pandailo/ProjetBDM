@@ -105,11 +105,12 @@ public class frame_saison extends javax.swing.JFrame {
         try
         {
             con=connexionUtils.getInstance().getConnexion();
-            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("SELECT nom FROM THE(SELECT episodes FROM PBDM_Saison WHERE id=?)");
+            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("SELECT nom,numero FROM THE(SELECT episodes FROM PBDM_Saison WHERE id=? ) ORDER BY numero ASC");
+            s.setInt(1, this.id);
             OracleResultSet rs=(OracleResultSet)s.executeQuery();
             while(rs.next())
             {
-                this.edition.append(rs.getString(1)+"\n");
+                this.edition.append("Episode "+rs.getString(2)+": "+rs.getString(1)+"\n");
                 this.cb_episode.addItem(rs.getString(1));
             }
         }
@@ -413,12 +414,32 @@ public class frame_saison extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_formWindowGainedFocus
         try
         {
+            this.edition.setText("");
+            this.cb_episode.removeAllItems();
             con=connexionUtils.getInstance().getConnexion();
-            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("SELECT nom FROM THE(SELECT episodes FROM PBDM_Saison WHERE id=?)");
-            s.setInt(1, this.id);
-            OracleResultSet rs=(OracleResultSet) s.executeQuery();
+            Statement st=con.createStatement();
+            String numS="";
+            String Se="";
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT DEREF(serie).nom,numS FROM PBDM_Saison sa WHERE sa.id="+this.id);
             while(rs.next())
             {
+                numS=rs.getString(2);
+                Se=rs.getString(1);
+                if(Se==null)
+                {
+                    Se="";
+                }
+            }
+            this.edition.append("Nom de la série : "+Se+"\n");
+            this.edition.append("Numéro de saison : "+numS+"\n");
+            this.edition.append("\nEpisodes :\n");
+            con=connexionUtils.getInstance().getConnexion();
+            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("SELECT nom,numero FROM THE(SELECT episodes FROM PBDM_Saison WHERE id=? ) ORDER BY numero ASC");
+            s.setInt(1, this.id);
+            rs=(OracleResultSet)s.executeQuery();
+            while(rs.next())
+            {
+                this.edition.append("Episode "+rs.getString(2)+": "+rs.getString(1)+"\n");
                 this.cb_episode.addItem(rs.getString(1));
             }
         }
@@ -498,9 +519,7 @@ public class frame_saison extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(frame_saison.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-            
         /* Create and display the form */
-
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

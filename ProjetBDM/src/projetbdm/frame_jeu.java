@@ -70,7 +70,7 @@ public class frame_jeu extends javax.swing.JFrame
                 note=rs.getInt(5);
             }
             this.label_titre.setText(titre);
-            rs=(OracleResultSet)st.executeQuery("SELECT DEREF(acteurMA).nom FROM PBDM_MedVidActeur WHERE DEREF(MedVidMa).id="+idJ);
+            rs=(OracleResultSet)st.executeQuery("SELECT DEREF(acteurMA).nom FROM PBDM_MedVidActeur WHERE DEREF(MedVidMa).id="+idJ+" order by DEREF(acteurMA).nom");
             while(rs.next())
             {
                 temp=rs.getString(1);
@@ -92,13 +92,14 @@ public class frame_jeu extends javax.swing.JFrame
             while(rs.next())
             {
                 OrdImage imgObj= (OrdImage)rs.getORAData(1,OrdImage.getORADataFactory());
-                fich="im_temp.jpg";
+                fich=""+titre+".jpg";
                 imgObj.getDataInFile(fich);
                 photo=this.pan_affiche.getToolkit().getImage(fich);
                 affiche();
-                
+                File fichiertemp = new File(fich);
+                if(fichiertemp.exists())
+                    fichiertemp.delete();
             }
-            
         }
         catch (ClassNotFoundException ex)
         {

@@ -90,7 +90,7 @@ public class frame_film extends javax.swing.JFrame
                     nomR="";
                 }
             }
-            rs=(OracleResultSet)st.executeQuery("SELECT DEREF(acteurMA).nom FROM PBDM_MedVidActeur WHERE DEREF(MedVidMa).id="+idF);
+            rs=(OracleResultSet)st.executeQuery("SELECT DEREF(acteurMA).nom FROM PBDM_MedVidActeur WHERE DEREF(MedVidMa).id="+idF+" order by DEREF(acteurMA).nom");
             while(rs.next())
             {
                 temp=rs.getString(1);
@@ -595,22 +595,12 @@ public class frame_film extends javax.swing.JFrame
                 }
             }
         }
-        catch (ClassNotFoundException ex)
+        catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex)
         {
             java.util.logging.Logger.getLogger(frame_film.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        catch (InstantiationException ex)
-        {
-            java.util.logging.Logger.getLogger(frame_film.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (IllegalAccessException ex)
-        {
-            java.util.logging.Logger.getLogger(frame_film.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util.logging.Logger.getLogger(frame_film.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        //</editor-fold>
+        /* Create and display the form */
         //</editor-fold>
 
         /* Create and display the form */
