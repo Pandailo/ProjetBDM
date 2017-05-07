@@ -302,8 +302,37 @@ public class frame_serie extends javax.swing.JFrame
             //Récupération de l'image
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
-            //TODO update dans la BD
             this.affiche();
+            try
+            {
+                int index=0;
+                con=connexionUtils.getInstance().getConnexion();
+                con.setAutoCommit(false);
+                Statement s=null;
+                s = con.createStatement();
+                OracleResultSet rs=null;
+                rs=(OracleResultSet)s.executeQuery("select id, image from PBDM_Serie where nom='"+this.label_titre.getText()+"' for update");
+                while(rs.next())
+                {
+                    index=rs.getInt(1);
+                    OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
+                    String img=this.cheminPhoto;
+                    imgObj.loadDataFromFile(img);
+                    imgObj.setProperties();
+                    OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Serie set image=? where id="+index);
+                    stmt1.setORAData(1,imgObj);
+                    stmt1.execute();
+                    stmt1.close();   
+                }
+                rs=(OracleResultSet)s.executeQuery("ALTER INDEX PBDM_indexS REBUILD");
+                rs.close();
+                s.close();
+                con.commit();
+            }
+            catch (SQLException | IOException | ClassNotFoundException ex)
+            {
+                Logger.getLogger(frame_serie.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_button_modif_afficheActionPerformed
 

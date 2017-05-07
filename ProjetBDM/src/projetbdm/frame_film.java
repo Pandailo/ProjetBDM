@@ -7,6 +7,7 @@ package projetbdm;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.MediaTracker;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
@@ -115,9 +116,15 @@ public class frame_film extends javax.swing.JFrame
                 fich=""+titre+".jpg";
                 imgObj.getDataInFile(fich);
                 photo=this.pan_affiche.getToolkit().getImage(fich);
-                affiche();  
+                MediaTracker tracker=new MediaTracker(this);
+                tracker.addImage(this.photo,0);
+                try {tracker.waitForID(0);}
+                catch(InterruptedException e) {}
+                affiche();
+                imgObj=null;
                 File fichiertemp = new File(fich);
                 if(fichiertemp.exists())
+                    System.out.println("Je passe dans le delete image du debut");
                     fichiertemp.delete();
                 fich="";
             }
@@ -343,6 +350,10 @@ public class frame_film extends javax.swing.JFrame
             //Récupération de l'image
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
+            MediaTracker tracker=new MediaTracker(this);
+            tracker.addImage(this.photo,0);
+            try {tracker.waitForID(0);}
+            catch(InterruptedException e) {}
             this.affiche();
             try
             {
@@ -362,6 +373,7 @@ public class frame_film extends javax.swing.JFrame
                     imgObj.setProperties();
                     OraclePreparedStatement stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=? where id="+index);
                     stmt1.setORAData(1,imgObj);
+                    imgObj=null;
                     stmt1.execute();
                     stmt1.close();   
                 }
@@ -470,6 +482,7 @@ public class frame_film extends javax.swing.JFrame
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        System.out.println("Je passe dans le closing");
         File imagetemp = new File(fich);
         File videotemp=null;
         if (vid!="")
@@ -478,6 +491,7 @@ public class frame_film extends javax.swing.JFrame
         if (aud!="")
             audiotemp = new File(aud);
         if(imagetemp.exists())
+            System.out.println("Je passe dans le delete image du closing");
             imagetemp.delete();
         if(videotemp!=null)
             videotemp.delete();
