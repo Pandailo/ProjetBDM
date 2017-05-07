@@ -5,9 +5,14 @@
  */
 package projetbdm;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
+import java.awt.TexturePaint;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
@@ -15,6 +20,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import oracle.jdbc.*;
 
 import oracle.ord.im.OrdImage;
@@ -37,6 +43,14 @@ public class frame_personne extends javax.swing.JFrame {
         initComponents();
         this.admin=admin;
         this.nom=nomP;
+        
+        if(nomP.equals("Nicolas"))
+        {
+        TextureCage texturePaint = new TextureCage();
+        TextureCage texturePaint2 = new TextureCage();
+        pan_affiche.add("Center", texturePaint);
+        pan_image.add("Center", texturePaint2);
+        }
         
         if(!admin){
             this.pan_admin.removeAll();
@@ -119,6 +133,20 @@ public class frame_personne extends javax.swing.JFrame {
             this.edition.append("Nom des films associés :\n"+nomFilms);
     }
 
+    
+    public void test(Graphics g){
+    try {
+    File img = new File("Cage.png");
+    BufferedImage bi = ImageIO.read(img ); 
+    System.out.println(bi);
+    Graphics2D g2d = bi.createGraphics();
+    g2d.fillRect (0, 0, bi.getWidth(), bi.getHeight());
+    
+    } catch (IOException e) { 
+        e.printStackTrace(); 
+    }
+    
+  }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -126,8 +154,7 @@ public class frame_personne extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         label_nom = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -146,10 +173,8 @@ public class frame_personne extends javax.swing.JFrame {
         button_media = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
@@ -171,6 +196,8 @@ public class frame_personne extends javax.swing.JFrame {
 
         pan_affiche.setLayout(new java.awt.BorderLayout());
 
+        pan_image.setLayout(new java.awt.BorderLayout());
+
         pan_imaffiche.setMinimumSize(new java.awt.Dimension(100, 125));
         pan_imaffiche.setPreferredSize(new java.awt.Dimension(100, 125));
 
@@ -185,26 +212,7 @@ public class frame_personne extends javax.swing.JFrame {
             .addGap(0, 125, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout pan_imageLayout = new javax.swing.GroupLayout(pan_image);
-        pan_image.setLayout(pan_imageLayout);
-        pan_imageLayout.setHorizontalGroup(
-            pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pan_imageLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(pan_imaffiche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
-        pan_imageLayout.setVerticalGroup(
-            pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-            .addGroup(pan_imageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pan_imageLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(pan_imaffiche, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
-        );
+        pan_image.add(pan_imaffiche, java.awt.BorderLayout.WEST);
 
         pan_affiche.add(pan_image, java.awt.BorderLayout.NORTH);
 
@@ -220,10 +228,8 @@ public class frame_personne extends javax.swing.JFrame {
         pan_ajout.add(button_chgt_infos);
 
         button_modif_photo.setText("Modifier la photo");
-        button_modif_photo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_modif_photo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_modif_photoActionPerformed(evt);
             }
         });
@@ -239,21 +245,16 @@ public class frame_personne extends javax.swing.JFrame {
 
         pan_button.setLayout(new java.awt.GridLayout(1, 2));
 
-        vb_media.setSelectedIndex(-1);
-        vb_media.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        vb_media.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vb_mediaActionPerformed(evt);
             }
         });
         pan_button.add(vb_media);
 
         button_media.setText("Aller au média");
-        button_media.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_media.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_mediaActionPerformed(evt);
             }
         });
