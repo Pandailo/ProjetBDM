@@ -25,7 +25,7 @@ public class TextureCage extends JPanel {
  
   public void paint(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
-    File img = new File("Cage.png");
+    File img = new File("textureCage.png");
     try { 
         BufferedImage bi = ImageIO.read(img);
         Rectangle2D rect = new Rectangle2D.Double(0, 0, 50, 62.5);
