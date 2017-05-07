@@ -214,8 +214,19 @@ public class frame_ajout_saison extends javax.swing.JFrame {
             s = con.createStatement();
             OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement("INSERT INTO PBDM_Saison VALUES(0,?,?,ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),(SELECT REF(s) FROM PBDM_Serie s WHERE s.id=?),PBDM_episodes_type())");
             st.setInt(1,Integer.parseInt(this.field_num.getText()));
-            st.setInt(2, 0);
+            st.setInt(2, Integer.parseInt(this.field_num.getText()));
             st.setInt(3, this.idSe);
+            st.executeQuery();
+            con.commit();
+            int id_saison;
+            st=(OraclePreparedStatement)con.prepareStatement("SELECT max(id) FROM PBDM_Saison WHERE DEREF(serie).id=?");
+            st.setInt(1, idSe);
+            OracleResultSet rs2=(OracleResultSet)st.executeQuery();
+            rs2.next();
+            id_saison=rs2.getInt(1);
+            st=(OraclePreparedStatement)con.prepareStatement("INSERT INTO THE(SELECT saisons FROM PBDM_Serie se WHERE se.id=?) SELECT REF(s) FROM PBDM_Saison s WHERE s.id=?");
+            st.setInt(1, idSe);
+            st.setInt(2, id_saison);
             st.executeQuery();
             con.commit();
             st.close();
@@ -237,10 +248,10 @@ public class frame_ajout_saison extends javax.swing.JFrame {
                     vidObj.setProperties(ctx);
                 OraclePreparedStatement stmt1;
                 if((!this.cheminBA.equals(""))&&this.cheminBA!=null)
-                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Saison set image=?,bandeA=? where numS="+this.field_num.getText()+" AND DEREF(serie).id='"+this.idSe+"'");
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Saison set image=?,bandeA=? where numS="+this.field_num.getText()+" AND DEREF(serie).id="+this.idSe);
                 else
-                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Saison set image=? where where numS="+this.field_num.getText()+" AND DEREF(serie).id='"+this.idSe+"'");
-                stmt1.setORAData(1,imgObj);
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Saison set image=? where numS="+this.field_num.getText()+" AND DEREF(serie).id="+this.idSe);
+                        stmt1.setORAData(1,imgObj);
                 if(!(this.cheminBA.equals("")))
                     stmt1.setORAData(2,vidObj);
                 stmt1.execute();
