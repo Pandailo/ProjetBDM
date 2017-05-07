@@ -45,12 +45,16 @@ public class frame_personne extends javax.swing.JFrame {
         String ddn="";
         String pnom="";
         int taille=-1;
+        String nomFilms="";
         OrdImage imgObj;
+        int id;
         Connection con=connexionUtils.getInstance().getConnexion();
         Statement st=con.createStatement();
         OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss,prenoms,taille FROM PBDM_Acteur WHERE nom='"+nomP+"'");
         if(rs.next())
         {
+            id=rs.getInt(1);
+            System.out.println("ID : "+id);
             nom=rs.getString(2);
             ddn=rs.getString(3);
             taille=rs.getInt(5);
@@ -61,6 +65,14 @@ public class frame_personne extends javax.swing.JFrame {
                 pnom=(((STRUCT)pnoms[1]).getAttributes()[0].toString())+" ";
             if(((STRUCT)pnoms[2]).getAttributes()[0]!=null)
                 pnom=(((STRUCT)pnoms[2]).getAttributes()[0].toString())+" ";
+            OraclePreparedStatement pst=(OraclePreparedStatement) con.prepareStatement("SELECT DEREF(MedVidMA).nom FROM PBDM_MedVidActeur WHERE DEREF(ActeurMA).id=?");
+            pst.setInt(1,id);
+            OracleResultSet rs2=(OracleResultSet)pst.executeQuery();
+            while(rs2.next())
+            {
+                nomFilms+=rs2.getString(1)+"\n";
+                this.vb_media.addItem(rs2.getString(1));
+            }
         }
         else
         {
@@ -102,7 +114,9 @@ public class frame_personne extends javax.swing.JFrame {
         this.edition.append("Prenom :"+pnom+" \n");
         this.edition.append("Date de naissance :"+ddn+"\n");
         if(taille!=-1)
-            this.edition.append("Taille :"+taille);
+            this.edition.append("Taille :"+taille+"\n");
+        if(!nomFilms.equals(""))
+            this.edition.append("Nom des films associés :\n"+nomFilms);
     }
 
     /**
@@ -225,11 +239,24 @@ public class frame_personne extends javax.swing.JFrame {
 
         pan_button.setLayout(new java.awt.GridLayout(1, 2));
 
-        vb_media.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         vb_media.setSelectedIndex(-1);
+        vb_media.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                vb_mediaActionPerformed(evt);
+            }
+        });
         pan_button.add(vb_media);
 
         button_media.setText("Aller au média");
+        button_media.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_mediaActionPerformed(evt);
+            }
+        });
         pan_button.add(button_media);
 
         getContentPane().add(pan_button, java.awt.BorderLayout.SOUTH);
@@ -315,6 +342,61 @@ public class frame_personne extends javax.swing.JFrame {
         if(imagetemp.exists())
             imagetemp.delete();
     }//GEN-LAST:event_formWindowClosing
+
+    private void vb_mediaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_vb_mediaActionPerformed
+    {//GEN-HEADEREND:event_vb_mediaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vb_mediaActionPerformed
+
+    private void button_mediaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_mediaActionPerformed
+    {//GEN-HEADEREND:event_button_mediaActionPerformed
+        try
+        {
+            String nomM=this.vb_media.getSelectedItem().toString();
+            Connection con=connexionUtils.getInstance().getConnexion();
+            int idM=0;
+            String typeM="";
+            PreparedStatement pst=con.prepareStatement("SELECT DEREF(MedVidMA).id FROM PBDM_MedVidActeur WHERE DEREF(MedVidMA).nom=?");
+            pst.setString(1, nomM);
+            OracleResultSet rs=(OracleResultSet)pst.executeQuery();
+            while(rs.next())
+            {
+                idM=rs.getInt(1);
+            }
+            pst=con.prepareStatement("SELECT id,nom FROM PBDM_Film WHERE id=? AND nom=?");
+            pst.setInt(1,idM);
+            pst.setString(2,nomM);
+            rs=(OracleResultSet) pst.executeQuery();
+            if(rs.next())
+            {
+                typeM="film";
+                frame_film f=new frame_film(this.admin,idM);
+                f.setVisible(true);
+            }
+            pst=con.prepareStatement("SELECT id,nom FROM PBDM_JeuVideo WHERE id=? AND nom=?");
+            pst.setInt(1,idM);
+            pst.setString(2,nomM);
+            rs=(OracleResultSet) pst.executeQuery();
+            if(rs.next())
+            {
+                typeM="jeu";
+                frame_jeu fj=new frame_jeu(this.admin,idM);
+                fj.setVisible(true);
+            }
+        }
+        catch (SQLException ex)
+        {
+            Logger.getLogger(frame_personne.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_personne.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex)
+        {
+            Logger.getLogger(frame_personne.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_mediaActionPerformed
 
     /**
      * @param args the command line arguments
