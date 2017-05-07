@@ -47,7 +47,7 @@ public class frame_serie extends javax.swing.JFrame
     {
         initComponents();
         this.admin=admin;
-        id=idS; 
+        this.id=idS; 
         if(!admin){
             this.pan_saison.remove(button_ajout_saison);
             this.pan_ba.remove(button_ajout_ba);
@@ -76,7 +76,7 @@ public class frame_serie extends javax.swing.JFrame
                 genre=rs.getString(3);
             }
             this.label_titre.setText(titre);
-            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("SELECT MAX(numS) FROM PBDM_SAISON WHERE DEREF(serie).id =?");
+            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("select max(deref(serieRef).numS) from the(select saisons from pbdm_serie where id=?)");
             s.setInt(1, this.id);
             rs=(OracleResultSet)s.executeQuery();
             while(rs.next())
