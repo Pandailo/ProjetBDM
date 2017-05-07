@@ -76,7 +76,13 @@ public class frame_serie extends javax.swing.JFrame
                 genre=rs.getString(3);
             }
             this.label_titre.setText(titre);
-            
+            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("SELECT MAX(numS) FROM PBDM_SAISON WHERE DEREF(serie).id =?");
+            s.setInt(1, this.id);
+            rs=(OracleResultSet)s.executeQuery();
+            while(rs.next())
+            {
+                nombreS=rs.getString(1);
+            }
             this.edition.append("Titre de la série : "+titre+"\n");
             this.edition.append("Genre :"+genre+"\n");
             this.edition.append("Nombre de saison :"+nombreS+"\n");
