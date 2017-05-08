@@ -79,9 +79,9 @@ public class frame_personne extends javax.swing.JFrame {
             Object[] pnoms = (Object[])prenoms.getArray();
             pnom=(((STRUCT)pnoms[0]).getAttributes()[0].toString())+" ";
             if(((STRUCT)pnoms[1]).getAttributes()[0]!=null)
-                pnom=(((STRUCT)pnoms[1]).getAttributes()[0].toString())+" ";
+                pnom+=(((STRUCT)pnoms[1]).getAttributes()[0].toString())+" ";
             if(((STRUCT)pnoms[2]).getAttributes()[0]!=null)
-                pnom=(((STRUCT)pnoms[2]).getAttributes()[0].toString())+" ";
+                pnom+=(((STRUCT)pnoms[2]).getAttributes()[0].toString())+" ";
             OraclePreparedStatement pst=(OraclePreparedStatement) con.prepareStatement("SELECT DEREF(MedVidMA).nom FROM PBDM_MedVidActeur WHERE DEREF(ActeurMA).id=? ORDER BY DEREF(MedVidMA).nom");
             pst.setInt(1,id);
             OracleResultSet rs2=(OracleResultSet)pst.executeQuery();
@@ -103,9 +103,9 @@ public class frame_personne extends javax.swing.JFrame {
             Object[] pnoms = (Object[])prenoms.getArray();
             pnom=(((STRUCT)pnoms[0]).getAttributes()[0].toString())+"\n";
             if(((STRUCT)pnoms[1]).getAttributes()[0]!=null)
-                pnom=(((STRUCT)pnoms[1]).getAttributes()[0].toString())+"\n";
+                pnom+=(((STRUCT)pnoms[1]).getAttributes()[0].toString())+"\n";
             if(((STRUCT)pnoms[2]).getAttributes()[0]!=null)
-                pnom=(((STRUCT)pnoms[2]).getAttributes()[0].toString())+"\n";
+                pnom+=(((STRUCT)pnoms[2]).getAttributes()[0].toString())+"\n";
             //select max(deref(saisonRef).numS) from the(select saisons from pbdm_serie where id=?)
             OraclePreparedStatement pst=(OraclePreparedStatement) con.prepareStatement("SELECT DEREF(filmRef).nom FROM THE(SELECT filmsR FROM PBDM_Realisateur where id=?) ORDER BY DEREF(filmRef).nom");
             pst.setInt(1,id);
