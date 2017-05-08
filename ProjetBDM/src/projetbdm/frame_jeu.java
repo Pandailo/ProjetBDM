@@ -44,6 +44,7 @@ public class frame_jeu extends javax.swing.JFrame
         try
         {
             initComponents();
+            this.edition.setLineWrap(true);
             this.admin=admin;
             if(!admin){
                 this.pan_buttons.remove(button_ajout_ba);
@@ -113,7 +114,8 @@ public class frame_jeu extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_titre = new javax.swing.JLabel();
         pan_buttons = new javax.swing.JPanel();
@@ -133,8 +135,10 @@ public class frame_jeu extends javax.swing.JFrame
         button_modif_affiche = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -147,24 +151,30 @@ public class frame_jeu extends javax.swing.JFrame
         pan_buttons.setLayout(new java.awt.GridLayout(1, 2));
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_baActionPerformed(evt);
             }
         });
         pan_buttons.add(button_ba);
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
-        button_ajout_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ajout_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_ajout_baActionPerformed(evt);
             }
         });
         pan_buttons.add(button_ajout_ba);
 
         button_recherche.setText("Chercher des jeu similaires");
-        button_recherche.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_recherche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_rechercheActionPerformed(evt);
             }
         });
@@ -232,8 +242,10 @@ public class frame_jeu extends javax.swing.JFrame
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'image de couverture");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -313,7 +325,21 @@ public class frame_jeu extends javax.swing.JFrame
             vid="vid_temp.avi";
             vidObj.getDataInFile(vid);
             Runtime runtime = Runtime.getRuntime();
-            runtime.exec("vlc "+vid);
+             try
+                {
+                    runtime.exec("vlc "+vid);
+                }
+                catch (IOException ex)
+                {
+                     try
+                    {
+                        Runtime.getRuntime().exec("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe "+vid);
+                    }
+                    catch (IOException ex1)
+                    {
+                        Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
+                }
             }
             rs.close();
             st.close();

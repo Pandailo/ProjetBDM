@@ -46,6 +46,7 @@ public class frame_serie extends javax.swing.JFrame
     public frame_serie(boolean admin,int idS) throws SQLException, IOException
     {
         initComponents();
+        this.edition.setLineWrap(true);
         this.admin=admin;
         this.id=idS; 
         if(!admin){
@@ -428,7 +429,21 @@ public class frame_serie extends javax.swing.JFrame
                 vid="vid_temp.avi";
                 vidObj.getDataInFile(vid);
                 Runtime runtime = Runtime.getRuntime();
-                runtime.exec("vlc "+vid);
+                 try
+                {
+                    runtime.exec("vlc "+vid);
+                }
+                catch (IOException ex)
+                {
+                     try
+                    {
+                        Runtime.getRuntime().exec("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe "+vid);
+                    }
+                    catch (IOException ex1)
+                    {
+                        Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
+                }
             }
             rs.close();
             st.close(); 

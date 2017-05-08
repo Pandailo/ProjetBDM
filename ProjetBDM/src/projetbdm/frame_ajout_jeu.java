@@ -35,6 +35,7 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
      */
     public frame_ajout_jeu() {
         initComponents();
+        this.edition_synopsis.setLineWrap(true);
     }
 
     @Override

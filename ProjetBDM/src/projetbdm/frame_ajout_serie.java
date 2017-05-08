@@ -34,6 +34,7 @@ public class frame_ajout_serie extends javax.swing.JFrame {
      */
     public frame_ajout_serie() {
         initComponents();
+        this.ta_synopsis.setLineWrap(true);
     }
     
     @Override

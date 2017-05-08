@@ -43,6 +43,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
         try
         {
             initComponents();
+            this.edition_synopsis.setLineWrap(true);
             l_acteurs=new ArrayList(); 
             this.idR=0;
             Connection con=connexionUtils.getInstance().getConnexion();

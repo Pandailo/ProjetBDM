@@ -53,9 +53,11 @@ public class frame_film extends javax.swing.JFrame
     {
         this.id=idF;
         l_id=new ArrayList();
+        
         try
         {
             initComponents();
+            this.edition.setLineWrap(true);
             this.admin=admin;
             if(!admin){
                 this.pan_bo.remove(button_ajout_bo);
@@ -145,7 +147,8 @@ public class frame_film extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         label_titre = new javax.swing.JLabel();
@@ -169,11 +172,14 @@ public class frame_film extends javax.swing.JFrame
         button_ajout_ba = new javax.swing.JButton();
         button_ba = new javax.swing.JButton();
 
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosed(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosed(evt);
             }
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -188,6 +194,8 @@ public class frame_film extends javax.swing.JFrame
         jPanel1.add(label_titre, java.awt.BorderLayout.NORTH);
 
         pan_principal.setLayout(new java.awt.GridLayout(1, 0));
+
+        pan_text.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         edition.setEditable(false);
         edition.setColumns(20);
@@ -213,8 +221,10 @@ public class frame_film extends javax.swing.JFrame
         );
 
         compareFilm_button.setText("Rechercher des films à ambiance similaire");
-        compareFilm_button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        compareFilm_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 compareFilm_buttonActionPerformed(evt);
             }
         });
@@ -253,16 +263,20 @@ public class frame_film extends javax.swing.JFrame
         pan_ajout.setLayout(new java.awt.GridLayout(1, 0));
 
         button_chgt_infos.setText("Changer les informations");
-        button_chgt_infos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_chgt_infos.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_chgt_infosActionPerformed(evt);
             }
         });
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -281,16 +295,20 @@ public class frame_film extends javax.swing.JFrame
         pan_bo.setLayout(new java.awt.GridLayout(2, 1));
 
         button_ajout_bo.setText("Ajouter une bande originale");
-        button_ajout_bo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ajout_bo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_ajout_boActionPerformed(evt);
             }
         });
         pan_bo.add(button_ajout_bo);
 
         button_bo.setText("Bande originale");
-        button_bo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_bo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_boActionPerformed(evt);
             }
         });
@@ -301,16 +319,20 @@ public class frame_film extends javax.swing.JFrame
         pan_ba.setLayout(new java.awt.GridLayout(2, 1));
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
-        button_ajout_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ajout_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_ajout_baActionPerformed(evt);
             }
         });
         pan_ba.add(button_ajout_ba);
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_baActionPerformed(evt);
             }
         });
@@ -446,12 +468,30 @@ public class frame_film extends javax.swing.JFrame
                 vid="vid_temp.avi";
                 vidObj.getDataInFile(vid);
                 Runtime runtime = Runtime.getRuntime();
-                runtime.exec("vlc "+vid);
+                try
+                {
+                    runtime.exec("vlc "+vid);
+                }
+                catch (IOException ex)
+                {
+                     try
+                    {
+                        Runtime.getRuntime().exec("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe "+vid);
+                    }
+                    catch (IOException ex1)
+                    {
+                        Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
+                }
             }
             rs.close();
             st.close();
             
-        } catch (SQLException | ClassNotFoundException | IOException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex)
+        {
             Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_baActionPerformed
@@ -468,13 +508,34 @@ public class frame_film extends javax.swing.JFrame
                 aud="son_temp.mp3";
                 audObj.getDataInFile(aud);
                 Runtime runtime = Runtime.getRuntime();
-                runtime.exec("vlc "+aud);
+                try
+                {
+                    runtime.exec("vlc "+aud);
+                }
+                catch (IOException ex)
+                {
+                    try
+                    {
+                        Runtime.getRuntime().exec("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe "+aud);
+                    }
+                    catch (IOException ex1)
+                    {
+                        Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
+                   
+                }
             }
             rs.close();
             st.close();
-        } catch (SQLException | ClassNotFoundException | IOException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
+           
+           Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex)
+        {
             Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_button_boActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

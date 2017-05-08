@@ -46,6 +46,7 @@ public class frame_saison extends javax.swing.JFrame {
         try
         {
             initComponents();
+            this.edition.setLineWrap(true);
             this.admin=admin;
             if(!admin){
                 this.pan_episode.remove(button_ajout_ep);
@@ -127,7 +128,8 @@ public class frame_saison extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_titre = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -151,15 +153,20 @@ public class frame_saison extends javax.swing.JFrame {
         button_ajout_ba = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        addWindowFocusListener(new java.awt.event.WindowFocusListener() {
-            public void windowGainedFocus(java.awt.event.WindowEvent evt) {
+        addWindowFocusListener(new java.awt.event.WindowFocusListener()
+        {
+            public void windowGainedFocus(java.awt.event.WindowEvent evt)
+            {
                 formWindowGainedFocus(evt);
             }
-            public void windowLostFocus(java.awt.event.WindowEvent evt) {
+            public void windowLostFocus(java.awt.event.WindowEvent evt)
+            {
             }
         });
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -231,8 +238,10 @@ public class frame_saison extends javax.swing.JFrame {
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -253,16 +262,20 @@ public class frame_saison extends javax.swing.JFrame {
         pan_episode.add(cb_episode);
 
         button_episode.setText("Aller à l'épisode");
-        button_episode.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_episode.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_episodeActionPerformed(evt);
             }
         });
         pan_episode.add(button_episode);
 
         button_ajout_ep.setText("Ajouter un épisode");
-        button_ajout_ep.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ajout_ep.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_ajout_epActionPerformed(evt);
             }
         });
@@ -273,16 +286,20 @@ public class frame_saison extends javax.swing.JFrame {
         pan_ba.setLayout(new java.awt.GridLayout(1, 2));
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_baActionPerformed(evt);
             }
         });
         pan_ba.add(button_ba);
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
-        button_ajout_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ajout_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_ajout_baActionPerformed(evt);
             }
         });
@@ -337,7 +354,21 @@ public class frame_saison extends javax.swing.JFrame {
                 vid="vid_temp.avi";
                 vidObj.getDataInFile(vid);
                 Runtime runtime = Runtime.getRuntime();
-                runtime.exec("vlc "+vid);
+                 try
+                {
+                    runtime.exec("vlc "+vid);
+                }
+                catch (IOException ex)
+                {
+                     try
+                    {
+                        Runtime.getRuntime().exec("C:\\Program Files (x86)\\VideoLAN\\VLC\\vlc.exe "+vid);
+                    }
+                    catch (IOException ex1)
+                    {
+                        Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex1);
+                    }
+                }
             }
             rs.close();
             st.close(); 

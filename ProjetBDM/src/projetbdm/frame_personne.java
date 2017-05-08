@@ -44,6 +44,7 @@ public class frame_personne extends javax.swing.JFrame {
      */
     public frame_personne(boolean admin,String nomP) throws SQLException, ClassNotFoundException, IOException {
         initComponents();
+        this.edition.setLineWrap(true);
         this.admin=admin;
         this.nom=nomP;
         
