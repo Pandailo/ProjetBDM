@@ -143,7 +143,7 @@ public class frame_ajout_episode extends javax.swing.JFrame {
                         duree=Integer.parseInt(this.tf_dur.getText());
                         Connection con=connexionUtils.getInstance().getConnexion();
                         OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement
-        ("INSERT INTO THE(SELECT episodes FROM PBDM_Saison s WHERE s.id=?) VALUES(0,?,?,?,?,?,?,?,(SELECT REF(s) FROM PBDM_Saison s WHERE s.id=?))");
+        ("INSERT INTO THE(SELECT episodes FROM PBDM_Saison s WHERE s.id=?) VALUES(0,?,?,?,?,?,?,(SELECT REF(s) FROM PBDM_Saison s WHERE s.id=?))");
                         //id,date,nom,syno,genre,duree,nomE,numero,saison
                         st.setInt(1, this.idS);
                         st.setString(2, this.tf_date.getText());
@@ -151,9 +151,8 @@ public class frame_ajout_episode extends javax.swing.JFrame {
                         st.setString(4,this.ta_syno.getText());
                         st.setString(5,this.tf_genre.getText());
                         st.setInt(6, duree);
-                        st.setString(7, nom);
-                        st.setInt(8,num);
-                        st.setInt(9,this.idS);
+                        st.setInt(7,num);
+                        st.setInt(8,this.idS);
                         st.executeQuery();
                         con.commit();
                         st.close();

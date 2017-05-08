@@ -107,6 +107,15 @@ public class frame_personne extends javax.swing.JFrame {
                 pnom=(((STRUCT)pnoms[1]).getAttributes()[0].toString())+"\n";
             if(((STRUCT)pnoms[2]).getAttributes()[0]!=null)
                 pnom=(((STRUCT)pnoms[2]).getAttributes()[0].toString())+"\n";
+            //select max(deref(saisonRef).numS) from the(select saisons from pbdm_serie where id=?)
+            OraclePreparedStatement pst=(OraclePreparedStatement) con.prepareStatement("SELECT DEREF(filmRef).nom FROM THE(SELECT filmsR FROM PBDM_Realisateur where id=?) ORDER BY DEREF(filmRef).nom");
+            pst.setInt(1,id);
+            OracleResultSet rs2=(OracleResultSet)pst.executeQuery();
+            while(rs2.next())
+            {
+                nomFilms+=rs2.getString(1)+"\n";
+                this.vb_media.addItem(rs2.getString(1));
+            }
             this.typeP="real";
         }
         rs=(OracleResultSet)st.executeQuery("SELECT photo FROM PBDM_Acteur WHERE nom='"+nomP+"'");
@@ -163,7 +172,8 @@ public class frame_personne extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_nom = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -182,8 +192,10 @@ public class frame_personne extends javax.swing.JFrame {
         button_media = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -237,8 +249,10 @@ public class frame_personne extends javax.swing.JFrame {
         pan_ajout.add(button_chgt_infos);
 
         button_modif_photo.setText("Modifier la photo");
-        button_modif_photo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_photo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_photoActionPerformed(evt);
             }
         });
@@ -254,16 +268,13 @@ public class frame_personne extends javax.swing.JFrame {
 
         pan_button.setLayout(new java.awt.GridLayout(1, 2));
 
-        vb_media.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                vb_mediaActionPerformed(evt);
-            }
-        });
         pan_button.add(vb_media);
 
         button_media.setText("Aller au média");
-        button_media.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_media.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_mediaActionPerformed(evt);
             }
         });
@@ -360,45 +371,42 @@ public class frame_personne extends javax.swing.JFrame {
             imagetemp.delete();
     }//GEN-LAST:event_formWindowClosing
 
-    private void vb_mediaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_vb_mediaActionPerformed
-    {//GEN-HEADEREND:event_vb_mediaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_vb_mediaActionPerformed
-
     private void button_mediaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_mediaActionPerformed
     {//GEN-HEADEREND:event_button_mediaActionPerformed
         try
         {
-            String nomM=this.vb_media.getSelectedItem().toString();
-            Connection con=connexionUtils.getInstance().getConnexion();
-            int idM=0;
-            String typeM="";
-            PreparedStatement pst=con.prepareStatement("SELECT DEREF(MedVidMA).id FROM PBDM_MedVidActeur WHERE DEREF(MedVidMA).nom=?");
-            pst.setString(1, nomM);
-            OracleResultSet rs=(OracleResultSet)pst.executeQuery();
-            while(rs.next())
-            {
-                idM=rs.getInt(1);
-            }
-            pst=con.prepareStatement("SELECT id,nom FROM PBDM_Film WHERE id=? AND nom=?");
-            pst.setInt(1,idM);
-            pst.setString(2,nomM);
-            rs=(OracleResultSet) pst.executeQuery();
-            if(rs.next())
-            {
-                typeM="film";
-                frame_film f=new frame_film(this.admin,idM);
-                f.setVisible(true);
-            }
-            pst=con.prepareStatement("SELECT id,nom FROM PBDM_JeuVideo WHERE id=? AND nom=?");
-            pst.setInt(1,idM);
-            pst.setString(2,nomM);
-            rs=(OracleResultSet) pst.executeQuery();
-            if(rs.next())
-            {
-                typeM="jeu";
-                frame_jeu fj=new frame_jeu(this.admin,idM);
-                fj.setVisible(true);
+            if(this.vb_media.getSelectedItem()!=null){
+                String nomM=this.vb_media.getSelectedItem().toString();
+                Connection con=connexionUtils.getInstance().getConnexion();
+                int idM=0;
+                String typeM="";
+                PreparedStatement pst=con.prepareStatement("SELECT DEREF(MedVidMA).id FROM PBDM_MedVidActeur WHERE DEREF(MedVidMA).nom=?");
+                pst.setString(1, nomM);
+                OracleResultSet rs=(OracleResultSet)pst.executeQuery();
+                while(rs.next())
+                {
+                    idM=rs.getInt(1);
+                }
+                pst=con.prepareStatement("SELECT id,nom FROM PBDM_Film WHERE id=? AND nom=?");
+                pst.setInt(1,idM);
+                pst.setString(2,nomM);
+                rs=(OracleResultSet) pst.executeQuery();
+                if(rs.next())
+                {
+                    typeM="film";
+                    frame_film f=new frame_film(this.admin,idM);
+                    f.setVisible(true);
+                }
+                pst=con.prepareStatement("SELECT id,nom FROM PBDM_JeuVideo WHERE id=? AND nom=?");
+                pst.setInt(1,idM);
+                pst.setString(2,nomM);
+                rs=(OracleResultSet) pst.executeQuery();
+                if(rs.next())
+                {
+                    typeM="jeu";
+                    frame_jeu fj=new frame_jeu(this.admin,idM);
+                    fj.setVisible(true);
+                }
             }
         }
         catch (SQLException | ClassNotFoundException | IOException ex)

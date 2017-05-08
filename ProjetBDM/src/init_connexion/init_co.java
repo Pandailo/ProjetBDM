@@ -17,7 +17,7 @@ import projetbdm.connexionUtils;
  */
 public class init_co
 {
-    public static void main()
+    public static void main(String[] args)
     {
         try
         {
@@ -26,7 +26,7 @@ public class init_co
             Connection con=connexionUtils.getInstance().getConnexion();
             OraclePreparedStatement ops=(OraclePreparedStatement)con.prepareStatement("INSERT INTO PBDM_table_connexion VALUES('admin',?,'admin')");
             String pwC=md.getEncodedPassword(pw);
-            ops.setString(1, pw);
+            ops.setString(1, pwC);
             ops.executeQuery();
             con.commit();
                     }

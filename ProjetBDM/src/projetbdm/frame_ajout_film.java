@@ -34,6 +34,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
     String cheminBO="";
     List<Integer> l_acteurs;
     Image photo;
+    int idR;
     /**
      * Creates new form frame_ajout_film
      */
@@ -43,12 +44,18 @@ public class frame_ajout_film extends javax.swing.JFrame {
         {
             initComponents();
             l_acteurs=new ArrayList(); 
+            this.idR=0;
             Connection con=connexionUtils.getInstance().getConnexion();
             OracleStatement st=(OracleStatement) con.createStatement();
             OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT nom FROM PBDM_Acteur");
             while(rs.next())
             {
                 this.cb_acteurs.addItem(rs.getString(1));
+            }
+            rs=(OracleResultSet) st.executeQuery("SELECT nom FROM PBDM_Realisateur");
+            while(rs.next())
+            {
+                this.cb_real.addItem(rs.getString(1));
             }
         }
         catch (SQLException | ClassNotFoundException ex)
@@ -97,6 +104,8 @@ public class frame_ajout_film extends javax.swing.JFrame {
         field_genre = new javax.swing.JTextField();
         button_ajoutA = new javax.swing.JButton();
         cb_acteurs = new javax.swing.JComboBox<>();
+        cb_real = new javax.swing.JComboBox<>();
+        button_ajoutR = new javax.swing.JButton();
         pan_buttons = new javax.swing.JPanel();
         button_ba = new javax.swing.JButton();
         button_bo = new javax.swing.JButton();
@@ -155,6 +164,15 @@ public class frame_ajout_film extends javax.swing.JFrame {
             }
         });
 
+        button_ajoutR.setText("Ajouter un réalisateur");
+        button_ajoutR.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                button_ajoutRActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pan_principalLayout = new javax.swing.GroupLayout(pan_principal);
         pan_principal.setLayout(pan_principalLayout);
         pan_principalLayout.setHorizontalGroup(
@@ -182,9 +200,13 @@ public class frame_ajout_film extends javax.swing.JFrame {
                             .addComponent(button_image, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(56, 56, 56))
                     .addGroup(pan_principalLayout.createSequentialGroup()
-                        .addComponent(cb_acteurs, 0, 73, Short.MAX_VALUE)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cb_real, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cb_acteurs, 0, 53, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(button_ajoutA)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(button_ajoutA)
+                            .addComponent(button_ajoutR, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addContainerGap())))
         );
         pan_principalLayout.setVerticalGroup(
@@ -207,12 +229,16 @@ public class frame_ajout_film extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_synopsis)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pan_text, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                        .addComponent(pan_text))
                     .addGroup(pan_principalLayout.createSequentialGroup()
                         .addComponent(pan_image, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(button_image)
-                        .addGap(16, 16, 16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cb_real, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(button_ajoutR))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pan_principalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(button_ajoutA)
                             .addComponent(cb_acteurs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -272,6 +298,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
                                                
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choisir une photo");
+        
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Images", "bmp", "jpg", "jpeg", "png");
         fileChooser.addChoosableFileFilter(filter);
         fileChooser.setAcceptAllFileFilterUsed(false);
@@ -293,14 +320,20 @@ public class frame_ajout_film extends javax.swing.JFrame {
             Connection con=connexionUtils.getInstance().getConnexion();
             con.setAutoCommit(false);
             Statement s=null;
+            
             s = con.createStatement();
             OracleResultSet rs=null;
-            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Film VALUES("+index+",'"+this.field_date.getText()+"','"+this.field_titre.getText()+"','"+this.edition_synopsis.getText()+"','"+this.field_genre.getText()+"',ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),ORDSYS.ORDAudio.init(),(SELECT REF(r) FROM PBDM_Realisateur r WHERE r.id=1))");
+            
+            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Film VALUES("+index+",'"+this.field_date.getText()+"','"+this.field_titre.getText()+"','"+this.edition_synopsis.getText()+"','"+this.field_genre.getText()+"',ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),ORDSYS.ORDAudio.init(), (SELECT REF(r) FROM PBDM_Realisateur r WHERE id="+this.idR+"))");
             index=-1;
             rs=(OracleResultSet)s.executeQuery("select id, image, bandeA, bandeO from PBDM_Film where nom='"+this.field_titre.getText()+"' for update");
             while(rs.next())
             {
                 index=rs.getInt(1);
+                OraclePreparedStatement or=(OraclePreparedStatement) con.prepareStatement("INSERT INTO THE(SELECT filmsR FROM PBDM_Realisateur r WHERE r.id="+this.idR+") SELECT REF(f) FROM PBDM_Film f WHERE f.id=?");
+                or.setInt(1, index);
+                or.execute();
+                or.close();
                 OrdImage imgObj= (OrdImage)rs.getORAData(2,OrdImage.getORADataFactory());
                 OrdVideo vidObj= (OrdVideo)rs.getORAData(3,OrdVideo.getORADataFactory());
                 OrdAudio sonObj= (OrdAudio)rs.getORAData(4,OrdAudio.getORADataFactory());
@@ -357,6 +390,7 @@ public class frame_ajout_film extends javax.swing.JFrame {
             }
             rs.close();
             s.close();
+            
             con.commit();
         }
         catch (SQLException | IOException | ClassNotFoundException ex)
@@ -403,19 +437,42 @@ public class frame_ajout_film extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_button_ajoutAActionPerformed
         try
         {
-            Connection con=connexionUtils.getInstance().getConnexion();
-            OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement("SELECT id FROM PBDM_Acteur WHERE nom=?");
-            st.setString(1, this.cb_acteurs.getSelectedItem().toString());
-            OracleResultSet rs=(OracleResultSet) st.executeQuery();
-            rs.next();
-            this.l_acteurs.add(rs.getInt(1));
-            this.cb_acteurs.removeItem(this.cb_acteurs.getSelectedItem());
+
+                Connection con=connexionUtils.getInstance().getConnexion();
+                OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement("SELECT id FROM PBDM_Acteur WHERE nom=?");
+                st.setString(1, this.cb_acteurs.getSelectedItem().toString());
+                OracleResultSet rs=(OracleResultSet) st.executeQuery();
+                rs.next();
+                this.l_acteurs.add(rs.getInt(1));
+                this.cb_acteurs.removeItem(this.cb_acteurs.getSelectedItem());
         }
         catch (SQLException | ClassNotFoundException ex)
         {
             Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_ajoutAActionPerformed
+
+    private void button_ajoutRActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_ajoutRActionPerformed
+    {//GEN-HEADEREND:event_button_ajoutRActionPerformed
+        try
+        {
+            if(this.cb_real.getSelectedItem()!=null)
+            {
+                Connection con=connexionUtils.getInstance().getConnexion();
+                OraclePreparedStatement st=(OraclePreparedStatement) con.prepareStatement("SELECT id FROM PBDM_Realisateur WHERE nom=?");
+                st.setString(1, this.cb_real.getSelectedItem().toString());
+                OracleResultSet rs=(OracleResultSet) st.executeQuery();
+                rs.next();
+                int idr=rs.getInt(1);
+                this.idR=idr;
+                this.cb_real.removeAllItems();
+            }
+        }
+        catch (SQLException | ClassNotFoundException ex)
+        {
+            Logger.getLogger(frame_ajout_film.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_button_ajoutRActionPerformed
 
     /**
      * @param args the command line arguments
@@ -454,12 +511,14 @@ public class frame_ajout_film extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button_ajoutA;
+    private javax.swing.JButton button_ajoutR;
     private javax.swing.JButton button_annuler;
     private javax.swing.JButton button_ba;
     private javax.swing.JButton button_bo;
     private javax.swing.JButton button_image;
     private javax.swing.JButton button_valider;
     private javax.swing.JComboBox<String> cb_acteurs;
+    private javax.swing.JComboBox<String> cb_real;
     private javax.swing.JTextArea edition_synopsis;
     private javax.swing.JTextField field_date;
     private javax.swing.JTextField field_genre;
