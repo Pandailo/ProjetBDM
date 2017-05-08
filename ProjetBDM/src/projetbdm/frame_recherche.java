@@ -161,7 +161,7 @@ public class frame_recherche extends javax.swing.JFrame
                     OracleResultSet rs=null;
                     switch (this.type_media) {
                         case "film" :
-                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film WHERE CONTAINS(synopsis,'"+this.tf_rech_nom.getText()+"')>0 order by nom asc");
+                            rs=(OracleResultSet)st.executeQuery("SELECT nom,id FROM PBDM_Film WHERE CONTAINS(synopsis,'?"+this.tf_rech_nom.getText()+"')>0 order by nom asc");
                             while(rs.next())
                             {
                                 index=rs.getInt(2);
