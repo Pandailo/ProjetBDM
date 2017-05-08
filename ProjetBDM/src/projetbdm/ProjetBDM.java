@@ -5,6 +5,7 @@
  */
 package projetbdm;
 
+import init_connexion.init_co;
 import java.sql.SQLException;
 
 /**
@@ -20,6 +21,8 @@ public class ProjetBDM {
      */
     public static void main(String[] args) throws SQLException, ClassNotFoundException 
     {
+            init_co i=new init_co();
+            i.init();
             frame_con test= new frame_con();
             test.setVisible(true);
     } 

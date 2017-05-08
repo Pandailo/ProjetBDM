@@ -17,7 +17,7 @@ import projetbdm.connexionUtils;
  */
 public class init_co
 {
-    public static void main(String[] args)
+    public void init()
     {
         try
         {
