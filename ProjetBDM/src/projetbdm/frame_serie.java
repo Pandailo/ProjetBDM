@@ -76,7 +76,7 @@ public class frame_serie extends javax.swing.JFrame
                 genre=rs.getString(3);
             }
             this.label_titre.setText(titre);
-            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("select max(deref(serieRef).numS) from the(select saisons from pbdm_serie where id=?)");
+            OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("select max(deref(saisonRef).numS) from the(select saisons from pbdm_serie where id=?)");
             s.setInt(1, this.id);
             rs=(OracleResultSet)s.executeQuery();
             while(rs.next())
@@ -115,7 +115,8 @@ public class frame_serie extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_titre = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -138,8 +139,10 @@ public class frame_serie extends javax.swing.JFrame
         button_ajout_ba = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -207,8 +210,10 @@ public class frame_serie extends javax.swing.JFrame
         pan_ajout.add(button_chgt_infos);
 
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -227,16 +232,20 @@ public class frame_serie extends javax.swing.JFrame
         pan_saison.setLayout(new java.awt.GridLayout(1, 3));
 
         button_saison.setText("Aller à la saison");
-        button_saison.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_saison.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_saisonActionPerformed(evt);
             }
         });
         pan_saison.add(button_saison);
 
         button_ajout_saison.setText("Ajouter une saison");
-        button_ajout_saison.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ajout_saison.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_ajout_saisonActionPerformed(evt);
             }
         });
@@ -247,16 +256,20 @@ public class frame_serie extends javax.swing.JFrame
         pan_ba.setLayout(new java.awt.GridLayout(1, 2));
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_baActionPerformed(evt);
             }
         });
         pan_ba.add(button_ba);
 
         button_ajout_ba.setText("Ajouter une bande annonce");
-        button_ajout_ba.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_ajout_ba.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_ajout_baActionPerformed(evt);
             }
         });

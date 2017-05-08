@@ -39,7 +39,7 @@ CREATE Type PBDM_JeuVideo_Type UNDER PBDM_MediaVideo_Type(note INTEGER,image ORD
 /
 CREATE Type PBDM_Film_Type UNDER PBDM_MediaVideo_Type (image ORDSYS.ORDImage,bandeA ORDSYS.ORDVideo, bandeO ORDSYS.ORDAudio,realisateur REF PBDM_Realisateur_Type,MEMBER FUNCTION compareImage(idF IN INTEGER) RETURN DOUBLE PRECISION);
 /
-CREATE Type PBDM_Episode_Type UNDER PBDM_MediaVideo_Type (duree INTEGER, nomE VARCHAR2(25), numero INTEGER,saison REF PBDM_Saison_Type);
+CREATE Type PBDM_Episode_Type UNDER PBDM_MediaVideo_Type (duree INTEGER, numero INTEGER,saison REF PBDM_Saison_Type);
 /
 CREATE TYPE PBDM_Serie_Type;
 /
@@ -47,7 +47,7 @@ CREATE TYPE PBDM_Episodes_Type AS TABLE OF PBDM_Episode_type;
 /
 CREATE Type PBDM_Saison_Type AS OBJECT (id NUMBER,numS INTEGER,nbE INTEGER, image ORDSYS.ORDImage,bandeA ORDSYS.ORDVideo,serie REF PBDM_Serie_Type,episodes PBDM_episodes_type,MEMBER FUNCTION compareImage(idS IN INTEGER) RETURN DOUBLE PRECISION);
 /
-CREATE TYPE PBDM_SaisonRef_Type AS OBJECT(serieRef REF PBDM_Saison_Type);
+CREATE TYPE PBDM_SaisonRef_Type AS OBJECT(saisonRef REF PBDM_Saison_Type);
 /
 CREATE TYPE PBDM_Saisons_Type AS TABLE OF PBDM_SaisonRef_Type;
 /

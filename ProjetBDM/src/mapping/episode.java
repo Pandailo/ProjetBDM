@@ -129,7 +129,6 @@ public class episode implements SQLData
         this.synopsis=stream.readString();
         this.genre=stream.readString();
         this.duree=stream.readInt();
-        this.nom=stream.readString();
         this.numero=stream.readInt();
         saison=stream.readRef();
     }
