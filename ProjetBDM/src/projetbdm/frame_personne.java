@@ -72,7 +72,6 @@ public class frame_personne extends javax.swing.JFrame {
         if(rs.next())
         {
             id=this.idp=rs.getInt(1);
-            System.out.println("ID : "+id);
             nom=rs.getString(2);
             ddn=rs.getString(3);
             taille=rs.getInt(5);
@@ -98,7 +97,6 @@ public class frame_personne extends javax.swing.JFrame {
             rs=(OracleResultSet)st.executeQuery("SELECT id,nom,dateNaiss,prenoms FROM PBDM_Realisateur WHERE nom='"+nomP+"'");
             rs.next();
             id=this.idp=rs.getInt(1);
-            System.out.println("ID :"+id);
             nom=rs.getString(2);
             ddn=rs.getString(3);
             ARRAY prenoms = rs.getARRAY(4);
@@ -157,7 +155,6 @@ public class frame_personne extends javax.swing.JFrame {
     try {
     File img = new File("Cage.png");
     BufferedImage bi = ImageIO.read(img ); 
-    System.out.println(bi);
     Graphics2D g2d = bi.createGraphics();
     g2d.fillRect (0, 0, bi.getWidth(), bi.getHeight());
     
@@ -173,8 +170,7 @@ public class frame_personne extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         label_nom = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -186,17 +182,14 @@ public class frame_personne extends javax.swing.JFrame {
         pan_admin = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pan_ajout = new javax.swing.JPanel();
-        button_chgt_infos = new javax.swing.JButton();
         button_modif_photo = new javax.swing.JButton();
         pan_button = new javax.swing.JPanel();
         vb_media = new javax.swing.JComboBox<>();
         button_media = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
@@ -246,14 +239,9 @@ public class frame_personne extends javax.swing.JFrame {
 
         pan_ajout.setLayout(new java.awt.GridLayout(1, 2));
 
-        button_chgt_infos.setText("Changer les informations");
-        pan_ajout.add(button_chgt_infos);
-
         button_modif_photo.setText("Modifier la photo");
-        button_modif_photo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_modif_photo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_modif_photoActionPerformed(evt);
             }
         });
@@ -272,10 +260,8 @@ public class frame_personne extends javax.swing.JFrame {
         pan_button.add(vb_media);
 
         button_media.setText("Aller au média");
-        button_media.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_media.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_mediaActionPerformed(evt);
             }
         });
@@ -311,7 +297,6 @@ public class frame_personne extends javax.swing.JFrame {
         {
             //Récupération de l'image
             this.cheminPhoto = fileChooser.getSelectedFile().getAbsolutePath();
-            System.out.println(this.cheminPhoto);
             this.photo = Toolkit.getDefaultToolkit().getImage(this.cheminPhoto);
             this.affiche();
             Connection con;
@@ -340,7 +325,6 @@ public class frame_personne extends javax.swing.JFrame {
                 }
                 else
                 {
-                    System.out.println("ID :"+this.idp);
                     OracleResultSet rs=(OracleResultSet)st.executeQuery("SELECT r.nom,r.PHOTO,r.id FROM PBDM_Realisateur r WHERE r.id="+this.idp+" for update");
                     while(rs.next())
                     {
@@ -447,7 +431,6 @@ public class frame_personne extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton button_chgt_infos;
     private javax.swing.JButton button_media;
     private javax.swing.JButton button_modif_photo;
     private javax.swing.JTextArea edition;

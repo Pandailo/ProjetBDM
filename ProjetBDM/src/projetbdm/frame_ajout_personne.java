@@ -274,7 +274,6 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                 try
                 {
                     taille=Integer.parseInt(this.jTextField1.getText());
-                    System.out.println(taille);
                 }
                 catch(NumberFormatException  e)
                 {
@@ -288,7 +287,6 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                     if(split.length>=i+1)
                     {
                         prenoms[i]=split[i];
-                        System.out.println("split :"+split[i]);
                     }
                     else
                     {

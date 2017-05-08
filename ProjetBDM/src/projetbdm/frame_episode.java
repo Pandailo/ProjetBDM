@@ -69,7 +69,6 @@ public class frame_episode extends javax.swing.JFrame {
         edition = new javax.swing.JTextArea();
         pan_affiche = new javax.swing.JPanel();
         pan_admin = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
 
         label_titre.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         label_titre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -87,10 +86,6 @@ public class frame_episode extends javax.swing.JFrame {
         pan_affiche.setLayout(new java.awt.BorderLayout());
 
         pan_admin.setLayout(new java.awt.GridLayout(1, 1));
-
-        jButton1.setText("Changer les infos");
-        pan_admin.add(jButton1);
-
         pan_affiche.add(pan_admin, java.awt.BorderLayout.SOUTH);
 
         getContentPane().add(pan_affiche, java.awt.BorderLayout.EAST);
@@ -131,7 +126,6 @@ public class frame_episode extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea edition;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel label_titre;
     private javax.swing.JPanel pan_admin;
     private javax.swing.JPanel pan_affiche;

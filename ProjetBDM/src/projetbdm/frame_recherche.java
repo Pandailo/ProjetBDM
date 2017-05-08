@@ -250,7 +250,6 @@ public class frame_recherche extends javax.swing.JFrame
                                  while(rs.next())
                                 {
                                     nom=rs.getString(1);
-                                    System.out.println(nom);
                                     l_noms.add(nom);
                                 }
                             ft=new frame_transition(this.admin,this.type_media,null,l_noms,"");

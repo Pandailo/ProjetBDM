@@ -84,7 +84,7 @@ public class frame_film extends javax.swing.JFrame
                 DDS=rs.getString(4);
             }
             this.label_titre.setText(titre);
-            rs=(OracleResultSet)st.executeQuery("SELECT DEREF(realisateur).nom FROM PBDM_Film f WHERE f.id="+idF);
+            rs=(OracleResultSet)st.executeQuery("SELECT DEREF(realisateur).nom FROM PBDM_Film f WHERE f.id="+idF+"order by DEREF(realisateur).nom");
             while(rs.next())
             {
                 nomR=rs.getString(1);
@@ -126,7 +126,6 @@ public class frame_film extends javax.swing.JFrame
                 imgObj=null;
                 File fichiertemp = new File(fich);
                 if(fichiertemp.exists())
-                    System.out.println("Je passe dans le delete image du debut");
                     fichiertemp.delete();
                 fich="";
             }
@@ -147,8 +146,7 @@ public class frame_film extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         label_titre = new javax.swing.JLabel();
@@ -162,7 +160,6 @@ public class frame_film extends javax.swing.JFrame
         pan_admin = new javax.swing.JPanel();
         lab_ajout_affiche = new javax.swing.JLabel();
         pan_ajout = new javax.swing.JPanel();
-        button_chgt_infos = new javax.swing.JButton();
         button_modif_affiche = new javax.swing.JButton();
         pan_buttons = new javax.swing.JPanel();
         pan_bo = new javax.swing.JPanel();
@@ -172,14 +169,11 @@ public class frame_film extends javax.swing.JFrame
         button_ajout_ba = new javax.swing.JButton();
         button_ba = new javax.swing.JButton();
 
-        addWindowListener(new java.awt.event.WindowAdapter()
-        {
-            public void windowClosed(java.awt.event.WindowEvent evt)
-            {
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
             }
-            public void windowClosing(java.awt.event.WindowEvent evt)
-            {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
@@ -221,10 +215,8 @@ public class frame_film extends javax.swing.JFrame
         );
 
         compareFilm_button.setText("Rechercher des films à ambiance similaire");
-        compareFilm_button.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        compareFilm_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 compareFilm_buttonActionPerformed(evt);
             }
         });
@@ -262,21 +254,9 @@ public class frame_film extends javax.swing.JFrame
 
         pan_ajout.setLayout(new java.awt.GridLayout(1, 0));
 
-        button_chgt_infos.setText("Changer les informations");
-        button_chgt_infos.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                button_chgt_infosActionPerformed(evt);
-            }
-        });
-        pan_ajout.add(button_chgt_infos);
-
         button_modif_affiche.setText("Modifier l'affiche");
-        button_modif_affiche.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_modif_affiche.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_modif_afficheActionPerformed(evt);
             }
         });
@@ -295,20 +275,16 @@ public class frame_film extends javax.swing.JFrame
         pan_bo.setLayout(new java.awt.GridLayout(2, 1));
 
         button_ajout_bo.setText("Ajouter une bande originale");
-        button_ajout_bo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_ajout_bo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_ajout_boActionPerformed(evt);
             }
         });
         pan_bo.add(button_ajout_bo);
 
         button_bo.setText("Bande originale");
-        button_bo.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_bo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_boActionPerformed(evt);
             }
         });
@@ -319,20 +295,16 @@ public class frame_film extends javax.swing.JFrame
         pan_ba.setLayout(new java.awt.GridLayout(2, 1));
 
         button_ajout_ba.setText("Ajouter une bande-annonce");
-        button_ajout_ba.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_ajout_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_ajout_baActionPerformed(evt);
             }
         });
         pan_ba.add(button_ajout_ba);
 
         button_ba.setText("Bande-annonce");
-        button_ba.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        button_ba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 button_baActionPerformed(evt);
             }
         });
@@ -543,7 +515,6 @@ public class frame_film extends javax.swing.JFrame
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        System.out.println("Je passe dans le closing");
         File imagetemp = new File(fich);
         File videotemp=null;
         if (vid!="")
@@ -552,7 +523,6 @@ public class frame_film extends javax.swing.JFrame
         if (aud!="")
             audiotemp = new File(aud);
         if(imagetemp.exists())
-            System.out.println("Je passe dans le delete image du closing");
             imagetemp.delete();
         if(videotemp!=null)
             videotemp.delete();
@@ -598,11 +568,6 @@ public class frame_film extends javax.swing.JFrame
             Logger.getLogger(frame_film.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_compareFilm_buttonActionPerformed
-
-    private void button_chgt_infosActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_button_chgt_infosActionPerformed
-    {//GEN-HEADEREND:event_button_chgt_infosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_button_chgt_infosActionPerformed
 
     private void button_ajout_boActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_ajout_boActionPerformed
         JFileChooser fileChooser = new JFileChooser();
@@ -686,7 +651,6 @@ public class frame_film extends javax.swing.JFrame
     private javax.swing.JButton button_ajout_bo;
     private javax.swing.JButton button_ba;
     private javax.swing.JButton button_bo;
-    private javax.swing.JButton button_chgt_infos;
     private javax.swing.JButton button_modif_affiche;
     private javax.swing.JButton compareFilm_button;
     private javax.swing.JTextArea edition;

@@ -76,13 +76,6 @@
             <Property name="columns" type="int" value="1"/>
             <Property name="rows" type="int" value="1"/>
           </Layout>
-          <SubComponents>
-            <Component class="javax.swing.JButton" name="jButton1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Changer les infos"/>
-              </Properties>
-            </Component>
-          </SubComponents>
         </Container>
       </SubComponents>
     </Container>
