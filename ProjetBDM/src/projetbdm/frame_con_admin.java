@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package projetbdm;
+import init_connexion.MD5Password;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
