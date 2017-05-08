@@ -303,7 +303,7 @@ public class frame_jeu extends javax.swing.JFrame
             vid="";
             con=connexionUtils.getInstance().getConnexion();
             Statement st=con.createStatement();
-            OracleResultSet rs=(OracleResultSet)st.executeQuery("select bandeA from PBDM_Film where id="+id);
+            OracleResultSet rs=(OracleResultSet)st.executeQuery("select bandeA from PBDM_JeuVideo where id="+id);
             while(rs.next())
             {
             OrdVideo vidObj= (OrdVideo)rs.getORAData(1,OrdVideo.getORADataFactory());
