@@ -234,9 +234,8 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
             {
                 index=rs.getInt(1);
             }
-            System.out.println(index);
             index++;
-            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_JeuVideo VALUES("+index+",'"+this.field_date.getText()+"','"+this.field_titre.getText()+"','"+this.edition_synopsis.getText()+"','"+this.field_genre.getText()+"',"+this.field_note.getText()+",ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init())");
+            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_JeuVideo VALUES("+index+",'"+this.field_date.getText()+"','"+this.field_titre.getText()+"','"+this.edition_synopsis.getText()+"','"+this.field_genre.getText()+"',"+Integer.parseInt(this.field_note.getText())+",ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init())");
             index=-1;
             rs=(OracleResultSet)s.executeQuery("select id, image, bandeA from PBDM_JeuVideo where nom='"+this.field_titre.getText()+"' for update");
             while(rs.next())

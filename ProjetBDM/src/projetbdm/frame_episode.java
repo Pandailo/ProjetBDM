@@ -30,6 +30,7 @@ public class frame_episode extends javax.swing.JFrame {
         {
             initComponents();
             Connection con=connexionUtils.getInstance().getConnexion();
+            this.edition.setLineWrap(true);
             java.util.Map map = con.getTypeMap();
             map.put("YV965015.PBDM_EPISODE_TYPE", Class.forName("mapping.episode"));
             con.setTypeMap(map);
