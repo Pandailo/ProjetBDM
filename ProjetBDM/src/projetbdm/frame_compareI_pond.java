@@ -152,6 +152,13 @@ public class frame_compareI_pond extends javax.swing.JFrame
         jPanel2.add(annuler_button);
 
         reinit_button.setText("Reinitialiser");
+        reinit_button.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                reinit_buttonActionPerformed(evt);
+            }
+        });
         jPanel2.add(reinit_button);
 
         valider_button.setText("Valider");
@@ -237,6 +244,14 @@ public class frame_compareI_pond extends javax.swing.JFrame
         double val=this.pond_ColorHist.getValue()/100;
         this.txt_posC.setText(""+val);        
     }//GEN-LAST:event_pond_poscolorKeyReleased
+
+    private void reinit_buttonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_reinit_buttonActionPerformed
+    {//GEN-HEADEREND:event_reinit_buttonActionPerformed
+        this.pond_AvgColor.setValue(50);
+        this.pond_ColorHist.setValue(50);
+        this.pond_Text.setValue(50);
+        this.pond_poscolor.setValue(50);
+    }//GEN-LAST:event_reinit_buttonActionPerformed
 
     /**
      * @param args the command line arguments
