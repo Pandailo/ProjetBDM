@@ -236,6 +236,7 @@ public class frame_ajout_serie extends javax.swing.JFrame {
     {//GEN-HEADEREND:event_button_validerActionPerformed
         try
         {
+            this.ta_synopsis.setText(this.ta_synopsis.getText().replaceAll("\'", "\""));
             int index=0;
             Connection con=connexionUtils.getInstance().getConnexion();
             con.setAutoCommit(false);

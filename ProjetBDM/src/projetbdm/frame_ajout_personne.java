@@ -325,6 +325,7 @@ public class frame_ajout_personne extends javax.swing.JFrame {
                 else
                 {
                     OraclePreparedStatement s=(OraclePreparedStatement)con.prepareStatement("INSERT INTO PBDM_Realisateur VALUES(0,?,?,PBDM_PrenomsV_Type(PBDM_prenom_type(?),PBDM_prenom_type(?),PBDM_prenom_type(?)),ORDImage.init(),PBDM_Films_Type())"); 
+                   
                     s.setString(1, ddn);
                     s.setString(2, nom);
                     s.setString(3, prenoms[0]);

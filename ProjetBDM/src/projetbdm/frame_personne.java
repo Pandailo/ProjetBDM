@@ -325,6 +325,7 @@ public class frame_personne extends javax.swing.JFrame {
                         stmt1.setORAData(1,imgObj);
                         stmt1.execute();
                         stmt1.close();
+                        con.commit();
                         st.executeQuery("ALTER INDEX PBDM_indexA REBUILD");
                         
                     }
@@ -342,6 +343,7 @@ public class frame_personne extends javax.swing.JFrame {
                         stmt1.setORAData(1,imgObj);
                         stmt1.execute();
                         stmt1.close();
+                        con.commit();
                         st.executeQuery("ALTER INDEX PBDM_indexR REBUILD");
                         
                     }
@@ -399,6 +401,7 @@ public class frame_personne extends javax.swing.JFrame {
                     frame_jeu fj=new frame_jeu(this.admin,idM);
                     fj.setVisible(true);
                 }
+                con.commit();
             }
         }
         catch (SQLException | ClassNotFoundException | IOException ex)

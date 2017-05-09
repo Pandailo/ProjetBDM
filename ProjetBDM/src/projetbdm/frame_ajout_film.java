@@ -324,8 +324,8 @@ public class frame_ajout_film extends javax.swing.JFrame {
             
             s = con.createStatement();
             OracleResultSet rs=null;
-            
-            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Film VALUES("+index+",'"+this.field_date.getText()+"','"+this.field_titre.getText()+"','"+this.edition_synopsis.getText()+"','"+this.field_genre.getText()+"',ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),ORDSYS.ORDAudio.init(), (SELECT REF(r) FROM PBDM_Realisateur r WHERE id="+this.idR+"))");
+            String synopsis = this.edition_synopsis.getText().replaceAll("\'", "\"");
+            rs=(OracleResultSet) s.executeQuery("INSERT INTO PBDM_Film VALUES("+index+",'"+this.field_date.getText()+"','"+this.field_titre.getText()+"','"+synopsis+"','"+this.field_genre.getText()+"',ORDSYS.ORDImage.init(),ORDSYS.ORDVideo.init(),ORDSYS.ORDAudio.init(), (SELECT REF(r) FROM PBDM_Realisateur r WHERE id="+this.idR+"))");
             index=-1;
             rs=(OracleResultSet)s.executeQuery("select id, image, bandeA, bandeO from PBDM_Film where nom='"+this.field_titre.getText()+"' for update");
             while(rs.next())

@@ -71,7 +71,6 @@ public class frame_compareI_pond extends javax.swing.JFrame
 
         jButton1.setText("jButton1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.GridLayout(3, 0));
 
         jPanel3.setLayout(new java.awt.GridLayout(1, 4));

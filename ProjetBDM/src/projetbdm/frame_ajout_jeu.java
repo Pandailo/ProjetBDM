@@ -222,6 +222,7 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
     private void button_validerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button_validerActionPerformed
         try
         {
+            this.edition_synopsis.setText(this.edition_synopsis.getText().replaceAll("\'", "\""));
             int index=0;
             Connection con=connexionUtils.getInstance().getConnexion();
             con.setAutoCommit(false);
