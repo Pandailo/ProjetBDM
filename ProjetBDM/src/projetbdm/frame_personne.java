@@ -48,13 +48,7 @@ public class frame_personne extends javax.swing.JFrame {
         this.admin=admin;
         this.nom=nomP;
         
-        if(nomP.equals("Cage"))
-        {
-            TextureCage texturePaint = new TextureCage();
-            TextureCage texturePaint2 = new TextureCage();
-            pan_affiche.add("Center", texturePaint);
-            pan_image.add("Center", texturePaint2);
-        }
+        
         
         if(!admin){
             this.pan_admin.removeAll();
@@ -170,7 +164,8 @@ public class frame_personne extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         label_nom = new javax.swing.JLabel();
         pan_principal = new javax.swing.JPanel();
@@ -188,8 +183,17 @@ public class frame_personne extends javax.swing.JFrame {
         button_media = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(720, 600));
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
+        addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                formMouseClicked(evt);
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter()
+        {
+            public void windowClosing(java.awt.event.WindowEvent evt)
+            {
                 formWindowClosing(evt);
             }
         });
@@ -239,8 +243,10 @@ public class frame_personne extends javax.swing.JFrame {
         pan_ajout.setLayout(new java.awt.GridLayout(1, 2));
 
         button_modif_photo.setText("Modifier la photo");
-        button_modif_photo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_modif_photo.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_modif_photoActionPerformed(evt);
             }
         });
@@ -259,8 +265,10 @@ public class frame_personne extends javax.swing.JFrame {
         pan_button.add(vb_media);
 
         button_media.setText("Aller au média");
-        button_media.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        button_media.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 button_mediaActionPerformed(evt);
             }
         });
@@ -398,6 +406,19 @@ public class frame_personne extends javax.swing.JFrame {
             Logger.getLogger(frame_personne.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_button_mediaActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_formMouseClicked
+    {//GEN-HEADEREND:event_formMouseClicked
+        if(this.nom.equals("Cage"))
+        {
+            TextureCage texturePaint = new TextureCage();
+            TextureCage texturePaint2 = new TextureCage();
+            pan_affiche.add("Center", texturePaint);
+            pan_image.add("Center", texturePaint2);
+        }
+        this.setSize(this.getWidth()-1, this.getHeight()-1);
+        this.setSize(this.getWidth()+1, this.getHeight()+1);
+    }//GEN-LAST:event_formMouseClicked
 
     /**
      * @param args the command line arguments
