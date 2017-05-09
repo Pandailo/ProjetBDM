@@ -78,7 +78,6 @@ public class frame_episode extends javax.swing.JFrame {
         edition.setEditable(false);
         edition.setColumns(20);
         edition.setRows(5);
-        edition.setEnabled(false);
         pan_text.setViewportView(edition);
 
         getContentPane().add(pan_text, java.awt.BorderLayout.CENTER);

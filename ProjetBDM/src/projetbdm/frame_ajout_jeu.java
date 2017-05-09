@@ -255,13 +255,13 @@ public class frame_ajout_jeu extends javax.swing.JFrame {
                 OraclePreparedStatement stmt1;
                 if(!this.cheminBA.equals(""))
                 {
-                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=?,bandeA=? where id="+index);
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_JeuVideo set image=?,bandeA=? where id="+index);
                     stmt1.setORAData(1,imgObj);
                     stmt1.setORAData(2,vidObj);
                 }
                 else
                 {
-                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_Film set image=? where id="+index);
+                    stmt1=(OraclePreparedStatement)con.prepareStatement("update PBDM_JeuVideo set image=? where id="+index);
                     stmt1.setORAData(1,imgObj);
                 }
                 stmt1.execute();
